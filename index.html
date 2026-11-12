@@ -1193,19 +1193,13 @@ body[data-topic="overview"] .sec:not([data-topic="overview"]){display:none}
 body[data-topic="iam"] .sec:not([data-topic="iam"]){display:none}
 body[data-topic="cs"] .sec:not([data-topic="cs"]){display:none}
 body[data-topic="delivery"] .sec:not([data-topic="delivery"]){display:none}
+/* v5.0 · Hero 只在 Overview 顯示 · 其他 tab 直接進入內容 */
+body:not([data-topic="overview"]) .hero{display:none}
+body:not([data-topic="overview"]) .mode-banner{top:60px}
+body:not([data-topic="overview"]) .topic-tabs{top:98px}
 /* v4.6.1 外部模式隱藏純內部 tab：IAM 新內容多半 internal-only · Delivery 全 internal-only */
 body.ext .topic-tab[data-topic="iam"],
 body.ext .topic-tab[data-topic="delivery"]{display:none}
-/* All topic = show everything */
-
-/* Topic indicator banner above each section (only when 'all' topic) */
-body[data-topic="all"] .sec[data-topic="iam"]::before,
-body[data-topic="all"] .sec[data-topic="cs"]::before,
-body[data-topic="all"] .sec[data-topic="delivery"]::before{
-  content:"";position:absolute;top:0;left:0;right:0;height:3px;
-  background:linear-gradient(90deg,transparent,var(--blue),transparent);
-  opacity:.4;
-}
 
 /* RWD */
 @media (max-width:640px){
@@ -1599,15 +1593,14 @@ body[data-topic="all"] .sec[data-topic="delivery"]::before{
 <!-- v4.6 · TOPIC TAB BAR · 階層式主題導航 -->
 <div class="topic-tabs">
   <span class="tt-label">VIEW</span>
-  <button class="topic-tab" data-topic="all" onclick="setTopic('all')"><span class="tt-ic">📍</span>全部<span class="tt-count">20</span></button>
   <button class="topic-tab active" data-topic="overview" onclick="setTopic('overview')"><span class="tt-ic">🏠</span>總覽<span class="tt-count">7</span></button>
   <button class="topic-tab" data-topic="iam" onclick="setTopic('iam')"><span class="tt-ic">🛡</span>IAM<span class="tt-count">5</span></button>
   <button class="topic-tab" data-topic="cs" onclick="setTopic('cs')"><span class="tt-ic">⚡</span>CS<span class="tt-count">7</span></button>
-  <button class="topic-tab" data-topic="delivery" onclick="setTopic('delivery')"><span class="tt-ic">📅</span>Delivery<span class="tt-count">1</span></button>
+  <button class="topic-tab" data-topic="delivery" onclick="setTopic('delivery')"><span class="tt-ic">📅</span>Delivery<span class="tt-count">2</span></button>
 </div>
 
-<!-- HERO -->
-<section class="hero">
+<!-- HERO (overview-only) -->
+<section class="hero" data-topic="overview">
   <div class="hero-inner">
     <div class="hero-crumb">DATA INNOVATION PLATFORM</div>
     <h1 class="hero-h1">DIP</h1>
@@ -4287,11 +4280,453 @@ body[data-topic="all"] .sec[data-topic="delivery"]::before{
   </div>
 </section>
 
-<!-- ===== v4.5 SECTION 15 · Phase 1 Delivery Roadmap (INTERNAL ONLY) ===== -->
+<!-- ===== v5.0 SECTION 15 · Product Gantt + STG Delivery Plan (INTERNAL ONLY) ===== -->
+<style>
+  /* ===== Fixed Gantt v2 ===== */
+  .pg-wrap{padding:28px;border-radius:18px;background:linear-gradient(135deg,rgba(74,108,247,.04),rgba(255,138,101,.03));border:1px solid rgba(74,108,247,.18);backdrop-filter:blur(20px);margin-bottom:28px}
+  .pg-head{display:flex;justify-content:space-between;align-items:flex-end;margin-bottom:20px;flex-wrap:wrap;gap:14px}
+  .pg-head-title{font-family:'Noto Serif TC',serif;font-size:19px;font-weight:900;color:var(--text)}
+  .pg-head-sub{color:var(--text-muted);font-size:12px;margin-top:4px}
+  .pg-legend{display:flex;gap:12px;flex-wrap:wrap;font-size:11px;color:var(--text-muted)}
+  .pg-legend-item{display:flex;align-items:center;gap:5px}
+  .pg-legend-swatch{width:14px;height:10px;border-radius:3px}
+
+  /* Timeline header row */
+  .pg-month-head{display:grid;grid-template-columns:160px repeat(6,1fr);background:rgba(255,255,255,.65);border-radius:10px 10px 0 0;border:1px solid rgba(74,108,247,.15);overflow:hidden}
+  .pg-month-head-spacer{padding:12px}
+  .pg-month-th{padding:12px 8px;text-align:center;font-family:'JetBrains Mono',monospace;font-size:11px;color:var(--text-muted);font-weight:700;letter-spacing:1.2px;border-left:1px solid rgba(74,108,247,.08);position:relative}
+  .pg-month-th.current{color:#D86848;background:linear-gradient(180deg,rgba(255,138,101,.15),rgba(255,138,101,.03))}
+  .pg-month-th.current::after{content:'NOW';position:absolute;bottom:-9px;left:50%;transform:translateX(-50%);font-size:8px;padding:2px 7px;background:#D86848;color:#fff;border-radius:6px;letter-spacing:1.5px;font-weight:700;box-shadow:0 2px 6px rgba(216,104,72,.3)}
+
+  /* Rows container */
+  .pg-rows{background:rgba(255,255,255,.4);border:1px solid rgba(74,108,247,.15);border-top:none;border-radius:0 0 10px 10px;overflow:hidden}
+  .pg-row{display:block;border-bottom:1px solid rgba(74,108,247,.08);transition:background .3s cubic-bezier(.22,1,.36,1)}
+  .pg-row:last-child{border-bottom:none}
+  .pg-row:hover{background:rgba(74,108,247,.03)}
+
+  .pg-row-main{display:grid;grid-template-columns:160px 1fr;align-items:stretch}
+  .pg-row-label{padding:16px;border-right:1px solid rgba(74,108,247,.08);display:flex;flex-direction:column;gap:3px;cursor:pointer;user-select:none;background:linear-gradient(135deg,rgba(255,255,255,.55),rgba(255,255,255,.2))}
+  .pg-row-label:hover{background:linear-gradient(135deg,rgba(74,108,247,.08),rgba(74,108,247,.02))}
+  .pg-pname{font-family:'Noto Serif TC',serif;font-size:16px;font-weight:900;color:var(--text);display:flex;align-items:center;gap:6px}
+  .pg-stage{font-size:10px;letter-spacing:1px;font-weight:700;font-family:'JetBrains Mono',monospace}
+  .pg-status{font-size:10px;font-weight:700;margin-top:2px}
+  .pg-expand{font-size:10px;color:var(--text-dim);margin-top:auto;padding-top:6px;transition:transform .3s}
+  .pg-row.open .pg-expand{transform:rotate(180deg)}
+
+  /* Lane */
+  .pg-lane{position:relative;height:76px}
+  .pg-lane-grid{position:absolute;inset:0;display:grid;grid-template-columns:repeat(6,1fr)}
+  .pg-lane-cell{border-left:1px solid rgba(74,108,247,.06)}
+  .pg-lane-cell:first-child{border-left:none}
+  .pg-lane-cell.current{background:linear-gradient(180deg,rgba(255,138,101,.05),rgba(255,138,101,.01))}
+
+  /* Bars */
+  .pg-bar{position:absolute;top:50%;transform:translateY(-50%);height:36px;border-radius:7px;padding:0 11px;display:flex;align-items:center;gap:5px;font-size:11px;font-weight:700;color:#fff;box-shadow:0 2px 8px rgba(0,0,0,.08);z-index:2;overflow:hidden;white-space:nowrap;text-overflow:ellipsis;transition:transform .3s cubic-bezier(.22,1,.36,1),box-shadow .3s cubic-bezier(.22,1,.36,1)}
+  .pg-bar:hover{transform:translateY(-50%) scale(1.03);box-shadow:0 6px 18px rgba(0,0,0,.15);z-index:5}
+  .pg-done{background:linear-gradient(135deg,#22C55E,#15803D)}
+  .pg-active{background:linear-gradient(135deg,#4A6CF7,#3B5BDB);animation:pg-pulse 2.5s cubic-bezier(.22,1,.36,1) infinite}
+  .pg-planned{background:linear-gradient(135deg,#FF8A65,#F4511E)}
+  .pg-pending{background:repeating-linear-gradient(135deg,rgba(148,163,184,.35),rgba(148,163,184,.35) 5px,rgba(255,255,255,.4) 5px,rgba(255,255,255,.4) 10px);color:#475569;border:1px dashed rgba(100,116,139,.5);box-shadow:none}
+  @keyframes pg-pulse{0%,100%{box-shadow:0 2px 8px rgba(74,108,247,.3)}50%{box-shadow:0 2px 20px rgba(74,108,247,.55),0 0 0 3px rgba(74,108,247,.1)}}
+
+  /* Checkpoint dots */
+  .pg-cp{position:absolute;top:50%;transform:translateY(-50%);width:22px;height:22px;border-radius:50%;background:#fff;border:2.5px solid #4A6CF7;display:flex;align-items:center;justify-content:center;font-size:9px;font-weight:900;color:#4A6CF7;z-index:3;cursor:help;box-shadow:0 2px 8px rgba(74,108,247,.25);transition:transform .3s cubic-bezier(.22,1,.36,1)}
+  .pg-cp:hover{transform:translateY(-50%) scale(1.25)}
+  .pg-cp.pg-cp-done{background:#22C55E;border-color:#15803D;color:#fff}
+
+  /* Now line */
+  .pg-now-line{position:absolute;top:-4px;bottom:-4px;width:2px;background:linear-gradient(180deg,#D86848,rgba(216,104,72,.3));z-index:1;pointer-events:none}
+  .pg-now-line::before{content:'';position:absolute;top:-3px;left:-3px;width:8px;height:8px;border-radius:50%;background:#D86848;box-shadow:0 0 0 3px rgba(216,104,72,.25)}
+
+  /* Collapsible detail */
+  .pg-detail{max-height:0;overflow:hidden;transition:max-height .4s cubic-bezier(.22,1,.36,1)}
+  .pg-row.open .pg-detail{max-height:600px}
+  .pg-detail-inner{padding:16px 20px;background:linear-gradient(180deg,rgba(74,108,247,.06),rgba(74,108,247,.02));border-top:1px solid rgba(74,108,247,.12);display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:10px}
+  .pg-dcard{padding:11px 13px;background:rgba(255,255,255,.75);border-radius:8px;border:1px solid rgba(74,108,247,.1);font-size:12px;color:var(--text-muted);line-height:1.65}
+  .pg-dcard strong{display:block;color:var(--text);font-size:10px;letter-spacing:1.5px;font-family:'JetBrains Mono',monospace;margin-bottom:4px;text-transform:uppercase}
+
+  /* STG Delivery Plan */
+  .stg-wrap{padding:28px;border-radius:18px;background:rgba(255,255,255,.6);border:1px solid rgba(74,108,247,.18);backdrop-filter:blur(20px)}
+  .stg-table{width:100%;border-collapse:separate;border-spacing:8px 8px;min-width:900px}
+  .stg-th-month{padding:10px 12px;text-align:center;font-family:'JetBrains Mono',monospace;font-size:11px;color:var(--text-muted);font-weight:700;letter-spacing:1.5px;background:rgba(74,108,247,.06);border-radius:8px}
+  .stg-th-month.highlight{background:linear-gradient(135deg,rgba(255,138,101,.18),rgba(255,138,101,.06));color:#D86848}
+  .stg-th-month.key{background:linear-gradient(135deg,rgba(76,183,130,.18),rgba(76,183,130,.06));color:#15803D}
+  .stg-th-prod{padding:10px 14px;text-align:left;font-family:'Noto Serif TC',serif;font-size:14px;font-weight:900;color:var(--text);background:rgba(255,255,255,.8);border-radius:8px;width:150px;vertical-align:middle}
+  .stg-cell{padding:12px 14px;background:rgba(255,255,255,.65);border-radius:8px;vertical-align:top;font-size:12px;color:var(--text);line-height:1.7;min-width:150px}
+  .stg-cell.stg-empty{color:var(--text-dim);font-style:italic;text-align:center;background:rgba(255,255,255,.3);font-size:11px}
+  .stg-cell.stg-pending{background:repeating-linear-gradient(135deg,rgba(148,163,184,.14),rgba(148,163,184,.14) 5px,rgba(255,255,255,.4) 5px,rgba(255,255,255,.4) 10px);border:1px dashed rgba(100,116,139,.35);color:#64748B;font-style:italic;text-align:center;font-size:11px}
+  .stg-cell.stg-ship{background:linear-gradient(135deg,rgba(76,183,130,.1),rgba(255,255,255,.65));border-left:3px solid #15803D}
+  .stg-cell.stg-active{background:linear-gradient(135deg,rgba(74,108,247,.1),rgba(255,255,255,.65));border-left:3px solid #4A6CF7}
+  .stg-cell.stg-milestone{background:linear-gradient(135deg,rgba(255,138,101,.12),rgba(255,255,255,.65));border-left:3px solid #D86848}
+  .stg-cell ul{margin:0;padding-left:16px;line-height:1.75}
+  .stg-cell ul li{margin-bottom:2px}
+  .stg-cell .stg-tag{display:inline-block;padding:2px 7px;border-radius:4px;background:rgba(74,108,247,.15);color:var(--blue);font-size:10px;font-weight:700;letter-spacing:.5px;margin-top:5px}
+  .stg-cell .stg-date{font-family:'JetBrains Mono',monospace;font-size:10px;color:var(--text-dim);display:block;margin-bottom:4px;letter-spacing:.5px}
+
+  @media(max-width:900px){
+    .pg-month-head,.pg-row-main{grid-template-columns:120px repeat(6,minmax(80px,1fr))}
+    .pg-row-main{grid-template-columns:120px 1fr}
+    .pg-bar{font-size:10px;padding:0 7px}
+    .pg-pname{font-size:14px}
+    .stg-table{display:block;overflow-x:auto}
+  }
+</style>
+
+<section class="sec internal-only no-tag" id="product-progress" data-topic="delivery">
+  <div class="sec-inner">
+    <div class="sec-crumb">◆ 15 · PRODUCT GANTT ◆</div>
+    <h2 class="sec-h">四產品 <em>Q4 2026 → Q1 2027 甘特圖</em></h2>
+    <p class="sec-sub">6 個月時間軸 &times; 4 條產品線 &mdash; <span class="blue">點產品名可展開細節</span></p>
+
+    <!-- ===== PART 1 · Gantt Chart ===== -->
+    <div class="pg-wrap reveal">
+      <div class="pg-head">
+        <div>
+          <div style="color:var(--blue);font-size:11px;letter-spacing:3px;font-weight:700;margin-bottom:4px">📊 PRODUCT GANTT · 2026 Q4 → 2027 Q1</div>
+          <div class="pg-head-title">四產品時間軸</div>
+          <div class="pg-head-sub">今天：2026-11-12 · 資料擷取：ClickUp（IAM）+ WBS（CS）· DBRG / LS 進度待追補</div>
+        </div>
+        <div class="pg-legend">
+          <div class="pg-legend-item"><span class="pg-legend-swatch" style="background:linear-gradient(135deg,#22C55E,#15803D)"></span>已完成</div>
+          <div class="pg-legend-item"><span class="pg-legend-swatch" style="background:linear-gradient(135deg,#4A6CF7,#3B5BDB)"></span>進行中</div>
+          <div class="pg-legend-item"><span class="pg-legend-swatch" style="background:linear-gradient(135deg,#FF8A65,#F4511E)"></span>規劃中</div>
+          <div class="pg-legend-item"><span class="pg-legend-swatch" style="background:repeating-linear-gradient(135deg,rgba(148,163,184,.4),rgba(148,163,184,.4) 4px,rgba(255,255,255,.4) 4px,rgba(255,255,255,.4) 8px);border:1px dashed #94A3B8"></span>待追補</div>
+          <div class="pg-legend-item"><span style="display:inline-block;width:14px;height:14px;border-radius:50%;background:#fff;border:2px solid #4A6CF7"></span>Checkpoint</div>
+        </div>
+      </div>
+
+      <!-- Month Header -->
+      <div class="pg-month-head">
+        <div class="pg-month-head-spacer"></div>
+        <div class="pg-month-th">2026 OCT</div>
+        <div class="pg-month-th current">2026 NOV</div>
+        <div class="pg-month-th">2026 DEC</div>
+        <div class="pg-month-th">2027 JAN</div>
+        <div class="pg-month-th">2027 FEB</div>
+        <div class="pg-month-th">2027 MAR</div>
+      </div>
+
+      <!-- Rows -->
+      <div class="pg-rows">
+
+        <!-- Row 1 · IAM -->
+        <div class="pg-row" id="pgrow-iam">
+          <div class="pg-row-main">
+            <div class="pg-row-label" onclick="pgToggle('pgrow-iam')">
+              <div class="pg-pname">🛡 IAM</div>
+              <div class="pg-stage" style="color:var(--blue)">BUILD · Phase 1 MVP</div>
+              <div class="pg-status" style="color:#15803D">🟢 On Track</div>
+              <div class="pg-expand">▾ 點擊展開</div>
+            </div>
+            <div class="pg-lane">
+              <div class="pg-lane-grid">
+                <div class="pg-lane-cell"></div>
+                <div class="pg-lane-cell current"></div>
+                <div class="pg-lane-cell"></div>
+                <div class="pg-lane-cell"></div>
+                <div class="pg-lane-cell"></div>
+                <div class="pg-lane-cell"></div>
+              </div>
+              <!-- Bars -->
+              <div class="pg-bar pg-done" style="left:1.5%;width:13.5%" title="Oct: Scope / PRD / API 定版">Baseline ✓</div>
+              <div class="pg-bar pg-active" style="left:17.5%;width:14%" title="Nov: 15 Features · 11/27 最終驗收">15 Features</div>
+              <div class="pg-bar pg-planned" style="left:34%;width:14%" title="Dec: Audit + E2E + 12/29 PROD">Audit · E2E · PROD</div>
+              <!-- CheckPoints -->
+              <div class="pg-cp pg-cp-done" style="left:15%" title="Oct · Baseline 完成">✓</div>
+              <div class="pg-cp" style="left:30.5%" title="11/27 · 15 Features 最終驗收">27</div>
+              <div class="pg-cp" style="left:46.5%" title="12/29 · PROD 部署">29</div>
+              <!-- Now line -->
+              <div class="pg-now-line" style="left:23%"></div>
+            </div>
+          </div>
+          <div class="pg-detail">
+            <div class="pg-detail-inner">
+              <div class="pg-dcard"><strong>本週焦點</strong>Web AuthZ 測試收尾 · FE 動態路由 · UAT 邀請流程</div>
+              <div class="pg-dcard"><strong>11/27 里程碑</strong>15 個 Feature 最終驗收（登入 / 帳號 / 密碼 / 使用者 / 組織 / 專案 / 角色 / 授權 / 稽核 ...）</div>
+              <div class="pg-dcard"><strong>12/29 PROD 部署</strong>Audit 實作 · 壓測 Baseline · IAM × DBRG E2E 5/5</div>
+              <div class="pg-dcard"><strong>團隊</strong>Annie (TPM) · Gammy (FE) · Sally (UIUX) · Brian (QA) · Paul / Anthony (SRE)</div>
+              <div class="pg-dcard"><strong>資料來源</strong>ClickUp 2026-11-12 · 45 tasks（1 testing · 8 in progress · 36 to do）</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Row 2 · CS -->
+        <div class="pg-row" id="pgrow-cs">
+          <div class="pg-row-main">
+            <div class="pg-row-label" onclick="pgToggle('pgrow-cs')">
+              <div class="pg-pname">⚡ CS</div>
+              <div class="pg-stage" style="color:#C2185B">DESIGN → BUILD</div>
+              <div class="pg-status" style="color:#15803D">🟢 On Track</div>
+              <div class="pg-expand">▾ 點擊展開</div>
+            </div>
+            <div class="pg-lane">
+              <div class="pg-lane-grid">
+                <div class="pg-lane-cell"></div>
+                <div class="pg-lane-cell current"></div>
+                <div class="pg-lane-cell"></div>
+                <div class="pg-lane-cell"></div>
+                <div class="pg-lane-cell"></div>
+                <div class="pg-lane-cell"></div>
+              </div>
+              <!-- Bars -->
+              <div class="pg-bar pg-done" style="left:6%;width:10%" title="10/22 Kickoff + Product Brief">Kickoff + Brief</div>
+              <div class="pg-bar pg-active" style="left:17.5%;width:14%" title="Nov: Brief 定版 · Functional Map · 跨 PO 第一輪">Brief → Func Map</div>
+              <div class="pg-bar pg-planned" style="left:34%;width:14%" title="Dec: PRD + 架構 + Dev Kickoff">PRD · 架構 · Dev</div>
+              <div class="pg-bar pg-planned" style="left:50%;width:29%" title="Jan-Feb: Sprint 0-4">Sprint 0 → 4</div>
+              <div class="pg-bar pg-planned" style="left:80%;width:17%" title="Mar: STG + 3/31 dogfooding">STG + 上線</div>
+              <!-- CheckPoints: CP1 11/12 NOW · CP2 12/10 · CP3 12/17 · CP4 12/24 -->
+              <div class="pg-cp pg-cp-done" style="left:23%" title="CP1 · 11/12 · Product Brief 定版">1</div>
+              <div class="pg-cp" style="left:41%" title="CP2 · 12/10 · 產品方案定版">2</div>
+              <div class="pg-cp" style="left:45%" title="CP3 · 12/17 · 架構路線拍板">3</div>
+              <div class="pg-cp" style="left:48.5%" title="CP4 · 12/24 · 開發 Kickoff">4</div>
+              <div class="pg-now-line" style="left:23%"></div>
+            </div>
+          </div>
+          <div class="pg-detail">
+            <div class="pg-detail-inner">
+              <div class="pg-dcard"><strong>本週焦點</strong>CP1 · 11/12 跟 ed 同步 Product Brief · Functional Map 執行中（11/9–11/27）</div>
+              <div class="pg-dcard"><strong>4 個 CheckPoint</strong>CP1 11/12 Brief → CP2 12/10 方案 → CP3 12/17 架構 → CP4 12/24 Dev Kickoff</div>
+              <div class="pg-dcard"><strong>跨 PO 對齊</strong>11/16–11/27 第一輪 · 12/1–12/8 第二輪 PO commit 介面+時程</div>
+              <div class="pg-dcard"><strong>Q1 2027</strong>Sprint 0–4（12/25 → 2/26）· 3/15 STG 驗收 · <strong style="color:var(--text)">3/31 內部 dogfooding</strong></div>
+              <div class="pg-dcard"><strong>團隊</strong>Eric (TPM) · Sally (UIUX) · Brian (QA) · Jeff (SRE) · Gammy (FE)</div>
+              <div class="pg-dcard"><strong>資料來源</strong>CS WBS 59 項 · PRD + Functional Map + 4 ADR 已在 repo</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Row 3 · DBRG -->
+        <div class="pg-row" id="pgrow-dbrg">
+          <div class="pg-row-main">
+            <div class="pg-row-label" onclick="pgToggle('pgrow-dbrg')">
+              <div class="pg-pname">🔄 DBRG</div>
+              <div class="pg-stage" style="color:#64748B">資料待追補</div>
+              <div class="pg-status" style="color:#64748B">❓ 待 PO 提供</div>
+              <div class="pg-expand">▾ 點擊展開</div>
+            </div>
+            <div class="pg-lane">
+              <div class="pg-lane-grid">
+                <div class="pg-lane-cell"></div>
+                <div class="pg-lane-cell current"></div>
+                <div class="pg-lane-cell"></div>
+                <div class="pg-lane-cell"></div>
+                <div class="pg-lane-cell"></div>
+                <div class="pg-lane-cell"></div>
+              </div>
+              <div class="pg-bar pg-planned" style="left:38%;width:10%" title="12 月配合 IAM × DBRG E2E 5/5">IAM E2E 配合</div>
+              <div class="pg-bar pg-pending" style="left:1%;width:36%" title="Oct/Nov 進度待追補">待追補</div>
+              <div class="pg-bar pg-pending" style="left:49%;width:50%" title="Q1 2027 規劃待追補">待追補</div>
+              <div class="pg-now-line" style="left:23%"></div>
+            </div>
+          </div>
+          <div class="pg-detail">
+            <div class="pg-detail-inner">
+              <div class="pg-dcard"><strong>已知定位</strong>全平台資料入出口閘道（即時 + 批次）· Kafka topic 暫存 3 天</div>
+              <div class="pg-dcard"><strong>Q4 配合項目</strong>12 月配合 IAM × DBRG E2E 5/5 · 配合 CS 跨 PO 對齊</div>
+              <div class="pg-dcard"><strong>待追補</strong>Q4 開發 feature · 目前 Stage · 團隊成員 · 近期 incident</div>
+              <div class="pg-dcard"><strong>追補來源</strong>DBRG PO · ClickUp DBRG Board（若有）</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Row 4 · LS -->
+        <div class="pg-row" id="pgrow-ls">
+          <div class="pg-row-main">
+            <div class="pg-row-label" onclick="pgToggle('pgrow-ls')">
+              <div class="pg-pname">📁 LS</div>
+              <div class="pg-stage" style="color:#64748B">資料待追補</div>
+              <div class="pg-status" style="color:#64748B">❓ 待 PO 提供</div>
+              <div class="pg-expand">▾ 點擊展開</div>
+            </div>
+            <div class="pg-lane">
+              <div class="pg-lane-grid">
+                <div class="pg-lane-cell"></div>
+                <div class="pg-lane-cell current"></div>
+                <div class="pg-lane-cell"></div>
+                <div class="pg-lane-cell"></div>
+                <div class="pg-lane-cell"></div>
+                <div class="pg-lane-cell"></div>
+              </div>
+              <div class="pg-bar pg-planned" style="left:19%;width:29%" title="11/16–12/8 配合 CS 跨 PO 對齊">配合 CS 跨 PO 對齊</div>
+              <div class="pg-bar pg-pending" style="left:1%;width:16%" title="Oct 進度待追補">待追補</div>
+              <div class="pg-bar pg-pending" style="left:49%;width:50%" title="Q1 2027 待追補">待追補</div>
+              <div class="pg-now-line" style="left:23%"></div>
+            </div>
+          </div>
+          <div class="pg-detail">
+            <div class="pg-detail-inner">
+              <div class="pg-dcard"><strong>已知定位</strong>底層資料儲存 · 全平台檔案存儲底座 · 底層 H7000 / HDFS</div>
+              <div class="pg-dcard"><strong>Q4 配合項目</strong>配合 CS 跨 PO 對齊（Project 資源池 × Tier × 配額）· D-101：儲存配額歸 LS 管</div>
+              <div class="pg-dcard"><strong>待追補</strong>容量使用率 % · Q4 擴容計畫 · 目前 Stage · 團隊成員</div>
+              <div class="pg-dcard"><strong>追補來源</strong>LS PO · 容量監控 Dashboard</div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+
+      <div style="margin-top:18px;padding:14px 18px;background:rgba(255,255,255,.65);border-radius:10px;border:1px solid rgba(74,108,247,.15);font-size:12px;color:var(--text-muted);line-height:1.7">
+        <strong style="color:var(--text)">📌 粒度統一說明</strong>：四條產品線用同一視覺語言（條狀 = 階段 / 圓點 = CheckPoint / 斜線 = 待追補）。
+        IAM 來自 ClickUp 真實任務（45 tasks）· CS 來自 Eric 的 WBS（59 項 · CP1→CP4 完整規劃）· DBRG · LS 僅先放已知的「跨產品配合項目」，詳細 Stage 與月進度待 Eunice 追補後更新。
+      </div>
+    </div>
+
+    <!-- ===== PART 2 · STG Delivery Plan ===== -->
+    <div class="stg-wrap reveal d2">
+      <div style="margin-bottom:20px">
+        <div style="color:var(--blue);font-size:11px;letter-spacing:3px;font-weight:700;margin-bottom:4px">🚀 STG DELIVERY PLAN · 2026/11 → 2027/3</div>
+        <div style="font-family:'Noto Serif TC',serif;font-size:19px;font-weight:900;color:var(--text)">四產品 STG 交付計畫</div>
+        <div style="color:var(--text-muted);font-size:12px;margin-top:4px">只放「會上到 STG 讓內部使用者操作的功能」· 前期 Design / 開發準備階段不列入</div>
+      </div>
+
+      <div style="overflow-x:auto">
+        <table class="stg-table">
+          <thead>
+            <tr>
+              <th class="stg-th-prod" style="background:transparent">產品 / 月份</th>
+              <th class="stg-th-month highlight">2026 NOV<br><span style="font-size:9px;font-weight:400;opacity:.7">本月</span></th>
+              <th class="stg-th-month">2026 DEC</th>
+              <th class="stg-th-month">2027 JAN</th>
+              <th class="stg-th-month">2027 FEB</th>
+              <th class="stg-th-month key">2027 MAR<br><span style="font-size:9px;font-weight:400;opacity:.8">dogfooding</span></th>
+            </tr>
+          </thead>
+          <tbody>
+            <!-- IAM Row -->
+            <tr>
+              <td class="stg-th-prod">🛡 IAM<br><span style="font-size:10px;font-weight:400;color:var(--text-muted);font-family:'JetBrains Mono',monospace">BUILD</span></td>
+              <td class="stg-cell stg-ship">
+                <span class="stg-date">11/27 最終驗收</span>
+                <strong>15 Features 上 STG</strong>
+                <ul>
+                  <li>使用者登入 / 登出</li>
+                  <li>帳號啟用</li>
+                  <li>密碼管理</li>
+                  <li>登入失敗防護</li>
+                  <li>使用者管理</li>
+                  <li>使用者邀請與重寄</li>
+                  <li>資源階層查詢</li>
+                  <li>組織 / 專案管理</li>
+                  <li>角色 / 權限查詢</li>
+                  <li>角色指派管理</li>
+                  <li>有效權限查詢</li>
+                  <li>授權判斷 Allow/Deny</li>
+                  <li>稽核紀錄查詢</li>
+                </ul>
+                <span class="stg-tag">共 15 項</span>
+              </td>
+              <td class="stg-cell stg-milestone">
+                <span class="stg-date">12/29 PROD</span>
+                <strong>Phase 1 PROD 部署</strong>
+                無新 STG feature · 走 Audit + E2E + 壓測 + PROD Release
+              </td>
+              <td class="stg-cell stg-empty">—</td>
+              <td class="stg-cell stg-empty">—</td>
+              <td class="stg-cell stg-empty">—</td>
+            </tr>
+
+            <!-- CS Row -->
+            <tr>
+              <td class="stg-th-prod">⚡ CS<br><span style="font-size:10px;font-weight:400;color:var(--text-muted);font-family:'JetBrains Mono',monospace">DESIGN → BUILD</span></td>
+              <td class="stg-cell stg-empty">—<br><span style="font-size:10px;color:var(--text-dim)">Product Brief 定版</span></td>
+              <td class="stg-cell stg-empty">—<br><span style="font-size:10px;color:var(--text-dim)">PRD + 架構 + Dev Kickoff（12/24）</span></td>
+              <td class="stg-cell stg-ship">
+                <span class="stg-date">Sprint 1 → 1/15 · Sprint 2 → 1/29</span>
+                <strong>Sprint 1-2 上 STG</strong>
+                <ul>
+                  <li>核心模組（Sprint 1）</li>
+                  <li>加大 scope（Sprint 2）</li>
+                </ul>
+                <span class="stg-tag" style="background:rgba(255,138,101,.15);color:#D86848">Scope 待 CP4 後定</span>
+              </td>
+              <td class="stg-cell stg-ship">
+                <span class="stg-date">Sprint 3 → 2/12 · Sprint 4 → 2/26</span>
+                <strong>Sprint 3-4 上 STG</strong>
+                <ul>
+                  <li>春節收尾（Sprint 3）</li>
+                  <li>整合測試（Sprint 4）</li>
+                  <li>Gammy 前端報表模組</li>
+                </ul>
+                <span class="stg-tag" style="background:rgba(255,138,101,.15);color:#D86848">Scope 待 CP4 後定</span>
+              </td>
+              <td class="stg-cell stg-milestone">
+                <span class="stg-date">3/2 全部 STG · 3/15 驗收 · 3/31 上線</span>
+                <strong>完整 feature + 內部 dogfooding</strong>
+                <ul>
+                  <li>C1 Spark 運算服務</li>
+                  <li>C3 Image Repository</li>
+                  <li>C4 Notebook 平台</li>
+                  <li>C5 資源配置與用量</li>
+                </ul>
+                <span class="stg-tag" style="background:rgba(76,183,130,.15);color:#15803D">MVP 完整上線</span>
+              </td>
+            </tr>
+
+            <!-- DBRG Row -->
+            <tr>
+              <td class="stg-th-prod">🔄 DBRG<br><span style="font-size:10px;font-weight:400;color:#64748B;font-family:'JetBrains Mono',monospace">待追補</span></td>
+              <td class="stg-cell stg-pending">待 DBRG PO 提供</td>
+              <td class="stg-cell stg-active">
+                <span class="stg-date">配合 IAM × DBRG E2E</span>
+                <strong>IAM 整合驗證</strong>
+                12 月配合 IAM 做 E2E 5/5 測試
+              </td>
+              <td class="stg-cell stg-pending">待 DBRG PO 提供</td>
+              <td class="stg-cell stg-pending">待 DBRG PO 提供</td>
+              <td class="stg-cell stg-pending">待 DBRG PO 提供</td>
+            </tr>
+
+            <!-- LS Row -->
+            <tr>
+              <td class="stg-th-prod">📁 LS<br><span style="font-size:10px;font-weight:400;color:#64748B;font-family:'JetBrains Mono',monospace">待追補</span></td>
+              <td class="stg-cell stg-active">
+                <span class="stg-date">11/16–11/27</span>
+                <strong>配合 CS 跨 PO 第一輪對齊</strong>
+                Project 資源池 × Tier × 配額分配討論
+              </td>
+              <td class="stg-cell stg-active">
+                <span class="stg-date">12/1–12/8</span>
+                <strong>配合 CS 跨 PO 第二輪對齊</strong>
+                PO commit 介面 + 時程
+              </td>
+              <td class="stg-cell stg-pending">待 LS PO 提供</td>
+              <td class="stg-cell stg-pending">待 LS PO 提供</td>
+              <td class="stg-cell stg-pending">待 LS PO 提供</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <!-- Reading guide -->
+      <div style="margin-top:18px;padding:14px 18px;background:linear-gradient(135deg,rgba(76,183,130,.08),rgba(74,108,247,.04));border-radius:10px;border:1px solid rgba(76,183,130,.2);font-size:12px;color:var(--text-muted);line-height:1.75">
+        <strong style="color:var(--text)">📖 怎麼讀這張表</strong>：
+        <span style="color:#15803D;font-weight:700">綠框</span> = 有新 feature 上 STG 給內部使用者操作 ·
+        <span style="color:var(--blue);font-weight:700">藍框</span> = 跨產品配合項目（沒有新 feature 但有事情做）·
+        <span style="color:#D86848;font-weight:700">橘框</span> = PROD / Launch 里程碑 ·
+        <span style="color:#64748B;font-weight:700">斜線</span> = 待 PO 補資料 ·
+        「—」= 該月在前期（Design / Dev 準備），不會上 STG
+      </div>
+
+      <!-- Key insight -->
+      <div style="margin-top:12px;padding:14px 18px;background:rgba(74,108,247,.06);border-radius:10px;border-left:3px solid var(--blue);font-size:12.5px;color:var(--text-muted);line-height:1.75">
+        💡 <strong style="color:var(--text)">關鍵觀察</strong>：IAM 和 CS 的 STG 交付時間<strong style="color:var(--text)">沒有重疊</strong>（IAM 11 月交完 → CS 1 月才開始）→ QA（Brian）資源可以順接 · UIUX（Sally）也不會兩邊卡。這是 PM 排期上刻意的健康設計。
+      </div>
+    </div>
+
+    <!-- Toggle script -->
+    <script>
+      function pgToggle(id) {
+        const el = document.getElementById(id);
+        if (el) el.classList.toggle('open');
+      }
+    </script>
+  </div>
+</section>
+
+<!-- ===== v4.5 SECTION 16 · Phase 1 Delivery Roadmap (INTERNAL ONLY) ===== -->
 <section class="sec internal-only no-tag" id="roadmap" data-topic="delivery">
   <div class="sec-inner">
-    <div class="sec-crumb">◆ 15 · DELIVERY ROADMAP ◆</div>
-    <h2 class="sec-h">Phase 1 <em>10–12 月交付計畫</em></h2>
+    <div class="sec-crumb">◆ 16 · DELIVERY ROADMAP ◆</div>
+    <h2 class="sec-h">IAM Phase 1 <em>10–12 月交付計畫</em></h2>
     <p class="sec-sub">6 職能 × 3 月份 &mdash; <span class="blue">12/15 上線目標</span></p>
 
     <div class="roadmap reveal">
@@ -4397,7 +4832,7 @@ body[data-topic="all"] .sec[data-topic="delivery"]::before{
 
 <script>
 /* ============ v4.6 · TOPIC TABS · 階層式 sitemap ============ */
-const TOPIC_LIST = ['all','overview','iam','cs','delivery'];
+const TOPIC_LIST = ['overview','iam','cs','delivery'];
 const TOPIC_NAMES = {all:'📍 全部',overview:'🏠 總覽',iam:'🛡 IAM & Access',cs:'⚡ Compute Studio',delivery:'📅 Delivery'};
 
 function setTopic(topic, skipHash) {
@@ -4407,11 +4842,15 @@ function setTopic(topic, skipHash) {
     t.classList.toggle('active', t.dataset.topic === topic);
   });
   if (!skipHash) {
-    if (topic === 'overview') {
-      history.replaceState(null, '', location.pathname);
-    } else {
-      history.replaceState(null, '', location.pathname + '#' + topic);
-    }
+    // Wrapped in try/catch — Claude artifact preview's sandboxed iframe (srcdoc)
+    // throws SecurityError on history.replaceState; real deployment (GitHub Pages) works fine.
+    try {
+      if (topic === 'overview') {
+        history.replaceState(null, '', location.pathname);
+      } else {
+        history.replaceState(null, '', location.pathname + '#' + topic);
+      }
+    } catch (_) { /* sandboxed preview — ignore */ }
   }
   // Re-count visible sections for "all" badge (sync)
   updateTopicCounts();
@@ -4427,7 +4866,7 @@ function setTopic(topic, skipHash) {
 }
 
 function updateTopicCounts() {
-  const counts = {all:0, overview:0, iam:0, cs:0, delivery:0};
+  const counts = {overview:0, iam:0, cs:0, delivery:0};
   const isExt = document.body.classList.contains('ext');
   document.querySelectorAll('.sec[data-topic]').forEach(sec => {
     const t = sec.dataset.topic;
@@ -4436,10 +4875,7 @@ function updateTopicCounts() {
     // Skip hidden sections per current mode
     if (isExt && isInternalOnly) return;
     if (!isExt && isExternalOnly) return;
-    if (counts[t] !== undefined) {
-      counts[t]++;
-      counts.all++;
-    }
+    if (counts[t] !== undefined) counts[t]++;
   });
   document.querySelectorAll('.topic-tab').forEach(t => {
     const c = t.querySelector('.tt-count');
@@ -4926,7 +5362,8 @@ const cmdkData = [
   { topic:'cs', id:'cs-adr',     num:'CS·5', name:'架構決策 ADR 🆕',          kw:'adr 架構決策 decision d-123 d-128 d-090 d-122' },
 
   // Delivery group
-  { topic:'delivery', id:'roadmap', num:'15', name:'Phase 1 Roadmap · Oct/Nov/Dec 🆕', kw:'roadmap phase 1 oct nov dec 交付 時程 12月 上線' },
+  { topic:'delivery', id:'product-progress', num:'15', name:'四產品甘特圖 · Q4 → Q1 🆕', kw:'product gantt 甘特圖 進度 iam cs dbrg ls 四產品 月 oct nov dec q1' },
+  { topic:'delivery', id:'roadmap',          num:'16', name:'IAM Phase 1 Roadmap · Oct/Nov/Dec', kw:'roadmap phase 1 oct nov dec 交付 時程 12月 上線' },
 
   // Actions
   { topic:'action', id:'__mode',  num:'⇄', name:'切換內部版 ⇄ 對外版',    kw:'mode toggle internal external 切換', action:'mode' }
