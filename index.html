@@ -1192,6 +1192,7 @@ section.sec{
 body[data-topic="overview"] .sec:not([data-topic="overview"]){display:none}
 body[data-topic="iam"] .sec:not([data-topic="iam"]){display:none}
 body[data-topic="cs"] .sec:not([data-topic="cs"]){display:none}
+body[data-topic="ls"] .sec:not([data-topic="ls"]){display:none}
 body[data-topic="delivery"] .sec:not([data-topic="delivery"]){display:none}
 /* v5.0 · Hero 只在 Overview 顯示 · 其他 tab 直接進入內容 */
 body:not([data-topic="overview"]) .hero{display:none}
@@ -1199,6 +1200,7 @@ body:not([data-topic="overview"]) .mode-banner{top:60px}
 body:not([data-topic="overview"]) .topic-tabs{top:98px}
 /* v4.6.1 外部模式隱藏純內部 tab：IAM 新內容多半 internal-only · Delivery 全 internal-only */
 body.ext .topic-tab[data-topic="iam"],
+body.ext .topic-tab[data-topic="ls"],
 body.ext .topic-tab[data-topic="delivery"]{display:none}
 
 /* RWD */
@@ -1594,9 +1596,10 @@ body.ext .topic-tab[data-topic="delivery"]{display:none}
 <div class="topic-tabs">
   <span class="tt-label">VIEW</span>
   <button class="topic-tab active" data-topic="overview" onclick="setTopic('overview')"><span class="tt-ic">🏠</span>總覽<span class="tt-count">7</span></button>
-  <button class="topic-tab" data-topic="iam" onclick="setTopic('iam')"><span class="tt-ic">🛡</span>IAM<span class="tt-count">5</span></button>
+  <button class="topic-tab" data-topic="iam" onclick="setTopic('iam')"><span class="tt-ic">🛡</span>IAM<span class="tt-count">11</span></button>
   <button class="topic-tab" data-topic="cs" onclick="setTopic('cs')"><span class="tt-ic">⚡</span>CS<span class="tt-count">7</span></button>
-  <button class="topic-tab" data-topic="delivery" onclick="setTopic('delivery')"><span class="tt-ic">📅</span>Delivery<span class="tt-count">2</span></button>
+  <button class="topic-tab" data-topic="ls" onclick="setTopic('ls')"><span class="tt-ic">📁</span>LS<span class="tt-count">6</span></button>
+  <button class="topic-tab" data-topic="delivery" onclick="setTopic('delivery')"><span class="tt-ic">📅</span>Delivery<span class="tt-count">3</span></button>
 </div>
 
 <!-- HERO (overview-only) -->
@@ -1621,7 +1624,7 @@ body.ext .topic-tab[data-topic="delivery"]{display:none}
 <!-- ===== v4.7 · EXTERNAL PAIN POINTS (對外版 WHY · 開場痛點) ===== -->
 <section class="sec external-only" data-topic="overview" id="pain">
   <div class="sec-inner">
-    <div class="sec-crumb">◆ WHY · 你是不是也遇過 ◆</div>
+    <div class="sec-crumb">◆ OV·00 · WHY · 你是不是也遇過 ◆</div>
     <h2 class="sec-h">資料團隊的<em>日常困境</em></h2>
     <p class="sec-sub">4 個常見痛點 &mdash; <span class="blue">DIP 一次解</span></p>
 
@@ -1667,7 +1670,7 @@ body.ext .topic-tab[data-topic="delivery"]{display:none}
 <section class="sec" data-topic="overview">
   <div class="grid-bg"></div>
   <div class="sec-inner">
-    <div class="sec-crumb">◆ 01 · FOUR CORE PRODUCTS ◆</div>
+    <div class="sec-crumb">◆ OV·01 · FOUR CORE PRODUCTS ◆</div>
     <h2 class="sec-h">四大核心產品</h2>
     <p class="sec-sub"><span class="blue">IAM</span> · <span class="cyan">DBRG</span> · <span class="amber">LS</span> · <span class="pink">CS</span> &mdash; 一個平台的四個齒輪</p>
 
@@ -1770,7 +1773,7 @@ body.ext .topic-tab[data-topic="delivery"]{display:none}
 <section class="sec" data-topic="overview">
   <div class="grid-bg"></div>
   <div class="sec-inner">
-    <div class="sec-crumb">◆ 02 · DATA LIFECYCLE ◆</div>
+    <div class="sec-crumb">◆ OV·02 · DATA LIFECYCLE ◆</div>
     <h2 class="sec-h">資料閉環</h2>
     <p class="sec-sub">資料<span class="cyan">進來</span> → <span class="amber">儲存</span> → <span class="pink">處理</span> → <span class="blue">出去</span> → 其他產品接著用</p>
 
@@ -1819,9 +1822,21 @@ body.ext .topic-tab[data-topic="delivery"]{display:none}
 <section class="sec" data-topic="cs">
   <div class="grid-bg"></div>
   <div class="sec-inner">
-    <div class="sec-crumb">◆ 03 · COMPUTE STUDIO 深度拆解 ◆</div>
+    <div class="sec-crumb">◆ CS·01 · COMPUTE STUDIO 深度拆解 ◆</div>
     <h2 class="sec-h">CS 不是獨立產品</h2>
     <p class="sec-sub">它是把運算能力「<span class="amber">整合進 DIP 介面</span>」的那一層</p>
+
+    <!-- 本頁目錄 (v39) -->
+    <div class="internal-only no-tag reveal" style="margin-bottom:28px;padding:16px 20px;border-radius:10px;background:rgba(244,114,182,.06);border:1px solid rgba(244,114,182,.25)">
+      <div style="color:#C2185B;font-size:10px;letter-spacing:2px;font-weight:700;margin-bottom:8px">📑 本頁目錄 · CS 頁籤內有</div>
+      <div style="display:flex;flex-wrap:wrap;gap:6px;font-size:11.5px">
+        <a href="#cs-vs" style="padding:4px 10px;border-radius:12px;background:rgba(255,255,255,.65);color:var(--text);text-decoration:none;border:1px solid rgba(244,114,182,.25);transition:all .3s" onmouseover="this.style.background='#C2185B';this.style.color='#fff'" onmouseout="this.style.background='rgba(255,255,255,.65)';this.style.color='var(--text)'">CS·03 1.0 vs MVP</a>
+        <a href="#cs-ba" style="padding:4px 10px;border-radius:12px;background:rgba(255,255,255,.65);color:var(--text);text-decoration:none;border:1px solid rgba(244,114,182,.25);transition:all .3s" onmouseover="this.style.background='#C2185B';this.style.color='#fff'" onmouseout="this.style.background='rgba(255,255,255,.65)';this.style.color='var(--text)'">CS·04 BA 改善</a>
+        <a href="#cs-spark" style="padding:4px 10px;border-radius:12px;background:rgba(255,255,255,.65);color:var(--text);text-decoration:none;border:1px solid rgba(244,114,182,.25);transition:all .3s" onmouseover="this.style.background='#C2185B';this.style.color='#fff'" onmouseout="this.style.background='rgba(255,255,255,.65)';this.style.color='var(--text)'">CS·05 4 大 Spark 類型</a>
+        <a href="#cs-credit" style="padding:4px 10px;border-radius:12px;background:rgba(255,255,255,.65);color:var(--text);text-decoration:none;border:1px solid rgba(244,114,182,.25);transition:all .3s" onmouseover="this.style.background='#C2185B';this.style.color='#fff'" onmouseout="this.style.background='rgba(255,255,255,.65)';this.style.color='var(--text)'">CS·06 Compute Credit · Tier</a>
+        <a href="#cs-adr" style="padding:4px 10px;border-radius:12px;background:rgba(255,255,255,.65);color:var(--text);text-decoration:none;border:1px solid rgba(244,114,182,.25);transition:all .3s" onmouseover="this.style.background='#C2185B';this.style.color='#fff'" onmouseout="this.style.background='rgba(255,255,255,.65)';this.style.color='var(--text)'">CS·07 架構決策 ADR</a>
+      </div>
+    </div>
 
     <!-- CS 1.0 vs 2.0 -->
     <div class="cs-grid">
@@ -2000,7 +2015,7 @@ body.ext .topic-tab[data-topic="delivery"]{display:none}
 <section class="sec" data-topic="cs">
   <div class="grid-bg"></div>
   <div class="sec-inner">
-    <div class="sec-crumb">◆ 04 · CS 上下游關係 ◆</div>
+    <div class="sec-crumb">◆ CS·02 · CS 上下游關係 ◆</div>
     <h2 class="sec-h">CS 連著誰？</h2>
     <p class="sec-sub">上游<span class="cyan">讀 3 個系統</span> · 下游<span class="pink">寫 5 個系統</span></p>
 
@@ -2096,7 +2111,7 @@ body.ext .topic-tab[data-topic="delivery"]{display:none}
 <!-- ===== v4.6 · CS 4.1 · CS 1.0 vs DIP CS 對照 ===== -->
 <section class="sec" data-topic="cs" id="cs-vs">
   <div class="sec-inner">
-    <div class="sec-crumb">◆ CS · 1.0 vs MVP ◆</div>
+    <div class="sec-crumb">◆ CS·03 · 1.0 vs MVP ◆</div>
     <h2 class="sec-h">CS 1.0 vs DIP CS <em>Capability Cloud</em></h2>
     <p class="sec-sub">從「集中運算」到「有管控、有價值的運算」 · 12 面向對照</p>
 
@@ -2192,7 +2207,7 @@ body.ext .topic-tab[data-topic="delivery"]{display:none}
 <!-- ===== v4.6 · CS 4.2 · BA 改善前後對照 ===== -->
 <section class="sec" data-topic="cs" id="cs-ba">
   <div class="sec-inner">
-    <div class="sec-crumb">◆ CS · BA 改善前後 ◆</div>
+    <div class="sec-crumb">◆ CS·04 · BA 改善前後 ◆</div>
     <h2 class="sec-h">痛點 <em>Before → After</em> · 9 項改善</h2>
     <p class="sec-sub">pitch 客戶最有力的一張表 · 具體看得到變化</p>
 
@@ -2245,7 +2260,7 @@ body.ext .topic-tab[data-topic="delivery"]{display:none}
 <!-- ===== v4.6 · CS 4.3 · 4 大 Spark 類型 ===== -->
 <section class="sec" data-topic="cs" id="cs-spark">
   <div class="sec-inner">
-    <div class="sec-crumb">◆ CS · SPARK TYPES ◆</div>
+    <div class="sec-crumb">◆ CS·05 · SPARK TYPES ◆</div>
     <h2 class="sec-h">4 大 Spark 類型 <em>Python / R / SQL / JAR</em></h2>
     <p class="sec-sub">涵蓋資料團隊三個角色（DA / Engineer / ML）的全部開發習慣</p>
 
@@ -2292,9 +2307,30 @@ body.ext .topic-tab[data-topic="delivery"]{display:none}
 <!-- ===== v4.6 · CS 4.4 · Compute Credit & Tier 計價 ===== -->
 <section class="sec" data-topic="cs" id="cs-credit">
   <div class="sec-inner">
-    <div class="sec-crumb">◆ CS · COMPUTE CREDIT ◆</div>
+    <div class="sec-crumb">◆ CS·06 · COMPUTE CREDIT ◆</div>
     <h2 class="sec-h">Compute Credit <em>Tier 計價</em></h2>
     <p class="sec-sub"><span class="internal-only no-tag"><strong class="blue">1 CC = 1 core + 4G memory</strong> · 按 Tier 固定收費，不按實際用量</span><span class="external-only"><strong class="blue">1 CC = 一個運算單位</strong> · 按等級固定收費，不按實際用量</span></p>
+
+    <!-- v39 · ADR-005/006 新增 11/12 決議 banner -->
+    <div class="internal-only no-tag reveal" style="margin-bottom:28px;padding:18px 22px;border-radius:12px;background:linear-gradient(135deg,rgba(76,183,130,.1),rgba(103,232,249,.06));border:1px solid rgba(76,183,130,.3);border-left:4px solid #15803D">
+      <div style="display:flex;align-items:center;gap:10px;margin-bottom:10px">
+        <span style="padding:3px 9px;border-radius:10px;background:#15803D;color:#fff;font-size:10px;font-weight:700;letter-spacing:.5px">🆕 2026-11-12 決議</span>
+        <span style="font-family:'JetBrains Mono',monospace;font-size:10.5px;color:var(--text-muted)">Eric × Edward × Jeff</span>
+      </div>
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:14px;font-size:12.5px;color:var(--text);line-height:1.7">
+        <div>
+          <strong style="color:#0891B2">ADR-005 · DBRG 資源獨立</strong><br>
+          <span style="color:var(--text-muted)">DBRG 自己管 queue 資源與計價，不放在 CS 資源裡一起算。原因：DBRG 可能用到外部資源，Kafka Connect 用量難計算。</span>
+        </div>
+        <div>
+          <strong style="color:#15803D">ADR-006 · Project 資源集中後切分</strong><br>
+          <span style="color:var(--text-muted)">Project 資源先全部在 CS YuniKorn queue，產品要用時：(a) 選現有 queue 或 (b) 從 CS queue 切新 queue。同一 queue 可能多產品共用。</span>
+        </div>
+      </div>
+      <div style="margin-top:10px;padding-top:10px;border-top:1px dashed rgba(76,183,130,.3);font-size:11.5px;color:var(--text-muted)">
+        ⏳ <strong>待討論</strong>：Queue 權限管理（誰可以選、誰可以切）· ⏸ <strong>暫緩</strong>：Secret 開發，等需求量變多再做
+      </div>
+    </div>
 
     <div class="reveal" style="display:grid;grid-template-columns:1fr 1fr;gap:20px">
       <!-- CC Definition -->
@@ -2356,11 +2392,25 @@ body.ext .topic-tab[data-topic="delivery"]{display:none}
 <!-- ===== v4.6 · CS 4.5 · ADR 架構決策紀錄 (INTERNAL ONLY) ===== -->
 <section class="sec internal-only no-tag" data-topic="cs" id="cs-adr">
   <div class="sec-inner">
-    <div class="sec-crumb">◆ CS · ADR ◆</div>
+    <div class="sec-crumb">◆ CS·07 · ARCHITECTURE DECISIONS ◆</div>
     <h2 class="sec-h">架構決策 <em>ADR Records</em></h2>
     <p class="sec-sub">關鍵技術選型與理由 · 內部技術決策備查</p>
 
-    <div class="reveal" style="display:grid;grid-template-columns:1fr 1fr;gap:16px">
+    <!-- v39 · 2026-11-12 最新決議 banner -->
+    <div class="reveal" style="margin-bottom:22px;padding:20px 24px;border-radius:14px;background:linear-gradient(135deg,rgba(76,183,130,.12),rgba(252,211,77,.06));border:1px solid rgba(76,183,130,.3);border-left:4px solid #15803D">
+      <div style="display:flex;align-items:center;gap:10px;margin-bottom:12px">
+        <span style="padding:4px 10px;border-radius:12px;background:#15803D;color:#fff;font-size:10px;font-weight:700;letter-spacing:1px">🆕 FRESH · 2026-11-12</span>
+        <span style="font-family:'JetBrains Mono',monospace;font-size:11px;color:var(--text-muted)">Eric × Edward × Jeff 對焦結果</span>
+      </div>
+      <div style="font-family:'Noto Serif TC',serif;font-size:16px;font-weight:900;color:var(--text);margin-bottom:8px">11/12 會議兩大結論 + Secret 暫緩</div>
+      <div style="font-size:12.5px;color:var(--text-muted);line-height:1.75">
+        <strong style="color:var(--text)">結論 1</strong>：DBRG 資源與費用<strong style="color:#15803D">獨立管理</strong>，不放在 CS 資源裡一起算（ADR-005）<br>
+        <strong style="color:var(--text)">結論 2</strong>：Project 資源改成<strong style="color:#15803D">「先全部在 CS queue，產品要用再切」</strong>（ADR-006）<br>
+        <strong style="color:var(--text)">補充</strong>：Secret 開發<strong style="color:#D86848">暫緩</strong>，等需求量變多再開發
+      </div>
+    </div>
+
+    <div class="reveal d2" style="display:grid;grid-template-columns:1fr 1fr;gap:16px">
       <div style="padding:20px;border-radius:16px;background:var(--glass-med);backdrop-filter:blur(24px);border:1px solid rgba(255,255,255,.75);border-left:4px solid var(--blue);box-shadow:var(--shadow-sm)">
         <div style="font-family:var(--font-mono);font-size:10px;color:var(--blue);letter-spacing:2px;font-weight:700;margin-bottom:4px">ADR-001</div>
         <div style="font-family:var(--font-h);font-size:17px;font-weight:900;color:var(--text);margin-bottom:8px">Notebook 採用 <em style="font-family:var(--font-h-en);font-style:italic;font-weight:400;color:var(--blue)">JupyterHub</em></div>
@@ -2384,6 +2434,46 @@ body.ext .topic-tab[data-topic="delivery"]{display:none}
         <div style="font-family:var(--font-h);font-size:17px;font-weight:900;color:var(--text);margin-bottom:8px">1.0 API <em style="font-family:var(--font-h-en);font-style:italic;font-weight:400;color:var(--pink)">不相容</em></div>
         <div style="font-size:12.5px;color:var(--text-muted);line-height:1.7">D-128 · 新 CS API 改用新路徑 <code style="font-family:var(--font-mono);font-size:11px;background:rgba(236,64,122,.08);padding:1px 6px;border-radius:4px;color:var(--pink);font-weight:600">dipapis.com/cs/v1/projects/{project}/...</code> · 1.0 客戶獨立運作 · 不接到新 CS（D-090）</div>
       </div>
+
+      <!-- v39 · ADR-005 新增 (2026-11-12) -->
+      <div style="padding:20px;border-radius:16px;background:linear-gradient(135deg,rgba(103,232,249,.1),rgba(255,255,255,.65));backdrop-filter:blur(24px);border:1px solid rgba(255,255,255,.75);border-left:4px solid #0891B2;box-shadow:var(--shadow-sm);position:relative">
+        <span style="position:absolute;top:12px;right:12px;padding:2px 7px;border-radius:8px;background:#15803D;color:#fff;font-size:9px;font-weight:700;letter-spacing:.5px">🆕 11/12</span>
+        <div style="font-family:var(--font-mono);font-size:10px;color:#0891B2;letter-spacing:2px;font-weight:700;margin-bottom:4px">ADR-005</div>
+        <div style="font-family:var(--font-h);font-size:17px;font-weight:900;color:var(--text);margin-bottom:8px">DBRG <em style="font-family:var(--font-h-en);font-style:italic;font-weight:400;color:#0891B2">資源獨立</em></div>
+        <div style="font-size:12.5px;color:var(--text-muted);line-height:1.7">
+          Data Bridge 自己管 queue 資源與計價，<strong style="color:var(--text)">不放在 CS 資源裡一起算</strong>。其他產品照原本做法。<br>
+          <span style="color:#D86848;font-size:11px">⚠ 原因</span>：DBRG 可能用到<strong>外部資源</strong> · Kafka Connect 用量很難計算
+        </div>
+      </div>
+
+      <!-- v39 · ADR-006 新增 (2026-11-12) -->
+      <div style="padding:20px;border-radius:16px;background:linear-gradient(135deg,rgba(76,183,130,.1),rgba(255,255,255,.65));backdrop-filter:blur(24px);border:1px solid rgba(255,255,255,.75);border-left:4px solid #15803D;box-shadow:var(--shadow-sm);position:relative">
+        <span style="position:absolute;top:12px;right:12px;padding:2px 7px;border-radius:8px;background:#15803D;color:#fff;font-size:9px;font-weight:700;letter-spacing:.5px">🆕 11/12</span>
+        <div style="font-family:var(--font-mono);font-size:10px;color:#15803D;letter-spacing:2px;font-weight:700;margin-bottom:4px">ADR-006</div>
+        <div style="font-family:var(--font-h);font-size:17px;font-weight:900;color:var(--text);margin-bottom:8px">Project 資源 <em style="font-family:var(--font-h-en);font-style:italic;font-weight:400;color:#15803D">集中後切分</em></div>
+        <div style="font-size:12.5px;color:var(--text-muted);line-height:1.7">
+          Project 資源<strong style="color:var(--text)">一開始全部放 CS YuniKorn queue</strong>，產品要用時：<br>
+          <span style="padding-left:8px;display:block;margin:4px 0">(a) 直接選一個現有 queue</span>
+          <span style="padding-left:8px;display:block;margin:4px 0">(b) 從 CS queue 切一個新 queue</span>
+          所以同一 queue 可能有多個產品共用。
+        </div>
+      </div>
+    </div>
+
+    <!-- 11/12 補充說明 · 待討論 + Secret 暫緩 -->
+    <div class="reveal d3" style="margin-top:18px;display:grid;grid-template-columns:1fr 1fr;gap:12px">
+      <div style="padding:16px 18px;border-radius:12px;background:rgba(255,138,101,.08);border:1px solid rgba(255,138,101,.3);border-left:3px solid #D86848">
+        <div style="font-family:'JetBrains Mono',monospace;font-size:10px;color:#D86848;letter-spacing:1.5px;font-weight:700;margin-bottom:6px">⏳ TBD · 待討論</div>
+        <div style="font-size:12.5px;color:var(--text);line-height:1.65">
+          <strong>Queue 權限管理</strong>：誰可以選、誰可以切？做法之後再討論。
+        </div>
+      </div>
+      <div style="padding:16px 18px;border-radius:12px;background:rgba(148,163,184,.08);border:1px solid rgba(148,163,184,.3);border-left:3px solid #64748B">
+        <div style="font-family:'JetBrains Mono',monospace;font-size:10px;color:#64748B;letter-spacing:1.5px;font-weight:700;margin-bottom:6px">⏸ ON HOLD · 暫緩</div>
+        <div style="font-size:12.5px;color:var(--text);line-height:1.65">
+          <strong>Secret 開發</strong>：先暫緩，等需求量變多再來開發。
+        </div>
+      </div>
     </div>
 
     <div style="margin-top:18px;padding:16px 20px;border-radius:14px;background:linear-gradient(135deg,rgba(74,108,247,.06),rgba(255,138,101,.04));border:1px solid rgba(74,108,247,.18);font-size:13px;color:var(--text);line-height:1.7">
@@ -2400,7 +2490,7 @@ body.ext .topic-tab[data-topic="delivery"]{display:none}
 <section class="sec internal-only no-tag" data-topic="overview">
   <div class="grid-bg"></div>
   <div class="sec-inner">
-    <div class="sec-crumb">◆ 05 · 對外話術三原則 ◆</div>
+    <div class="sec-crumb">◆ OV·03 · 對外話術三原則 ◆</div>
     <h2 class="sec-h">BD / PM 對外講話的三個紀律</h2>
     <p class="sec-sub"><span class="amber">保持一致</span>、避免讓客戶聽到不該聽的技術細節</p>
 
@@ -2450,7 +2540,7 @@ body.ext .topic-tab[data-topic="delivery"]{display:none}
 <!-- ===== SECTION 6: FULL SYSTEM TOPOLOGY (v4.6 · 對齊 lineage map 5 層) ===== -->
 <section class="sec" id="topology" data-topic="overview">
   <div class="sec-inner">
-    <div class="sec-crumb">◆ 06 · FULL SYSTEM TOPOLOGY ◆</div>
+    <div class="sec-crumb">◆ OV·04 · FULL SYSTEM TOPOLOGY ◆</div>
     <h2 class="sec-h">DIP 完整系統拓撲 <em>Hierarchy</em></h2>
     <p class="sec-sub">對齊<span class="blue">資料上下游關聯圖</span>的 5 層階層 · <span class="amber">橫向治理 · 應用 · 資產 · 資料流動 · 基礎</span></p>
 
@@ -2625,7 +2715,7 @@ body.ext .topic-tab[data-topic="delivery"]{display:none}
 <!-- ===== v4.6 · EXTERNAL TRUST & GOVERNANCE (對外簡化版 · 只在 external 模式顯示) ===== -->
 <section class="sec external-only" data-topic="overview" id="trust">
   <div class="sec-inner">
-    <div class="sec-crumb">◆ TRUST & GOVERNANCE ◆</div>
+    <div class="sec-crumb">◆ OV·05 · TRUST & GOVERNANCE ◆</div>
     <h2 class="sec-h">治理與信任 <em>Governance you can verify</em></h2>
     <p class="sec-sub">平台治理 · 完整稽核 · 多租戶隔離 &mdash; <span class="blue">可檢查、可稽核、可驗證</span></p>
 
@@ -2778,7 +2868,7 @@ body.ext .topic-tab[data-topic="delivery"]{display:none}
 <section class="sec internal-only" data-topic="overview">
   <div class="grid-bg"></div>
   <div class="sec-inner">
-    <div class="sec-crumb">◆ 07 · DIP PRODUCTS + TECH FOUNDATION ◆</div>
+    <div class="sec-crumb">◆ OV·06 · DIP PRODUCTS + TECH FOUNDATION ◆</div>
     <h2 class="sec-h">DIP 產品 + 技術基礎</h2>
     <p class="sec-sub"><span class="blue">11 個 DIP 產品</span>跑在<span class="amber">共用的技術基礎</span>上 &mdash; 產品歸產品、技術歸技術</p>
 
@@ -3002,7 +3092,7 @@ body.ext .topic-tab[data-topic="delivery"]{display:none}
 <section class="sec" data-topic="overview">
   <div class="grid-bg"></div>
   <div class="sec-inner">
-    <div class="sec-crumb">◆ 08 · DATA FLOW SEQUENCE ◆</div>
+    <div class="sec-crumb">◆ OV·07 · DATA FLOW SEQUENCE ◆</div>
     <h2 class="sec-h">資料流動時序圖</h2>
     <p class="sec-sub">從玩家點一下，到個人化推薦送回 &mdash; <span class="cyan">完整資料旅程</span></p>
 
@@ -3138,7 +3228,7 @@ body.ext .topic-tab[data-topic="delivery"]{display:none}
 <section class="sec internal-only" data-topic="overview">
   <div class="grid-bg"></div>
   <div class="sec-inner">
-    <div class="sec-crumb">◆ 09 · USER JOURNEY ◆</div>
+    <div class="sec-crumb">◆ OV·08 · USER JOURNEY ◆</div>
     <h2 class="sec-h">DA 操作流程圖</h2>
     <p class="sec-sub">資料分析師在 CS 上<span class="blue">從登入到看結果</span>的 10 個步驟</p>
 
@@ -3234,13 +3324,72 @@ body.ext .topic-tab[data-topic="delivery"]{display:none}
 </section>
 
 <!-- ===== SECTION 11: SECURITY & NETWORK ARCHITECTURE ===== -->
+<!-- ===== IAM·01 · POSITIONING (new · v39) ===== -->
+<section class="sec internal-only no-tag" id="iam-position" data-topic="iam">
+  <div class="sec-inner">
+    <div class="sec-crumb">◆ IAM·01 · POSITIONING ◆</div>
+    <h2 class="sec-h reveal">IAM · <em>身分與權限中樞</em></h2>
+    <p class="sec-sub reveal d1">統一治理跨 Project 的細粒度存取控制 &mdash; <span class="blue">管誰能做什麼、能看哪些資料</span></p>
+
+    <!-- Positioning card -->
+    <div class="reveal d2" style="margin-bottom:28px;padding:24px;border-radius:14px;background:linear-gradient(135deg,rgba(125,211,252,.1),rgba(255,255,255,.65));border:1px solid rgba(125,211,252,.35);backdrop-filter:blur(20px)">
+      <div style="color:var(--blue);font-size:11px;letter-spacing:3px;font-weight:700;margin-bottom:8px">🎯 POSITIONING · 對外定位</div>
+      <div style="font-family:'Noto Serif TC',serif;font-size:17px;font-weight:900;color:var(--text);line-height:1.5;margin-bottom:10px">身分與權限中樞 · 統一治理跨租戶的細粒度存取控制</div>
+      <div style="color:var(--text-muted);font-size:13px;line-height:1.75">核心能力：集中處理「<strong style="color:var(--text)">使用者是誰</strong>」與「<strong style="color:var(--text)">誰能對哪些資源做什麼</strong>」，並確保租戶間的隔離。收攏分散的授權能力，實現多階繼承、集中控管、可完整稽核的授權機制。</div>
+    </div>
+
+    <!-- 3-pillar core capabilities -->
+    <div class="reveal d3" style="display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:14px;margin-bottom:28px">
+      <div style="padding:20px;border-radius:14px;background:var(--glass-med);backdrop-filter:blur(24px);border:1px solid rgba(255,255,255,.75);border-top:4px solid var(--blue);box-shadow:var(--shadow-sm)">
+        <div style="font-size:30px;margin-bottom:10px">👤</div>
+        <div style="font-family:'Noto Serif TC',serif;font-size:15px;font-weight:900;color:var(--text);margin-bottom:6px">身分</div>
+        <div style="font-size:12.5px;color:var(--text-muted);line-height:1.65">集中管理使用者與 Service Account · Keycloak + LDAP · 支援 SSO 與 MFA</div>
+      </div>
+      <div style="padding:20px;border-radius:14px;background:var(--glass-med);backdrop-filter:blur(24px);border:1px solid rgba(255,255,255,.75);border-top:4px solid #C2185B;box-shadow:var(--shadow-sm)">
+        <div style="font-size:30px;margin-bottom:10px">🔐</div>
+        <div style="font-family:'Noto Serif TC',serif;font-size:15px;font-weight:900;color:var(--text);margin-bottom:6px">權限</div>
+        <div style="font-size:12.5px;color:var(--text-muted);line-height:1.65">SpiceDB（身分歸屬）+ Ranger（政策決策）· 4 層資源階層 · 跨 Project 隔離</div>
+      </div>
+      <div style="padding:20px;border-radius:14px;background:var(--glass-med);backdrop-filter:blur(24px);border:1px solid rgba(255,255,255,.75);border-top:4px solid #B8860B;box-shadow:var(--shadow-sm)">
+        <div style="font-size:30px;margin-bottom:10px">🔎</div>
+        <div style="font-family:'Noto Serif TC',serif;font-size:15px;font-weight:900;color:var(--text);margin-bottom:6px">稽核</div>
+        <div style="font-size:12.5px;color:var(--text-muted);line-height:1.65">Elasticsearch 存全平台授權事件 · 誰在何時對哪個資源做了什麼 · 完整可追溯</div>
+      </div>
+    </div>
+
+    <!-- IAM 在 DIP 中的角色 -->
+    <div class="reveal d4" style="padding:22px 24px;border-radius:14px;background:linear-gradient(135deg,rgba(74,108,247,.04),rgba(255,138,101,.03));border:1px solid rgba(74,108,247,.2)">
+      <div style="color:var(--blue);font-size:11px;letter-spacing:3px;font-weight:700;margin-bottom:10px">🔗 IAM 在 DIP 中的角色</div>
+      <div style="font-size:13px;color:var(--text-muted);line-height:1.75">IAM 在 DIP 四大核心產品中擔任<strong style="color:var(--text)">上游角色</strong> —— <strong style="color:var(--text)">管誰能跑 Job、誰能看別人結果</strong>，全走 IAM 的授權決策。所有 DIP 產品（DBRG / LS / CS / 11 個應用產品）都是 Resource，掛在 Project 下，依 IAM 的 Policy 決定 Allow / Deny。</div>
+    </div>
+
+    <!-- 本頁 index -->
+    <div class="reveal d4" style="margin-top:22px;padding:16px 20px;border-radius:10px;background:rgba(125,211,252,.06);border:1px solid rgba(125,211,252,.25)">
+      <div style="color:var(--blue);font-size:10px;letter-spacing:2px;font-weight:700;margin-bottom:8px">📑 本頁目錄 · IAM 頁籤內有</div>
+      <div style="display:flex;flex-wrap:wrap;gap:6px;font-size:11.5px">
+        <a href="#iam-hierarchy" style="padding:4px 10px;border-radius:12px;background:rgba(255,255,255,.65);color:var(--text);text-decoration:none;border:1px solid rgba(125,211,252,.25);transition:all .3s" onmouseover="this.style.background='var(--blue)';this.style.color='#fff'" onmouseout="this.style.background='rgba(255,255,255,.65)';this.style.color='var(--text)'">IAM·02 權限模型</a>
+        <a href="#iam-ranger" style="padding:4px 10px;border-radius:12px;background:rgba(255,255,255,.65);color:var(--text);text-decoration:none;border:1px solid rgba(125,211,252,.25);transition:all .3s" onmouseover="this.style.background='var(--blue)';this.style.color='#fff'" onmouseout="this.style.background='rgba(255,255,255,.65)';this.style.color='var(--text)'">IAM·03 SpiceDB + Ranger</a>
+        <a href="#iam-playground" style="padding:4px 10px;border-radius:12px;background:rgba(255,255,255,.65);color:var(--text);text-decoration:none;border:1px solid rgba(125,211,252,.25);transition:all .3s" onmouseover="this.style.background='var(--blue)';this.style.color='#fff'" onmouseout="this.style.background='rgba(255,255,255,.65)';this.style.color='var(--text)'">IAM·04 Playground</a>
+        <a href="#iam-auth" style="padding:4px 10px;border-radius:12px;background:rgba(255,255,255,.65);color:var(--text);text-decoration:none;border:1px solid rgba(125,211,252,.25);transition:all .3s" onmouseover="this.style.background='var(--blue)';this.style.color='#fff'" onmouseout="this.style.background='rgba(255,255,255,.65)';this.style.color='var(--text)'">IAM·05 兩條授權路徑</a>
+        <a href="#iam-cache" style="padding:4px 10px;border-radius:12px;background:rgba(255,255,255,.65);color:var(--text);text-decoration:none;border:1px solid rgba(125,211,252,.25);transition:all .3s" onmouseover="this.style.background='var(--blue)';this.style.color='#fff'" onmouseout="this.style.background='rgba(255,255,255,.65)';this.style.color='var(--text)'">IAM·06 兩層快取</a>
+        <a href="#iam-isolation" style="padding:4px 10px;border-radius:12px;background:rgba(255,255,255,.65);color:var(--text);text-decoration:none;border:1px solid rgba(125,211,252,.25);transition:all .3s" onmouseover="this.style.background='var(--blue)';this.style.color='#fff'" onmouseout="this.style.background='rgba(255,255,255,.65)';this.style.color='var(--text)'">IAM·07 Multi-Project 隔離</a>
+        <a href="#iam-roles" style="padding:4px 10px;border-radius:12px;background:rgba(255,255,255,.65);color:var(--text);text-decoration:none;border:1px solid rgba(125,211,252,.25);transition:all .3s" onmouseover="this.style.background='var(--blue)';this.style.color='#fff'" onmouseout="this.style.background='rgba(255,255,255,.65)';this.style.color='var(--text)'">IAM·08 4 大角色 × 23 權限</a>
+        <a href="#super-admin" style="padding:4px 10px;border-radius:12px;background:rgba(255,255,255,.65);color:var(--text);text-decoration:none;border:1px solid rgba(125,211,252,.25);transition:all .3s" onmouseover="this.style.background='var(--blue)';this.style.color='#fff'" onmouseout="this.style.background='rgba(255,255,255,.65)';this.style.color='var(--text)'">IAM·09 SUPER_ADMIN</a>
+        <a href="#user-status" style="padding:4px 10px;border-radius:12px;background:rgba(255,255,255,.65);color:var(--text);text-decoration:none;border:1px solid rgba(125,211,252,.25);transition:all .3s" onmouseover="this.style.background='var(--blue)';this.style.color='#fff'" onmouseout="this.style.background='rgba(255,255,255,.65)';this.style.color='var(--text)'">IAM·10 User Status</a>
+        <a href="#audit-logging" style="padding:4px 10px;border-radius:12px;background:rgba(255,255,255,.65);color:var(--text);text-decoration:none;border:1px solid rgba(125,211,252,.25);transition:all .3s" onmouseover="this.style.background='var(--blue)';this.style.color='#fff'" onmouseout="this.style.background='rgba(255,255,255,.65)';this.style.color='var(--text)'">IAM·11 Audit</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== IAM·02 · Permission Model (原「11 · SECURITY」大 section，內含子區塊) ===== -->
 <section class="sec" data-topic="iam">
   <div class="grid-bg"></div>
   <div class="glow" style="bottom:50px;left:50px;width:500px;height:500px;background:radial-gradient(circle,rgba(255,90,160,.1),transparent 60%)"></div>
   <div class="sec-inner">
-    <div class="sec-crumb">◆ 11 · SECURITY & NETWORK ARCHITECTURE ◆</div>
-    <h2 class="sec-h reveal">網路 / 資安架構</h2>
-    <p class="sec-sub reveal d1">7 層防護 &mdash; <span class="pink">iGaming B2B 等級合規</span></p>
+    <div class="sec-crumb">◆ IAM·02 · PERMISSION MODEL ◆</div>
+    <h2 class="sec-h reveal">權限模型 · <em>4 層資源 + 繼承規則</em></h2>
+    <p class="sec-sub reveal d1">組織 → Folder → Project → Resource &mdash; <span class="blue">權限像資料夾往下繼承</span></p>
 
     <!-- ===== IAM Resource Hierarchy v2 (2026-11-12 更新為 4 層) ===== -->
     <div id="iam-hierarchy"></div>
@@ -3399,6 +3548,16 @@ body.ext .topic-tab[data-topic="delivery"]{display:none}
       </div>
     </div>
 
+  </div>
+</section>
+
+<!-- ===== IAM·03 · SpiceDB + Ranger 兩步驟分工 ===== -->
+<section class="sec internal-only no-tag" id="iam-ranger-sec" data-topic="iam">
+  <div class="sec-inner">
+    <div class="sec-crumb">◆ IAM·03 · AUTHORIZATION PIPELINE ◆</div>
+    <h2 class="sec-h reveal">SpiceDB + Ranger · <em>兩步驟分工</em></h2>
+    <p class="sec-sub reveal d1">身分檢查 vs 行為授權 &mdash; <span class="blue">「有沒有身分」和「能不能做這件事」分開判斷</span></p>
+
     <div id="iam-ranger"></div>
     <!-- ===== SpiceDB vs Ranger · 兩步驟分工 (v4.7 · 內外雙版本) ===== -->
     <div class="reveal d2" style="margin-bottom:24px;padding:30px;border-radius:16px;background:linear-gradient(135deg,rgba(165,180,252,.08),rgba(165,180,252,.02));border:1px solid rgba(165,180,252,.35);backdrop-filter:blur(20px)">
@@ -3448,6 +3607,16 @@ body.ext .topic-tab[data-topic="delivery"]{display:none}
         💡 <strong style="color:var(--purple)">為什麼分兩步？</strong>· 把「<em>你是誰</em>」和「<em>你能做什麼</em>」拆開，之後要新增角色、調整權限，不用改一堆地方 · 稽核紀錄也更清楚
       </div>
     </div>
+
+  </div>
+</section>
+
+<!-- ===== IAM·04 · SpiceDB Hierarchical Playground ===== -->
+<section class="sec internal-only no-tag" id="iam-playground-sec" data-topic="iam">
+  <div class="sec-inner">
+    <div class="sec-crumb">◆ IAM·04 · INTERACTIVE PLAYGROUND ◆</div>
+    <h2 class="sec-h reveal">SpiceDB <em>階層授權模擬</em></h2>
+    <p class="sec-sub reveal d1">權限繼承演練 &mdash; <span class="blue">實際點點看 Allow / Deny 怎麼判斷</span></p>
 
     <div id="iam-playground"></div>
     <!-- ===== SpiceDB Hierarchical Playground (v4.4 · internal-only · 技術 playground 對客戶無感) ===== -->
@@ -3550,6 +3719,17 @@ body.ext .topic-tab[data-topic="delivery"]{display:none}
       </div>
     </div>
 
+  </div>
+</section>
+
+<!-- ===== IAM·05 · 兩條授權路徑 ===== -->
+<section class="sec" id="iam-auth-sec" data-topic="iam">
+  <div class="sec-inner">
+    <div class="sec-crumb">◆ IAM·05 · TWO AUTHORIZATION PATHS ◆</div>
+    <h2 class="sec-h reveal">兩條授權路徑 · <em>人 vs 系統呼叫</em></h2>
+    <p class="sec-sub reveal d1">HTTP API + Kafka &mdash; <span class="blue">不同通道、同一套權限系統</span></p>
+
+    <div id="iam-auth"></div>
     <!-- ===== Two Authorization Paths (v4.7 · 內部技術版 / 外部白話版) ===== -->
     <div class="reveal d2" style="margin-bottom:24px;padding:30px;border-radius:16px;background:linear-gradient(135deg,rgba(252,211,77,.08),rgba(252,211,77,.02));border:1px solid rgba(252,211,77,.35);backdrop-filter:blur(20px)">
       <div style="margin-bottom:24px">
@@ -3669,6 +3849,16 @@ body.ext .topic-tab[data-topic="delivery"]{display:none}
     </div>
 
     <!-- ===== Two-Layer Cache ===== -->
+  </div>
+</section>
+
+<!-- ===== IAM·06 · 兩層快取 ===== -->
+<section class="sec internal-only no-tag" id="iam-cache-sec" data-topic="iam">
+  <div class="sec-inner">
+    <div class="sec-crumb">◆ IAM·06 · TWO-LAYER CACHE ◆</div>
+    <h2 class="sec-h reveal">兩層快取 · <em>Local + Redis</em></h2>
+    <p class="sec-sub reveal d1">權限查詢效能最佳化 &mdash; <span class="blue">熱點本地、分散式一致</span></p>
+
     <div id="iam-cache"></div>
     <div class="reveal d2 internal-only no-tag" style="margin-bottom:28px;padding:30px;border-radius:16px;background:linear-gradient(135deg,rgba(103,232,249,.08),rgba(103,232,249,.02));border:1px solid rgba(103,232,249,.3);backdrop-filter:blur(20px)">
       <div style="margin-bottom:22px">
@@ -3888,6 +4078,16 @@ body.ext .topic-tab[data-topic="delivery"]{display:none}
     </div>
 
     <!-- Multi-Tenant Isolation -->
+  </div>
+</section>
+
+<!-- ===== IAM·07 · Multi-Project 隔離 ===== -->
+<section class="sec" id="iam-isolation-sec" data-topic="iam">
+  <div class="sec-inner">
+    <div class="sec-crumb">◆ IAM·07 · MULTI-PROJECT ISOLATION ◆</div>
+    <h2 class="sec-h reveal">Multi-Project <em>隔離架構</em></h2>
+    <p class="sec-sub reveal d1">資料分倉 · 跨專案互不干擾 &mdash; <span class="blue">零資料外洩</span></p>
+
     <div id="iam-isolation"></div>
     <div class="tenant-wrap reveal d4">
       <div class="tenant-title"><span class="internal-only no-tag">◆ MULTI-PROJECT 隔離架構 · 一個 Project = 一組完全獨立環境 ◆</span><span class="external-only">◆ 資料分倉 · 一個專案 = 一組完全獨立環境 · 跨專案互不干擾 ◆</span></div>
@@ -3941,7 +4141,7 @@ body.ext .topic-tab[data-topic="delivery"]{display:none}
 <!-- ===== v4.5 SECTION 11 · 4 Roles Permission Matrix (INTERNAL ONLY) ===== -->
 <section class="sec internal-only no-tag" id="iam-roles" data-topic="iam">
   <div class="sec-inner">
-    <div class="sec-crumb">◆ 11 · PERMISSION MATRIX ◆</div>
+    <div class="sec-crumb">◆ IAM·08 · PERMISSION MATRIX ◆</div>
     <h2 class="sec-h">4 大內建角色 × 23 <em>Permissions</em></h2>
     <p class="sec-sub">iam_admin · editor · viewer · auditor &mdash; 哪個角色能做什麼，一張表看完</p>
 
@@ -4012,7 +4212,7 @@ body.ext .topic-tab[data-topic="delivery"]{display:none}
 <!-- ===== v4.5 SECTION 12 · SUPER_ADMIN Boundary + Subject ID (INTERNAL ONLY) ===== -->
 <section class="sec internal-only no-tag" id="super-admin" data-topic="iam">
   <div class="sec-inner">
-    <div class="sec-crumb">◆ 12 · SUPER_ADMIN BOUNDARY ◆</div>
+    <div class="sec-crumb">◆ IAM·09 · SUPER_ADMIN BOUNDARY ◆</div>
     <h2 class="sec-h">SUPER_ADMIN <em>身分邊界</em></h2>
     <p class="sec-sub">DI 內部全域管理身分 &mdash; 但不是「後門」，走的是一般授權路徑</p>
 
@@ -4094,7 +4294,7 @@ body.ext .topic-tab[data-topic="delivery"]{display:none}
 <!-- ===== v4.5 SECTION 13 · User Status State Machine + Direct vs Inherited (INTERNAL ONLY) ===== -->
 <section class="sec internal-only no-tag" id="user-status" data-topic="iam">
   <div class="sec-inner">
-    <div class="sec-crumb">◆ 13 · USER STATUS · ROLE BINDINGS ◆</div>
+    <div class="sec-crumb">◆ IAM·10 · USER STATUS · ROLE BINDINGS ◆</div>
     <h2 class="sec-h">User Status <em>狀態機</em> · Direct vs Inherited</h2>
     <p class="sec-sub">PENDING → ACTIVE → DISABLED &mdash; 首次登入成功才算 ACTIVE</p>
 
@@ -4181,7 +4381,7 @@ body.ext .topic-tab[data-topic="delivery"]{display:none}
 <!-- ===== v4.5 SECTION 14 · Audit/Security Logging (INTERNAL ONLY) ===== -->
 <section class="sec internal-only no-tag" id="audit-logging" data-topic="iam">
   <div class="sec-inner">
-    <div class="sec-crumb">◆ 14 · AUDIT PIPELINE ◆</div>
+    <div class="sec-crumb">◆ IAM·11 · AUDIT PIPELINE ◆</div>
     <h2 class="sec-h">Audit / Security <em>Logging</em></h2>
     <p class="sec-sub">兩條獨立 Kafka pipeline · 共用一套 Event Schema · IAM 統一查詢</p>
 
@@ -4275,6 +4475,568 @@ body.ext .topic-tab[data-topic="delivery"]{display:none}
       </div>
       <div style="margin-top:14px;padding:12px 14px;border-radius:10px;background:rgba(248,113,113,.06);border:1px solid rgba(248,113,113,.18);font-size:11.5px;color:var(--text);line-height:1.6">
         ⚠️ <strong style="color:var(--red)">敏感資料白名單：</strong>禁止寫入 Password / Token / JWT / Secret / Stack Trace / 完整 Request-Response
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== v5.1 · LS TAB (INTERNAL ONLY · Lake Space Deep Dive) ===== -->
+<style>
+  /* ===== LS Tab Styles ===== */
+  .ls-problem{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:14px}
+  .ls-pain{padding:18px;border-radius:14px;background:var(--glass-med);backdrop-filter:blur(24px);border:1px solid rgba(255,255,255,.75);border-top:4px solid var(--red);box-shadow:var(--shadow-sm);transition:all .5s var(--ease)}
+  .ls-pain:hover{transform:translateY(-5px);box-shadow:var(--shadow-lg)}
+  .ls-pain-ic{font-size:28px;margin-bottom:10px;display:block}
+  .ls-pain-vote{display:inline-block;padding:2px 8px;border-radius:10px;background:rgba(216,104,72,.15);color:#D86848;font-size:10px;font-weight:700;margin-left:6px;font-family:'JetBrains Mono',monospace}
+  .ls-pain h5{font-family:'Noto Serif TC',serif;font-size:15px;font-weight:900;color:var(--text);margin:0 0 6px}
+  .ls-pain p{font-size:12.5px;color:var(--text-muted);line-height:1.6;margin:0}
+
+  /* 24 features scope grid */
+  .ls-scope{display:grid;grid-template-columns:repeat(auto-fit,minmax(210px,1fr));gap:14px;margin-top:20px}
+  .ls-mod{padding:18px;border-radius:14px;background:linear-gradient(135deg,rgba(252,211,77,.1),rgba(255,255,255,.65));border:1px solid rgba(252,211,77,.35);backdrop-filter:blur(20px);transition:all .5s var(--ease)}
+  .ls-mod:hover{transform:translateY(-4px);box-shadow:0 10px 30px rgba(252,211,77,.2)}
+  .ls-mod-head{display:flex;justify-content:space-between;align-items:center;margin-bottom:10px;padding-bottom:10px;border-bottom:1px dashed rgba(184,134,11,.3)}
+  .ls-mod-code{font-family:'JetBrains Mono',monospace;font-size:12px;color:#B8860B;font-weight:700;letter-spacing:1px}
+  .ls-mod-count{padding:3px 9px;border-radius:12px;background:#B8860B;color:#fff;font-size:10px;font-weight:700;letter-spacing:.5px}
+  .ls-mod h5{font-family:'Noto Serif TC',serif;font-size:16px;font-weight:900;color:var(--text);margin:0 0 10px}
+  .ls-mod ul{list-style:none;padding:0;margin:0;font-size:12px;color:var(--text-muted);line-height:1.9}
+  .ls-mod ul li::before{content:"▸ ";color:#B8860B;font-weight:700}
+  .ls-mod ul li.later{opacity:.5;font-style:italic}
+  .ls-mod ul li.later::before{content:"◌ ";color:var(--text-dim)}
+
+  /* User table */
+  .ls-users{width:100%;border-collapse:separate;border-spacing:0 8px;margin-top:12px}
+  .ls-users th{padding:10px 14px;text-align:left;font-family:'JetBrains Mono',monospace;font-size:10.5px;color:var(--text-muted);font-weight:700;letter-spacing:1.5px;border-bottom:1px solid rgba(74,108,247,.15)}
+  .ls-users td{padding:14px 16px;background:rgba(255,255,255,.65);font-size:13px;color:var(--text);line-height:1.6}
+  .ls-users td:first-child{border-radius:8px 0 0 8px;font-weight:900;font-family:'Noto Serif TC',serif;width:220px}
+  .ls-users td:last-child{border-radius:0 8px 8px 0;color:var(--text-muted);font-size:12px}
+  .ls-users .no-row td{background:repeating-linear-gradient(135deg,rgba(148,163,184,.08),rgba(148,163,184,.08) 6px,rgba(255,255,255,.4) 6px,rgba(255,255,255,.4) 12px);color:#64748B;font-style:italic;font-size:12px}
+  .ls-users .no-row td:first-child{font-style:normal;color:#64748B;text-decoration:line-through}
+
+  /* Before/After comparison */
+  .ls-ba{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-top:20px}
+  .ls-ba-col{padding:22px;border-radius:14px;backdrop-filter:blur(20px)}
+  .ls-ba-before{background:linear-gradient(135deg,rgba(216,104,72,.1),rgba(255,255,255,.55));border:1px solid rgba(216,104,72,.3)}
+  .ls-ba-after{background:linear-gradient(135deg,rgba(76,183,130,.1),rgba(255,255,255,.65));border:1px solid rgba(76,183,130,.35)}
+  .ls-ba-tag{display:inline-block;padding:4px 12px;border-radius:12px;font-size:10px;font-weight:700;letter-spacing:1.5px;margin-bottom:14px;font-family:'JetBrains Mono',monospace}
+  .ls-ba-before .ls-ba-tag{background:rgba(216,104,72,.2);color:#D86848}
+  .ls-ba-after .ls-ba-tag{background:rgba(76,183,130,.2);color:#15803D}
+  .ls-ba-col h4{font-family:'Noto Serif TC',serif;font-size:19px;font-weight:900;color:var(--text);margin:0 0 14px}
+  .ls-ba-col dl{margin:0;display:grid;grid-template-columns:90px 1fr;gap:10px 14px;font-size:12.5px}
+  .ls-ba-col dt{font-family:'JetBrains Mono',monospace;font-size:11px;color:var(--text-muted);font-weight:700;letter-spacing:1px;padding-top:2px}
+  .ls-ba-col dd{margin:0;color:var(--text);line-height:1.6}
+
+  /* 5-layer architecture */
+  .ls-arch{display:flex;flex-direction:column;gap:12px;margin-top:20px}
+  .ls-layer{padding:16px 22px;border-radius:12px;display:grid;grid-template-columns:140px 1fr;gap:20px;align-items:center;backdrop-filter:blur(20px);border:1px solid rgba(255,255,255,.75)}
+  .ls-layer-plat{background:linear-gradient(135deg,rgba(165,180,252,.15),rgba(255,255,255,.55));border-color:rgba(165,180,252,.35)}
+  .ls-layer-access{background:linear-gradient(135deg,rgba(125,211,252,.15),rgba(255,255,255,.55));border-color:rgba(125,211,252,.35)}
+  .ls-layer-service{background:linear-gradient(135deg,rgba(252,211,77,.2),rgba(255,255,255,.55));border-color:rgba(252,211,77,.4);border-width:2px;box-shadow:0 4px 20px rgba(252,211,77,.15)}
+  .ls-layer-meta{background:linear-gradient(135deg,rgba(244,114,182,.12),rgba(255,255,255,.55));border-color:rgba(244,114,182,.3)}
+  .ls-layer-store{background:linear-gradient(135deg,rgba(148,163,184,.12),rgba(255,255,255,.55));border-color:rgba(148,163,184,.3)}
+  .ls-layer-head{display:flex;flex-direction:column;gap:3px}
+  .ls-layer-tag{font-family:'JetBrains Mono',monospace;font-size:9.5px;color:var(--text-muted);font-weight:700;letter-spacing:1.5px}
+  .ls-layer-name{font-family:'Noto Serif TC',serif;font-size:16px;font-weight:900;color:var(--text)}
+  .ls-layer-mods{display:flex;flex-wrap:wrap;gap:6px}
+  .ls-layer-mod{padding:5px 11px;border-radius:12px;background:rgba(255,255,255,.75);font-size:11.5px;color:var(--text);font-weight:700;border:1px solid rgba(74,108,247,.15)}
+  .ls-layer-mod.build{background:linear-gradient(135deg,#FF8A65,#F4511E);color:#fff;border:none}
+  .ls-layer-mod.ext{background:rgba(148,163,184,.15);color:#64748B;font-style:italic}
+
+  /* Integration diagram */
+  .ls-int{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin-top:20px}
+  .ls-int-card{padding:18px;border-radius:14px;backdrop-filter:blur(20px);border:1px solid rgba(255,255,255,.75);background:linear-gradient(135deg,rgba(125,211,252,.08),rgba(255,255,255,.65));box-shadow:var(--shadow-sm);transition:all .4s var(--ease)}
+  .ls-int-card:hover{transform:translateY(-4px);box-shadow:var(--shadow-lg)}
+  .ls-int-card.iam-int{border-top:4px solid var(--blue)}
+  .ls-int-card.cs-int{border-top:4px solid #C2185B}
+  .ls-int-card.dbrg-int{border-top:4px solid #0891B2}
+  .ls-int-head{display:flex;align-items:center;gap:8px;margin-bottom:12px}
+  .ls-int-ic{width:34px;height:34px;border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:17px}
+  .iam-int .ls-int-ic{background:rgba(125,211,252,.25)}
+  .cs-int .ls-int-ic{background:rgba(244,114,182,.25)}
+  .dbrg-int .ls-int-ic{background:rgba(103,232,249,.25)}
+  .ls-int-title{font-family:'Noto Serif TC',serif;font-size:15px;font-weight:900;color:var(--text)}
+  .ls-int-sub{font-size:10px;letter-spacing:1px;font-weight:700;font-family:'JetBrains Mono',monospace}
+  .iam-int .ls-int-sub{color:var(--blue)}
+  .cs-int .ls-int-sub{color:#C2185B}
+  .dbrg-int .ls-int-sub{color:#0891B2}
+  .ls-int-body{font-size:12px;color:var(--text-muted);line-height:1.7}
+  .ls-int-body strong{color:var(--text)}
+  .ls-int-when{display:inline-block;padding:3px 9px;border-radius:10px;background:rgba(255,138,101,.12);color:#D86848;font-size:10px;font-weight:700;letter-spacing:.5px;margin-top:8px;font-family:'JetBrains Mono',monospace}
+</style>
+
+<!-- ===== Section 15A · LS 定位與痛點 ===== -->
+<section class="sec internal-only no-tag" id="ls-position" data-topic="ls">
+  <div class="sec-inner">
+    <div class="sec-crumb">◆ LS·01 · LAKE SPACE POSITIONING ◆</div>
+    <h2 class="sec-h">Lake Space · <em>DIP 的檔案儲存管理層</em></h2>
+    <p class="sec-sub">在既有 H7000 上補齊檔案級管理機制 &mdash; <span class="orange">2026-08 訪談 6 位 · 4 個真實痛點</span></p>
+
+    <!-- 本頁目錄 (v39) -->
+    <div class="reveal" style="margin-bottom:28px;padding:16px 20px;border-radius:10px;background:rgba(252,211,77,.1);border:1px solid rgba(184,134,11,.25)">
+      <div style="color:#B8860B;font-size:10px;letter-spacing:2px;font-weight:700;margin-bottom:8px">📑 本頁目錄 · LS 頁籤內有</div>
+      <div style="display:flex;flex-wrap:wrap;gap:6px;font-size:11.5px">
+        <a href="#ls-scope" style="padding:4px 10px;border-radius:12px;background:rgba(255,255,255,.65);color:var(--text);text-decoration:none;border:1px solid rgba(184,134,11,.25);transition:all .3s" onmouseover="this.style.background='#B8860B';this.style.color='#fff'" onmouseout="this.style.background='rgba(255,255,255,.65)';this.style.color='var(--text)'">LS·02 24 Features MVP</a>
+        <a href="#ls-users" style="padding:4px 10px;border-radius:12px;background:rgba(255,255,255,.65);color:var(--text);text-decoration:none;border:1px solid rgba(184,134,11,.25);transition:all .3s" onmouseover="this.style.background='#B8860B';this.style.color='#fff'" onmouseout="this.style.background='rgba(255,255,255,.65)';this.style.color='var(--text)'">LS·03 4 類使用者</a>
+        <a href="#ls-ba" style="padding:4px 10px;border-radius:12px;background:rgba(255,255,255,.65);color:var(--text);text-decoration:none;border:1px solid rgba(184,134,11,.25);transition:all .3s" onmouseover="this.style.background='#B8860B';this.style.color='#fff'" onmouseout="this.style.background='rgba(255,255,255,.65)';this.style.color='var(--text)'">LS·04 Before / After</a>
+        <a href="#ls-arch" style="padding:4px 10px;border-radius:12px;background:rgba(255,255,255,.65);color:var(--text);text-decoration:none;border:1px solid rgba(184,134,11,.25);transition:all .3s" onmouseover="this.style.background='#B8860B';this.style.color='#fff'" onmouseout="this.style.background='rgba(255,255,255,.65)';this.style.color='var(--text)'">LS·05 5 層架構</a>
+        <a href="#ls-integration" style="padding:4px 10px;border-radius:12px;background:rgba(255,255,255,.65);color:var(--text);text-decoration:none;border:1px solid rgba(184,134,11,.25);transition:all .3s" onmouseover="this.style.background='#B8860B';this.style.color='#fff'" onmouseout="this.style.background='rgba(255,255,255,.65)';this.style.color='var(--text)'">LS·06 跨產品整合</a>
+      </div>
+    </div>
+
+    <!-- Problem Statement -->
+    <div class="reveal" style="margin-bottom:28px;padding:22px;border-radius:14px;background:linear-gradient(135deg,rgba(216,104,72,.06),rgba(255,255,255,.55));border:1px solid rgba(216,104,72,.25)">
+      <div style="color:#D86848;font-size:11px;letter-spacing:3px;font-weight:700;margin-bottom:8px">❗ PROBLEM STATEMENT · 為什麼做</div>
+      <div style="font-family:'Noto Serif TC',serif;font-size:17px;font-weight:900;color:var(--text);line-height:1.5">DIP 缺檔案級儲存的管理介面 · UI 只能看、不能操作 · 刪除只能下指令怕誤刪 · 跨角色上傳需 SRE 人工中介 · 容量要下指令查</div>
+    </div>
+
+    <!-- 4 pains from 6-user interview -->
+    <div class="reveal d2 ls-problem">
+      <div class="ls-pain">
+        <span class="ls-pain-ic">🗑</span>
+        <h5>刪除不便、擔心誤刪<span class="ls-pain-vote">3/6</span></h5>
+        <p>要開 Notebook、回 Hue 複製路徑、下指令 · 刪了救不回</p>
+      </div>
+      <div class="ls-pain">
+        <span class="ls-pain-ic">📊</span>
+        <h5>容量看不到<span class="ls-pain-vote">2/6</span></h5>
+        <p>SRE 通知容量滿了，DE 要下指令依檔案大小排序找檔案</p>
+      </div>
+      <div class="ls-pain">
+        <span class="ls-pain-ic">📤</span>
+        <h5>缺統一上傳下載介面<span class="ls-pain-vote">1/6</span></h5>
+        <p>跨角色上傳要 SRE 代為處理 · 流程卡住</p>
+      </div>
+      <div class="ls-pain">
+        <span class="ls-pain-ic">👀</span>
+        <h5>UI 只能看、不能操作<span class="ls-pain-vote">—</span></h5>
+        <p>現有 Hue 介面只能瀏覽，無法完成任何檔案管理動作</p>
+      </div>
+    </div>
+
+    <!-- Core value -->
+    <div class="reveal d3" style="margin-top:28px;padding:24px;border-radius:14px;background:linear-gradient(135deg,rgba(252,211,77,.1),rgba(76,183,130,.04));border:1px solid rgba(184,134,11,.25)">
+      <div style="color:#B8860B;font-size:11px;letter-spacing:3px;font-weight:700;margin-bottom:12px">✨ 核心價值</div>
+      <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:14px">
+        <div style="padding:14px;background:rgba(255,255,255,.7);border-radius:10px;border-left:3px solid #B8860B"><strong style="color:var(--text)">🗺 路徑有規劃</strong><br><span style="font-size:12px;color:var(--text-muted);line-height:1.6">Project 建立時由系統開通 <code style="font-family:'JetBrains Mono',monospace;color:var(--blue);font-size:11px">ls/{PID}/default/</code>，不靠人工慣例</span></div>
+        <div style="padding:14px;background:rgba(255,255,255,.7);border-radius:10px;border-left:3px solid #B8860B"><strong style="color:var(--text)">📦 一處存放</strong><br><span style="font-size:12px;color:var(--text-muted);line-height:1.6">上傳、下載、整理都在 LakeSpace 介面完成，CS 用同一個路徑讀寫</span></div>
+        <div style="padding:14px;background:rgba(255,255,255,.7);border-radius:10px;border-left:3px solid #B8860B"><strong style="color:var(--text)">↩ 操作可逆</strong><br><span style="font-size:12px;color:var(--text-muted);line-height:1.6">刪除先進垃圾桶 · 30 天內可還原 · 產品區刪除走 API 進同一套垃圾桶</span></div>
+        <div style="padding:14px;background:rgba(255,255,255,.7);border-radius:10px;border-left:3px solid #B8860B"><strong style="color:var(--text)">📊 用量看得見</strong><br><span style="font-size:12px;color:var(--text-muted);line-height:1.6">儀表板看使用率 · Top 5 資料夾 · 超過 60 天未更新的檔案</span></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== Section 15B · 24 Features MVP Scope ===== -->
+<section class="sec internal-only no-tag" id="ls-scope" data-topic="ls">
+  <div class="sec-inner">
+    <div class="sec-crumb">◆ LS·02 · MVP SCOPE ◆</div>
+    <h2 class="sec-h">24 Features · <em>5 模組 MVP</em></h2>
+    <p class="sec-sub">共 33 功能點 &mdash; <span class="blue">MVP 24 項（M1–M3）</span> · <span class="orange">後續評估 9 項</span></p>
+
+    <div class="reveal ls-scope">
+      <!-- F-00 -->
+      <div class="ls-mod">
+        <div class="ls-mod-head">
+          <span class="ls-mod-code">F-00 通用</span>
+          <span class="ls-mod-count">1 項</span>
+        </div>
+        <h5>介紹頁</h5>
+        <ul>
+          <li>LakeSpace 介紹頁</li>
+        </ul>
+      </div>
+      <!-- F-01 -->
+      <div class="ls-mod">
+        <div class="ls-mod-head">
+          <span class="ls-mod-code">F-01 檔案操作</span>
+          <span class="ls-mod-count">MVP 8 + 2</span>
+        </div>
+        <h5>File Operations</h5>
+        <ul>
+          <li>檔案瀏覽與搜尋</li>
+          <li>檔案上傳</li>
+          <li>檔案下載</li>
+          <li>移動、複製與重新命名</li>
+          <li>資料夾建立</li>
+          <li>資料夾權限設定</li>
+          <li>複製路徑</li>
+          <li>背景工作</li>
+          <li class="later">檔案預覽（後續）</li>
+          <li class="later">上傳掃毒（後續）</li>
+        </ul>
+      </div>
+      <!-- F-02 -->
+      <div class="ls-mod">
+        <div class="ls-mod-head">
+          <span class="ls-mod-code">F-02 垃圾桶</span>
+          <span class="ls-mod-count">6 項</span>
+        </div>
+        <h5>Recycle Bin</h5>
+        <ul>
+          <li>勾選移到垃圾桶</li>
+          <li>垃圾桶清單</li>
+          <li>單檔還原</li>
+          <li>多筆還原</li>
+          <li>到期真刪（30 天）</li>
+          <li>提前清除</li>
+        </ul>
+      </div>
+      <!-- F-03 -->
+      <div class="ls-mod">
+        <div class="ls-mod-head">
+          <span class="ls-mod-code">F-03 用量統計</span>
+          <span class="ls-mod-count">MVP 3 + 5</span>
+        </div>
+        <h5>Usage Metering</h5>
+        <ul>
+          <li>用量儀表板</li>
+          <li>告警門檻設定</li>
+          <li>每日批次掃描</li>
+          <li class="later">資料夾下鑽（後續）</li>
+          <li class="later">已關閉 Project 清單</li>
+          <li class="later">逾門檻告警</li>
+          <li class="later">成本分攤報表</li>
+          <li class="later">配額調整</li>
+        </ul>
+      </div>
+      <!-- F-06 -->
+      <div class="ls-mod">
+        <div class="ls-mod-head">
+          <span class="ls-mod-code">F-06 介接服務</span>
+          <span class="ls-mod-count">MVP 6 + 2</span>
+        </div>
+        <h5>Integration</h5>
+        <ul>
+          <li>IAM Project 同步開通</li>
+          <li>Initial API</li>
+          <li>HDFS &amp; HBase 路徑約定</li>
+          <li>產品區移到垃圾桶 API</li>
+          <li>產品區還原 API</li>
+          <li>產品區永久刪除 API</li>
+          <li class="later">REST API 上傳下載</li>
+          <li class="later">REST API 用量查詢</li>
+        </ul>
+      </div>
+    </div>
+
+    <!-- Scope summary -->
+    <div class="reveal d2" style="margin-top:22px;padding:18px 24px;border-radius:12px;background:rgba(255,255,255,.55);border:1px solid rgba(184,134,11,.2);display:flex;gap:28px;justify-content:center;flex-wrap:wrap;font-size:14px">
+      <div style="text-align:center"><div style="font-family:'Instrument Serif',serif;font-size:32px;color:#B8860B;line-height:1">5</div><div style="font-size:11px;color:var(--text-muted);letter-spacing:1px">模組</div></div>
+      <div style="text-align:center"><div style="font-family:'Instrument Serif',serif;font-size:32px;color:#B8860B;line-height:1">33</div><div style="font-size:11px;color:var(--text-muted);letter-spacing:1px">功能點</div></div>
+      <div style="text-align:center"><div style="font-family:'Instrument Serif',serif;font-size:32px;color:#15803D;line-height:1">24</div><div style="font-size:11px;color:var(--text-muted);letter-spacing:1px">MVP（M1–M3）</div></div>
+      <div style="text-align:center"><div style="font-family:'Instrument Serif',serif;font-size:32px;color:#64748B;line-height:1">9</div><div style="font-size:11px;color:var(--text-muted);letter-spacing:1px">後續評估</div></div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== Section 15C · 目標使用者 ===== -->
+<section class="sec internal-only no-tag" id="ls-users" data-topic="ls">
+  <div class="sec-inner">
+    <div class="sec-crumb">◆ LS·03 · TARGET USERS ◆</div>
+    <h2 class="sec-h">4 類使用者 × <em>要完成的事</em></h2>
+    <p class="sec-sub">LS 服務誰、<span class="blue">不服務誰</span> &mdash; 定義清楚才不會 scope creep</p>
+
+    <table class="reveal ls-users">
+      <thead>
+        <tr>
+          <th>使用者</th>
+          <th>要完成的事</th>
+          <th>來源</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>👤 DIP 使用者 <span style="font-size:11px;font-weight:400;color:var(--text-muted)">DA / DE · Project Operator</span></td>
+          <td>在 <code style="font-family:'JetBrains Mono',monospace;color:var(--blue)">ls/{PID}/</code> 上傳、下載、整理程式與資料 · CS Job 用同一個路徑讀寫 · 刪錯時自己從垃圾桶救回</td>
+          <td>訪談 6 位 · 核心群</td>
+        </tr>
+        <tr>
+          <td>👑 Project Admin</td>
+          <td>建立第一層資料夾 · 配資料夾權限 · 看用量與 Top 5 資料夾 · 設告警門檻 · 提前清除垃圾桶</td>
+          <td>Project 層治理</td>
+        </tr>
+        <tr>
+          <td>⚡ DIP Admin</td>
+          <td>從 <code style="font-family:'JetBrains Mono',monospace;color:var(--blue)">/ifs/hdfs/</code> 瀏覽所有產品層 · 產品區可下載/移垃圾桶/還原/提前清除 · <strong style="color:var(--text)">不開放寫入</strong></td>
+          <td>全平台治理</td>
+        </tr>
+        <tr>
+          <td>🔄 DIP 內部產品 <span style="font-size:11px;font-weight:400;color:var(--text-muted)">MVP：DBRG / CS</span></td>
+          <td>以 HDFS 直接讀寫 <code style="font-family:'JetBrains Mono',monospace;color:var(--blue)">{產品}/{PID}/</code> · DBRG / CS 的刪除與還原走產品區 API</td>
+          <td>下游產品整合</td>
+        </tr>
+      </tbody>
+      <tr class="no-row"><td>不服務 1</td><td colspan="2">SRE 維運的全域共用檔案（設定檔、JAR）—— 不屬於任何 Project</td></tr>
+      <tr class="no-row"><td>不服務 2</td><td colspan="2">SRE 代上傳的檔案 —— 跨角色流程不透過 LS</td></tr>
+      <tr class="no-row"><td>不服務 3</td><td colspan="2">未開發產品（OT / DF / QS / EDP / IDR / RG / EH / DC）—— 2027 Q3 後再評估進開發</td></tr>
+    </table>
+  </div>
+</section>
+
+<!-- ===== Section 15D · Before / After ===== -->
+<section class="sec internal-only no-tag" id="ls-ba" data-topic="ls">
+  <div class="sec-inner">
+    <div class="sec-crumb">◆ LS·04 · BEFORE / AFTER ◆</div>
+    <h2 class="sec-h">現在 vs <em>LakeSpace</em></h2>
+    <p class="sec-sub">5 個維度的差別 &mdash; <span class="orange">從「找 SRE」到「自助完成」</span></p>
+
+    <div class="reveal ls-ba">
+      <div class="ls-ba-col ls-ba-before">
+        <span class="ls-ba-tag">❌ 現在 · Before</span>
+        <h4>找 SRE · 下指令 · 救不回</h4>
+        <dl>
+          <dt>🗺 路徑</dt><dd>SRE 人工定義母目錄</dd>
+          <dt>🗑 刪除</dt><dd>Notebook 下指令，刪了救不回</dd>
+          <dt>📤 上傳</dt><dd>下指令，或請 SRE 代上傳</dd>
+          <dt>📊 用量</dt><dd>下指令查，等 SRE 通知</dd>
+          <dt>🔒 權限</dt><dd>SRE 處理</dd>
+        </dl>
+      </div>
+      <div class="ls-ba-col ls-ba-after">
+        <span class="ls-ba-tag">✅ LakeSpace · After</span>
+        <h4>自助介面 · 可逆 · 看得見</h4>
+        <dl>
+          <dt>🗺 路徑</dt><dd>Initial API 依 Project 自動開通</dd>
+          <dt>🗑 刪除</dt><dd>介面勾選，進垃圾桶，30 天內可還原</dd>
+          <dt>📤 上傳</dt><dd>介面拖曳上傳，依資料夾權限</dd>
+          <dt>📊 用量</dt><dd>儀表板顯示使用率、Top 5、未更新檔案</dd>
+          <dt>🔒 權限</dt><dd>Project Admin 在介面逐人設定</dd>
+        </dl>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== Section 15E · 5 Layer Architecture ===== -->
+<section class="sec internal-only no-tag" id="ls-arch" data-topic="ls">
+  <div class="sec-inner">
+    <div class="sec-crumb">◆ LS·05 · ARCHITECTURE ◆</div>
+    <h2 class="sec-h">5 層架構 · <em>本產品自建 4 模組</em></h2>
+    <p class="sec-sub">LakeSpace 位於 DIP <span class="blue">第三層（基礎存儲與運算核心）</span>，與 Data Forge、CS 同層並列</p>
+
+    <div class="reveal ls-arch">
+      <!-- Layer 1 Platform -->
+      <div class="ls-layer ls-layer-plat">
+        <div class="ls-layer-head">
+          <div class="ls-layer-tag">LAYER 01 · 平台層</div>
+          <div class="ls-layer-name">PLATFORM</div>
+        </div>
+        <div class="ls-layer-mods">
+          <span class="ls-layer-mod">🛡 IAM · Org/Folder/Project · 角色 · Service Account · Audit</span>
+          <span class="ls-layer-mod">🔔 DIP Notification · 跨產品通知頁</span>
+        </div>
+      </div>
+
+      <!-- Layer 2 Access -->
+      <div class="ls-layer ls-layer-access">
+        <div class="ls-layer-head">
+          <div class="ls-layer-tag">LAYER 02 · 使用者與介接層</div>
+          <div class="ls-layer-name">ACCESS</div>
+        </div>
+        <div class="ls-layer-mods">
+          <span class="ls-layer-mod build">📁 LakeSpace 介面（自建）</span>
+          <span class="ls-layer-mod build">🔌 REST API（自建）</span>
+          <span class="ls-layer-mod">🗂 HDFS URI · CS Job / DBRG / airflow 直接讀寫</span>
+          <span class="ls-layer-mod ext">NFS 掛載（MVP 不開放）</span>
+        </div>
+      </div>
+
+      <!-- Layer 3 Service (highlight) -->
+      <div class="ls-layer ls-layer-service">
+        <div class="ls-layer-head">
+          <div class="ls-layer-tag">LAYER 03 · 服務層 · 本產品核心</div>
+          <div class="ls-layer-name">SERVICE</div>
+        </div>
+        <div class="ls-layer-mods">
+          <span class="ls-layer-mod build">F-01 檔案操作</span>
+          <span class="ls-layer-mod build">F-02 垃圾桶</span>
+          <span class="ls-layer-mod build">F-03 用量統計</span>
+          <span class="ls-layer-mod build">F-06 介接服務</span>
+        </div>
+      </div>
+
+      <!-- Layer 4 Metadata -->
+      <div class="ls-layer ls-layer-meta">
+        <div class="ls-layer-head">
+          <div class="ls-layer-tag">LAYER 04 · Metadata</div>
+          <div class="ls-layer-name">METADATA</div>
+        </div>
+        <div class="ls-layer-mods">
+          <span class="ls-layer-mod">📋 PostgreSQL · LS metadata</span>
+          <span class="ls-layer-mod">🗄 HBase · 路徑/權限索引</span>
+        </div>
+      </div>
+
+      <!-- Layer 5 Storage -->
+      <div class="ls-layer ls-layer-store">
+        <div class="ls-layer-head">
+          <div class="ls-layer-tag">LAYER 05 · 底層儲存</div>
+          <div class="ls-layer-name">STORAGE</div>
+        </div>
+        <div class="ls-layer-mods">
+          <span class="ls-layer-mod">💾 Dell H7000 · OneFS · HDFS 協定（MVP 採用）</span>
+          <span class="ls-layer-mod ext">多協定（S3/SMB/NFS）· 容量 · Snapshot · 壓縮</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="reveal d2" style="margin-top:22px;padding:16px 20px;border-radius:10px;background:rgba(252,211,77,.08);border:1px solid rgba(184,134,11,.25);font-size:12.5px;color:var(--text-muted);line-height:1.75">
+      <strong style="color:var(--text)">📌 架構重心</strong>：H7000 提供基礎設施能力，LakeSpace 提供<strong style="color:#B8860B">使用者介面與管理機制</strong>（勾選移到垃圾桶、統一操作介面、用量可視化）——這三項 H7000 與三家雲端皆無現成解，<strong style="color:var(--text)">是本產品自建範疇</strong>。
+    </div>
+  </div>
+</section>
+
+<!-- ===== Section 15F · 跨產品整合 ===== -->
+<section class="sec internal-only no-tag" id="ls-integration" data-topic="ls">
+  <div class="sec-inner">
+    <div class="sec-crumb">◆ LS·06 · CROSS-PRODUCT INTEGRATION ◆</div>
+    <h2 class="sec-h">跨產品整合 <em>依賴關係</em></h2>
+    <p class="sec-sub">LS 不是孤島 &mdash; <span class="blue">與 IAM / CS / DBRG 的配合窗口</span></p>
+
+    <div class="reveal ls-int">
+      <!-- IAM -->
+      <div class="ls-int-card iam-int">
+        <div class="ls-int-head">
+          <div class="ls-int-ic">🛡</div>
+          <div>
+            <div class="ls-int-title">IAM 整合</div>
+            <div class="ls-int-sub">窗口 · Annie (IAM PO)</div>
+          </div>
+        </div>
+        <div class="ls-int-body">
+          <strong>Project 建立時</strong>IAM 呼叫 LS Initial API 建立 <code style="font-family:'JetBrains Mono',monospace;font-size:11px;color:var(--blue)">ls/{PID}/default/</code> 路徑<br><br>
+          <strong>角色與 Policy</strong>IAM 新增 LakeSpace 角色、寫入 policy · Ranger HDFS policy · DIP Admin 角色與產品區 policy
+          <div class="ls-int-when">✅ 已對齊</div>
+        </div>
+      </div>
+
+      <!-- CS -->
+      <div class="ls-int-card cs-int">
+        <div class="ls-int-head">
+          <div class="ls-int-ic">⚡</div>
+          <div>
+            <div class="ls-int-title">CS 整合</div>
+            <div class="ls-int-sub">窗口 · Eunice (CS 主責)</div>
+          </div>
+        </div>
+        <div class="ls-int-body">
+          <strong>路徑串接</strong>CS Job 以 HDFS 讀寫 <code style="font-family:'JetBrains Mono',monospace;font-size:11px;color:var(--blue)">cs/{PID}/</code>，使用者區用 <code style="font-family:'JetBrains Mono',monospace;font-size:11px;color:var(--blue)">ls/{PID}/default/</code><br><br>
+          <strong>刪除還原</strong>CS 改走產品區刪除、還原、永久刪除 API，不再直接下指令
+          <div class="ls-int-when">🏃 W6 · 11/23–11/27 完成路徑串接驗證</div>
+        </div>
+      </div>
+
+      <!-- DBRG -->
+      <div class="ls-int-card dbrg-int">
+        <div class="ls-int-head">
+          <div class="ls-int-ic">🔄</div>
+          <div>
+            <div class="ls-int-title">DBRG 整合</div>
+            <div class="ls-int-sub">窗口 · Vivi (DBRG PO)</div>
+          </div>
+        </div>
+        <div class="ls-int-body">
+          <strong>刪除 API 串接</strong>DBRG Vivi 改走 LS 產品區刪除 API，不再直接下指令<br><br>
+          <strong>W4 窗口確認</strong>11/9–11/13 Vivi 需確認改走 API 的窗口
+          <div class="ls-int-when">📋 W8 · 12/7–12/11 完成串接</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Team -->
+    <div class="reveal d2" style="margin-top:28px;padding:22px;border-radius:14px;background:linear-gradient(135deg,rgba(252,211,77,.08),rgba(255,255,255,.65));border:1px solid rgba(184,134,11,.25)">
+      <div style="color:#B8860B;font-size:11px;letter-spacing:3px;font-weight:700;margin-bottom:12px">👥 LS TEAM</div>
+      <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:12px">
+        <div style="padding:12px;background:rgba(255,255,255,.65);border-radius:8px;border-left:3px solid #B8860B"><strong style="color:var(--text);font-size:13px">Stefani</strong><div style="font-size:11px;color:var(--text-muted);margin-top:2px">PO · 產品範疇 / PRD / 跨團隊依賴 / 時程</div></div>
+        <div style="padding:12px;background:rgba(255,255,255,.65);border-radius:8px;border-left:3px solid #B8860B"><strong style="color:var(--text);font-size:13px">James</strong><div style="font-size:11px;color:var(--text-muted);margin-top:2px">BE · 主責前端 UI / 5 週開發範圍 / metadata</div></div>
+        <div style="padding:12px;background:rgba(255,255,255,.65);border-radius:8px;border-left:3px solid #B8860B"><strong style="color:var(--text);font-size:13px">Jeff</strong><div style="font-size:11px;color:var(--text-muted);margin-top:2px">SRE · 環境 / HDFS 路徑 / 跨產品串接</div></div>
+        <div style="padding:12px;background:rgba(255,255,255,.65);border-radius:8px;border-left:3px solid #B8860B"><strong style="color:var(--text);font-size:13px">Sally</strong><div style="font-size:11px;color:var(--text-muted);margin-top:2px">UIUX · Sitemap → Wireflow → Mockup（11/13 定稿）</div></div>
+        <div style="padding:12px;background:rgba(255,255,255,.65);border-radius:8px;border-left:3px solid #B8860B"><strong style="color:var(--text);font-size:13px">Gammy</strong><div style="font-size:11px;color:var(--text-muted);margin-top:2px">FE · 支援 / 技術可行性 / 工時估算</div></div>
+        <div style="padding:12px;background:rgba(255,255,255,.65);border-radius:8px;border-left:3px solid #B8860B"><strong style="color:var(--text);font-size:13px">Brian</strong><div style="font-size:11px;color:var(--text-muted);margin-top:2px">QA · 測試策略 / P0 Journey / STG 驗證</div></div>
+        <div style="padding:12px;background:rgba(255,255,255,.65);border-radius:8px;border-left:3px solid #B8860B"><strong style="color:var(--text);font-size:13px">Hsuping</strong><div style="font-size:11px;color:var(--text-muted);margin-top:2px">DA · 成效指標 / 儀表板 / 指標 SQL</div></div>
+      </div>
+      <div style="margin-top:14px;padding:12px 16px;background:rgba(74,108,247,.06);border-radius:8px;font-size:11.5px;color:var(--text-muted);line-height:1.6">
+        🕒 <strong style="color:var(--text)">團隊運作</strong>：每週二 PO 向主管回報 · 週二～四 10–15 分鐘站立會 · 固定時段 週二 12:30、週三 11:00、週四 12:00
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== DL·00 · 本週焦點 (new v39) ===== -->
+<section class="sec internal-only no-tag" id="this-week" data-topic="delivery">
+  <div class="sec-inner">
+    <div class="sec-crumb">◆ DL·00 · THIS WEEK ◆</div>
+    <h2 class="sec-h reveal">本週焦點 · <em>Week 46 · 11/10–11/16</em></h2>
+    <p class="sec-sub reveal d1">三產品同步進行中 &mdash; <span class="blue">主管週會打開直接看</span></p>
+
+    <div class="reveal d2" style="display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:14px">
+      <!-- IAM this week -->
+      <div style="padding:20px;border-radius:14px;background:linear-gradient(135deg,rgba(125,211,252,.14),rgba(255,255,255,.65));border:1px solid rgba(125,211,252,.4);border-top:4px solid var(--blue)">
+        <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:10px">
+          <div style="font-family:'Noto Serif TC',serif;font-size:16px;font-weight:900;color:var(--text)">🛡 IAM</div>
+          <span style="padding:3px 9px;border-radius:10px;background:rgba(74,108,247,.15);color:var(--blue);font-size:10px;font-weight:700">BUILD · W46</span>
+        </div>
+        <div style="font-size:12.5px;color:var(--text);line-height:1.75">
+          <strong>本週 (11/10–11/16)</strong><br>
+          · Web AuthZ Flow 測試收尾（11/13 due）<br>
+          · FE 動態路由串接（11/11–11/16）<br>
+          · UAT 使用者邀請流程<br><br>
+          <strong style="color:var(--blue)">11/27 里程碑</strong>：15 Features 最終驗收
+        </div>
+      </div>
+
+      <!-- CS this week -->
+      <div style="padding:20px;border-radius:14px;background:linear-gradient(135deg,rgba(244,114,182,.12),rgba(255,255,255,.65));border:1px solid rgba(244,114,182,.4);border-top:4px solid #C2185B">
+        <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:10px">
+          <div style="font-family:'Noto Serif TC',serif;font-size:16px;font-weight:900;color:var(--text)">⚡ CS</div>
+          <span style="padding:3px 9px;border-radius:10px;background:rgba(194,24,91,.15);color:#C2185B;font-size:10px;font-weight:700">DESIGN · W4-5</span>
+        </div>
+        <div style="font-size:12.5px;color:var(--text);line-height:1.75">
+          <strong>本週 (11/10–11/16)</strong><br>
+          · <strong style="color:#C2185B">CP1 ✅ 11/12</strong> Product Brief 定版<br>
+          · Functional Map 執行中（11/9–11/27）<br>
+          · 11/16 跨 PO 第一輪對齊啟動<br><br>
+          <strong style="color:#C2185B">下個節點</strong>：11/27 Functional Map Finalize
+        </div>
+      </div>
+
+      <!-- LS this week -->
+      <div style="padding:20px;border-radius:14px;background:linear-gradient(135deg,rgba(252,211,77,.14),rgba(255,255,255,.65));border:1px solid rgba(184,134,11,.4);border-top:4px solid #B8860B">
+        <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:10px">
+          <div style="font-family:'Noto Serif TC',serif;font-size:16px;font-weight:900;color:var(--text)">📁 LS</div>
+          <span style="padding:3px 9px;border-radius:10px;background:rgba(184,134,11,.15);color:#B8860B;font-size:10px;font-weight:700">BUILD · W4</span>
+        </div>
+        <div style="font-size:12.5px;color:var(--text);line-height:1.75">
+          <strong>本週 (11/11–11/13)</strong><br>
+          · <strong style="color:#B8860B">W4 功能凍結</strong>（11/11–11/13）<br>
+          · UIUX Sally Mockup 定稿（11/13）<br>
+          · BE James 5 週開發範圍評估<br><br>
+          <strong style="color:#B8860B">下個節點</strong>：11/27 W6 末 核心流程打通
+        </div>
+      </div>
+
+      <!-- DBRG this week -->
+      <div style="padding:20px;border-radius:14px;background:linear-gradient(135deg,rgba(103,232,249,.1),rgba(255,255,255,.65));border:1px solid rgba(103,232,249,.4);border-top:4px solid #0891B2">
+        <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:10px">
+          <div style="font-family:'Noto Serif TC',serif;font-size:16px;font-weight:900;color:var(--text)">🔄 DBRG</div>
+          <span style="padding:3px 9px;border-radius:10px;background:rgba(8,145,178,.15);color:#0891B2;font-size:10px;font-weight:700">配合中</span>
+        </div>
+        <div style="font-size:12.5px;color:var(--text);line-height:1.75">
+          <strong>本週 (11/9–11/13)</strong><br>
+          · <strong style="color:#D86848">⏰ Vivi 需在 11/13 前</strong>確認「DBRG 刪除改走 LS API」窗口<br>
+          · 11/16 開始配合 CS 跨 PO 第一輪<br><br>
+          <strong style="color:#0891B2">下個節點</strong>：12/7 W8 DBRG 完成 LS API 串接
+        </div>
+      </div>
+    </div>
+
+    <!-- Cross-team watchouts -->
+    <div class="reveal d3" style="margin-top:22px;padding:18px 22px;border-radius:12px;background:linear-gradient(135deg,rgba(255,138,101,.08),rgba(248,113,113,.04));border:1px solid rgba(255,138,101,.3);border-left:4px solid #FF8A65">
+      <div style="color:#D86848;font-size:11px;letter-spacing:3px;font-weight:700;margin-bottom:8px">⚠ 本週需要注意</div>
+      <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:14px;font-size:12.5px;color:var(--text);line-height:1.7">
+        <div><strong style="color:#D86848">Sally（UIUX）兩頭忙</strong>：LS W4 Mockup 定稿（11/13） × IAM 持續 UX 調整。Mockup 定稿為 blocking item。</div>
+        <div><strong style="color:#D86848">Brian（QA）準備進入高峰期</strong>：IAM 11/27 驗收 + LS W6 核心流程打通，兩個同時 11/27 卡住。</div>
+        <div><strong style="color:#D86848">Vivi（DBRG）本週有決定要做</strong>：11/13 前要確認改走 API 窗口，否則會卡 LS 12/7 的串接。</div>
       </div>
     </div>
   </div>
@@ -4374,7 +5136,7 @@ body.ext .topic-tab[data-topic="delivery"]{display:none}
 
 <section class="sec internal-only no-tag" id="product-progress" data-topic="delivery">
   <div class="sec-inner">
-    <div class="sec-crumb">◆ 15 · PRODUCT GANTT ◆</div>
+    <div class="sec-crumb">◆ DL·01 · PRODUCT GANTT ◆</div>
     <h2 class="sec-h">四產品 <em>Q4 2026 → Q1 2027 甘特圖</em></h2>
     <p class="sec-sub">6 個月時間軸 &times; 4 條產品線 &mdash; <span class="blue">點產品名可展開細節</span></p>
 
@@ -4384,7 +5146,7 @@ body.ext .topic-tab[data-topic="delivery"]{display:none}
         <div>
           <div style="color:var(--blue);font-size:11px;letter-spacing:3px;font-weight:700;margin-bottom:4px">📊 PRODUCT GANTT · 2026 Q4 → 2027 Q1</div>
           <div class="pg-head-title">四產品時間軸</div>
-          <div class="pg-head-sub">今天：2026-11-12 · 資料擷取：ClickUp（IAM）+ WBS（CS）· DBRG / LS 進度待追補</div>
+          <div class="pg-head-sub">今天：2026-11-13 · 資料擷取：ClickUp（IAM）+ WBS（CS / LS）· DBRG 從他方 repo 推論跨產品配合項目</div>
         </div>
         <div class="pg-legend">
           <div class="pg-legend-item"><span class="pg-legend-swatch" style="background:linear-gradient(135deg,#22C55E,#15803D)"></span>已完成</div>
@@ -4494,13 +5256,13 @@ body.ext .topic-tab[data-topic="delivery"]{display:none}
           </div>
         </div>
 
-        <!-- Row 3 · DBRG -->
+        <!-- Row 3 · DBRG (v36 · 從跨產品 repo 推論補齊已知配合項目) -->
         <div class="pg-row" id="pgrow-dbrg">
           <div class="pg-row-main">
             <div class="pg-row-label" onclick="pgToggle('pgrow-dbrg')">
               <div class="pg-pname">🔄 DBRG</div>
-              <div class="pg-stage" style="color:#64748B">資料待追補</div>
-              <div class="pg-status" style="color:#64748B">❓ 待 PO 提供</div>
+              <div class="pg-stage" style="color:#0891B2">LIVE + 配合中</div>
+              <div class="pg-status" style="color:#B8860B">🟡 推論自他方 repo</div>
               <div class="pg-expand">▾ 點擊展開</div>
             </div>
             <div class="pg-lane">
@@ -4512,18 +5274,31 @@ body.ext .topic-tab[data-topic="delivery"]{display:none}
                 <div class="pg-lane-cell"></div>
                 <div class="pg-lane-cell"></div>
               </div>
-              <div class="pg-bar pg-planned" style="left:38%;width:10%" title="12 月配合 IAM × DBRG E2E 5/5">IAM E2E 配合</div>
-              <div class="pg-bar pg-pending" style="left:1%;width:36%" title="Oct/Nov 進度待追補">待追補</div>
-              <div class="pg-bar pg-pending" style="left:49%;width:50%" title="Q1 2027 規劃待追補">待追補</div>
+              <!-- Nov: 11/9-11/13 W4 配合 LS 確認刪除改走 API -->
+              <div class="pg-bar pg-active" style="left:18%;width:6%" title="11/9–11/13 配合 LS W4 · Vivi 確認刪除改走 API 窗口">LS 窗口確認</div>
+              <!-- Nov: 11/16-11/27 配合 CS 跨 PO 第一輪 -->
+              <div class="pg-bar pg-planned" style="left:25%;width:7%" title="11/16–11/27 配合 CS 跨 PO 第一輪對齊">CS 對齊 Rd1</div>
+              <!-- Dec: 12/1-12/8 配合 CS 跨 PO 第二輪 + 12/7-12/11 W8 DBRG 完成 LS API 串接 + 12/下 IAM×DBRG E2E 5/5 -->
+              <div class="pg-bar pg-planned" style="left:33.5%;width:14%" title="12 月：CS 跨 PO 第二輪 · 完成 LS API 串接（W8） · IAM × DBRG E2E 5/5">LS 串接 · IAM E2E</div>
+              <!-- Jan+: 配合 LS 上線後走新刪除 API + 待追補 -->
+              <div class="pg-bar pg-pending" style="left:49%;width:50%" title="Q1 2027 自身 feature 規劃待 DBRG Vivi 提供">Q1 規劃待追補</div>
+              <!-- Pending stripes for Oct -->
+              <div class="pg-bar pg-pending" style="left:1%;width:16%" title="Oct 進度待追補">待追補</div>
+              <!-- CheckPoints from cross-ref -->
+              <div class="pg-cp" style="left:23%" title="11/13 · 配合 LS W4 · 確認刪除改走 API 窗口">LS</div>
+              <div class="pg-cp" style="left:39%" title="12/7–12/11 · W8 · 完成 LS API 串接（DBRG Vivi 負責）">W8</div>
+              <div class="pg-cp" style="left:47%" title="12/下 · IAM × DBRG E2E 5/5 驗證">E2E</div>
               <div class="pg-now-line" style="left:23%"></div>
             </div>
           </div>
           <div class="pg-detail">
             <div class="pg-detail-inner">
-              <div class="pg-dcard"><strong>已知定位</strong>全平台資料入出口閘道（即時 + 批次）· Kafka topic 暫存 3 天</div>
-              <div class="pg-dcard"><strong>Q4 配合項目</strong>12 月配合 IAM × DBRG E2E 5/5 · 配合 CS 跨 PO 對齊</div>
-              <div class="pg-dcard"><strong>待追補</strong>Q4 開發 feature · 目前 Stage · 團隊成員 · 近期 incident</div>
-              <div class="pg-dcard"><strong>追補來源</strong>DBRG PO · ClickUp DBRG Board（若有）</div>
+              <div class="pg-dcard"><strong>LIVE 服務（既有）</strong>全平台唯一資料入出口閘道（即時 + 批次）· Kafka topic 暫存 3 天 · 寫入 LS / DW / OmniTag</div>
+              <div class="pg-dcard"><strong>本週焦點（推論）</strong>11/9–11/13 Vivi 需在 LS W4 功能凍結前確認「DBRG 刪除改走 LS API」窗口</div>
+              <div class="pg-dcard"><strong>11 月</strong>配合 LS W4 確認窗口（11/13）· 配合 CS 跨 PO 第一輪對齊（11/16–11/27）</div>
+              <div class="pg-dcard"><strong>12 月</strong>配合 CS 跨 PO 第二輪（12/1–12/8）· <strong style="color:var(--text)">W8 完成 LS API 串接（12/7–12/11）</strong> · IAM × DBRG E2E 5/5</div>
+              <div class="pg-dcard"><strong>Q1 2027</strong>LS MVP 上線（1/15）後 DBRG 走新刪除 API · 自身 feature 規劃待 Vivi 補</div>
+              <div class="pg-dcard"><strong>資料來源（推論）</strong>IAM ClickUp（E2E goal）· LS WBS 1.2.4.4（DBRG Vivi 12/7–12/11 串接）· LS Z-2603 §8.1（Vivi W4 確認窗口）· CS WBS §3.4/§4.3（跨 PO 對齊）<br><em style="color:#D86848">⚠ 這張 lane 是從其他產品 repo 推論出的「DBRG 必須配合的事」，不是 DBRG 自己的 Roadmap。待 Vivi 補充 DBRG 自身 Q4/Q1 feature 規劃。</em></div>
             </div>
           </div>
         </div>
@@ -4533,8 +5308,8 @@ body.ext .topic-tab[data-topic="delivery"]{display:none}
           <div class="pg-row-main">
             <div class="pg-row-label" onclick="pgToggle('pgrow-ls')">
               <div class="pg-pname">📁 LS</div>
-              <div class="pg-stage" style="color:#64748B">資料待追補</div>
-              <div class="pg-status" style="color:#64748B">❓ 待 PO 提供</div>
+              <div class="pg-stage" style="color:#B8860B">BUILD · MVP</div>
+              <div class="pg-status" style="color:#15803D">🟢 On Track</div>
               <div class="pg-expand">▾ 點擊展開</div>
             </div>
             <div class="pg-lane">
@@ -4546,18 +5321,36 @@ body.ext .topic-tab[data-topic="delivery"]{display:none}
                 <div class="pg-lane-cell"></div>
                 <div class="pg-lane-cell"></div>
               </div>
-              <div class="pg-bar pg-planned" style="left:19%;width:29%" title="11/16–12/8 配合 CS 跨 PO 對齊">配合 CS 跨 PO 對齊</div>
-              <div class="pg-bar pg-pending" style="left:1%;width:16%" title="Oct 進度待追補">待追補</div>
-              <div class="pg-bar pg-pending" style="left:49%;width:50%" title="Q1 2027 待追補">待追補</div>
+              <!-- Oct: Kickoff 10/8 + 規劃與設計 10/19-11/13 (跨越 Oct 後半 + Nov 前半) -->
+              <div class="pg-bar pg-done" style="left:8%;width:12%" title="10/8 Kickoff + 10/19–11/13 規劃與設計">Kickoff + 規劃</div>
+              <!-- Nov: 核心流程打通 11/13-11/27 (W4-W6) -->
+              <div class="pg-bar pg-active" style="left:22%;width:12%" title="11/13–11/27 核心流程打通（W4 功能凍結 → W6 末）">核心流程打通</div>
+              <!-- Dec: 開發完成 + 整合 11/27-12/18 (W6-W9) -->
+              <div class="pg-bar pg-planned" style="left:35%;width:14%" title="11/27–12/18 開發完成 + 整合緩衝（W8 末 12/11 · W9 D3 12/16 收斂）">開發完成 + 整合</div>
+              <!-- Jan: 測試上線 12/21-1/29 -->
+              <div class="pg-bar pg-planned" style="left:50%;width:16%" title="12/21–1/29 測試 + STG 簽核 1/7 + MVP 上線 1/15 + 觀察期 Retro">STG + MVP 上線</div>
+              <!-- Feb: 對外上線 -->
+              <div class="pg-bar pg-planned" style="left:67%;width:10%" title="2 月初對外上線">2 月初對外上線</div>
+              <!-- CheckPoints -->
+              <div class="pg-cp pg-cp-done" style="left:8%" title="10/8 · Kickoff">K</div>
+              <div class="pg-cp pg-cp-done" style="left:20.5%" title="11/6 · W3 末 需求端確認產品雛形">W3</div>
+              <div class="pg-cp" style="left:23.5%" title="11/13 · W4 功能凍結、UIUX 定稿">W4</div>
+              <div class="pg-cp" style="left:31%" title="11/27 · W6 末 核心流程打通">W6</div>
+              <div class="pg-cp" style="left:39%" title="12/11 · W8 末 功能開發完成 + OneFS 環境設定">W8</div>
+              <div class="pg-cp" style="left:51%" title="1/7 · STG 簽核">STG</div>
+              <div class="pg-cp" style="left:54%" title="1/15 · MVP 內部上線">15</div>
               <div class="pg-now-line" style="left:23%"></div>
             </div>
           </div>
           <div class="pg-detail">
             <div class="pg-detail-inner">
-              <div class="pg-dcard"><strong>已知定位</strong>底層資料儲存 · 全平台檔案存儲底座 · 底層 H7000 / HDFS</div>
-              <div class="pg-dcard"><strong>Q4 配合項目</strong>配合 CS 跨 PO 對齊（Project 資源池 × Tier × 配額）· D-101：儲存配額歸 LS 管</div>
-              <div class="pg-dcard"><strong>待追補</strong>容量使用率 % · Q4 擴容計畫 · 目前 Stage · 團隊成員</div>
-              <div class="pg-dcard"><strong>追補來源</strong>LS PO · 容量監控 Dashboard</div>
+              <div class="pg-dcard"><strong>本週焦點（W4）</strong>功能凍結、拆期判斷（11/11–11/13）· UIUX Sally 定稿（11/13）· BE 評估 5 週開發範圍</div>
+              <div class="pg-dcard"><strong>MVP Scope（24 項）</strong>F-00 介紹頁 ×1 · F-01 檔案操作 ×8 · F-02 垃圾桶 ×6 · F-03 用量統計 ×3 · F-06 介接服務 ×6</div>
+              <div class="pg-dcard"><strong>關鍵里程碑</strong>11/27 核心流程打通（W6）· 12/11 開發完成（W8）· 1/7 STG 簽核 · <strong style="color:var(--text)">1/15 MVP 上線</strong></div>
+              <div class="pg-dcard"><strong>對外時程</strong>2027 年 2 月初對外上線（含 1/18–1/29 觀察期 Retro）</div>
+              <div class="pg-dcard"><strong>團隊</strong>Stefani (PO) · James (BE 主責含前端) · Jeff (SRE) · Gammy (FE 支援) · Brian (QA) · Sally (UIUX) · Hsuping (DA)</div>
+              <div class="pg-dcard"><strong>跨團隊依賴</strong>IAM Annie（Project 建立呼叫 LS Initial API）· CS Eunice（W6 路徑串接）· DBRG Vivi（W8 完成 API 串接）</div>
+              <div class="pg-dcard"><strong>資料來源</strong>LS Repo · Z-2603 Kickoff（10/08）· WBS 完整規格 · 文件已定版「狀態: 已撰寫」</div>
             </div>
           </div>
         </div>
@@ -4566,7 +5359,7 @@ body.ext .topic-tab[data-topic="delivery"]{display:none}
 
       <div style="margin-top:18px;padding:14px 18px;background:rgba(255,255,255,.65);border-radius:10px;border:1px solid rgba(74,108,247,.15);font-size:12px;color:var(--text-muted);line-height:1.7">
         <strong style="color:var(--text)">📌 粒度統一說明</strong>：四條產品線用同一視覺語言（條狀 = 階段 / 圓點 = CheckPoint / 斜線 = 待追補）。
-        IAM 來自 ClickUp 真實任務（45 tasks）· CS 來自 Eric 的 WBS（59 項 · CP1→CP4 完整規劃）· DBRG · LS 僅先放已知的「跨產品配合項目」，詳細 Stage 與月進度待 Eunice 追補後更新。
+        🛡 IAM 來自 ClickUp 真實任務（45 tasks · Week 級）· ⚡ CS 來自 Eric WBS（59 項 · CheckPoint 級）· 📁 LS 來自 Stefani WBS（24 Features · Week W3–W9 級）· 🔄 DBRG 從 IAM / LS / CS repo 交叉推論出 Vivi 必須配合的時點（W4 LS 窗口 · W8 LS API 串接 · 12 月 IAM E2E），<strong style="color:#D86848">非 DBRG 自身 Roadmap</strong>，待 Vivi 補充 Q4/Q1 feature。
       </div>
     </div>
 
@@ -4661,36 +5454,69 @@ body.ext .topic-tab[data-topic="delivery"]{display:none}
               </td>
             </tr>
 
-            <!-- DBRG Row -->
+            <!-- DBRG Row (v36 · 推論自其他 repo 的跨產品配合項目) -->
             <tr>
-              <td class="stg-th-prod">🔄 DBRG<br><span style="font-size:10px;font-weight:400;color:#64748B;font-family:'JetBrains Mono',monospace">待追補</span></td>
-              <td class="stg-cell stg-pending">待 DBRG PO 提供</td>
+              <td class="stg-th-prod">🔄 DBRG<br><span style="font-size:10px;font-weight:400;color:#0891B2;font-family:'JetBrains Mono',monospace">LIVE + 配合</span></td>
               <td class="stg-cell stg-active">
-                <span class="stg-date">配合 IAM × DBRG E2E</span>
-                <strong>IAM 整合驗證</strong>
-                12 月配合 IAM 做 E2E 5/5 測試
+                <span class="stg-date">W4 · 11/9–11/13 · W5–W6 · 11/16–11/27</span>
+                <strong>LS W4 窗口確認 + CS 跨 PO 第一輪</strong>
+                <ul>
+                  <li>Vivi 在 LS 功能凍結前（11/13）確認「刪除改走 LS API」窗口</li>
+                  <li>配合 CS 跨 PO 第一輪對齊</li>
+                </ul>
+                <span class="stg-tag" style="background:rgba(184,134,11,.15);color:#B8860B">推論自 LS / CS repo</span>
               </td>
-              <td class="stg-cell stg-pending">待 DBRG PO 提供</td>
-              <td class="stg-cell stg-pending">待 DBRG PO 提供</td>
-              <td class="stg-cell stg-pending">待 DBRG PO 提供</td>
+              <td class="stg-cell stg-active">
+                <span class="stg-date">W7–W9 · 12/1–12/18</span>
+                <strong>LS API 串接 + IAM E2E</strong>
+                <ul>
+                  <li>12/1–12/8 CS 跨 PO 第二輪</li>
+                  <li><strong>12/7–12/11（W8） DBRG 完成與 LS API 串接</strong></li>
+                  <li>12 月下 IAM × DBRG E2E 5/5 驗證</li>
+                </ul>
+                <span class="stg-tag" style="background:rgba(184,134,11,.15);color:#B8860B">推論自 LS WBS 1.2.4.4</span>
+              </td>
+              <td class="stg-cell stg-active">
+                <span class="stg-date">1/15 後</span>
+                <strong>LS 新刪除 API 正式啟用</strong>
+                LS MVP 上線後 DBRG 走新 API 操作產品區檔案
+              </td>
+              <td class="stg-cell stg-pending">自身 feature 待 Vivi 補</td>
+              <td class="stg-cell stg-pending">自身 feature 待 Vivi 補</td>
             </tr>
 
             <!-- LS Row -->
             <tr>
-              <td class="stg-th-prod">📁 LS<br><span style="font-size:10px;font-weight:400;color:#64748B;font-family:'JetBrains Mono',monospace">待追補</span></td>
+              <td class="stg-th-prod">📁 LS<br><span style="font-size:10px;font-weight:400;color:var(--text-muted);font-family:'JetBrains Mono',monospace">BUILD</span></td>
+              <td class="stg-cell stg-empty">—<br><span style="font-size:10px;color:var(--text-dim)">W4 功能凍結 · UIUX 定稿（11/13）</span></td>
               <td class="stg-cell stg-active">
-                <span class="stg-date">11/16–11/27</span>
-                <strong>配合 CS 跨 PO 第一輪對齊</strong>
-                Project 資源池 × Tier × 配額分配討論
+                <span class="stg-date">W6–W9 · 11/27–12/18</span>
+                <strong>核心流程打通 + 開發完成</strong>
+                <ul>
+                  <li>W6 末 核心流程打通</li>
+                  <li>W8 末 功能開發完成 + OneFS 環境</li>
+                  <li>W9 D3（12/16）收斂不進新功能</li>
+                </ul>
+                <span class="stg-tag">尚未到 STG · 準備中</span>
               </td>
-              <td class="stg-cell stg-active">
-                <span class="stg-date">12/1–12/8</span>
-                <strong>配合 CS 跨 PO 第二輪對齊</strong>
-                PO commit 介面 + 時程
+              <td class="stg-cell stg-ship">
+                <span class="stg-date">1/7 STG 簽核 · 1/12–15 MVP 上線</span>
+                <strong>24 項 Features 全上 STG → PROD</strong>
+                <ul>
+                  <li>F-00 LakeSpace 介紹頁</li>
+                  <li>F-01 檔案操作（瀏覽 / 上傳 / 下載 / 移動複製 / 資料夾 / 權限 / 複製路徑）×8</li>
+                  <li>F-02 垃圾桶（勾選 / 清單 / 單筆多筆還原 / 到期真刪 / 提前清除）×6</li>
+                  <li>F-03 用量統計（儀表板 / 告警門檻 / 每日批次）×3</li>
+                  <li>F-06 介接服務（IAM 同步 / Initial API / HDFS 路徑約定 / DBRG CS 刪除還原）×6</li>
+                </ul>
+                <span class="stg-tag" style="background:rgba(76,183,130,.15);color:#15803D">MVP 全部上線</span>
               </td>
-              <td class="stg-cell stg-pending">待 LS PO 提供</td>
-              <td class="stg-cell stg-pending">待 LS PO 提供</td>
-              <td class="stg-cell stg-pending">待 LS PO 提供</td>
+              <td class="stg-cell stg-milestone">
+                <span class="stg-date">1/18–1/29 觀察期 · 2 月初對外</span>
+                <strong>觀察期 Retro + 對外上線</strong>
+                內部穩定性觀察 · Retro 收 bug · 2 月初對外正式上線
+              </td>
+              <td class="stg-cell stg-empty">—<br><span style="font-size:10px;color:var(--text-dim)">已對外上線</span></td>
             </tr>
           </tbody>
         </table>
@@ -4702,13 +5528,21 @@ body.ext .topic-tab[data-topic="delivery"]{display:none}
         <span style="color:#15803D;font-weight:700">綠框</span> = 有新 feature 上 STG 給內部使用者操作 ·
         <span style="color:var(--blue);font-weight:700">藍框</span> = 跨產品配合項目（沒有新 feature 但有事情做）·
         <span style="color:#D86848;font-weight:700">橘框</span> = PROD / Launch 里程碑 ·
+        <span style="color:#B8860B;font-weight:700">黃 tag</span> = 推論自其他 repo，待 PO 確認 ·
         <span style="color:#64748B;font-weight:700">斜線</span> = 待 PO 補資料 ·
         「—」= 該月在前期（Design / Dev 準備），不會上 STG
       </div>
 
-      <!-- Key insight -->
-      <div style="margin-top:12px;padding:14px 18px;background:rgba(74,108,247,.06);border-radius:10px;border-left:3px solid var(--blue);font-size:12.5px;color:var(--text-muted);line-height:1.75">
-        💡 <strong style="color:var(--text)">關鍵觀察</strong>：IAM 和 CS 的 STG 交付時間<strong style="color:var(--text)">沒有重疊</strong>（IAM 11 月交完 → CS 1 月才開始）→ QA（Brian）資源可以順接 · UIUX（Sally）也不會兩邊卡。這是 PM 排期上刻意的健康設計。
+      <!-- Key insight (updated v36 · 3-product staggered delivery) -->
+      <div style="margin-top:12px;padding:14px 18px;background:linear-gradient(135deg,rgba(74,108,247,.08),rgba(76,183,130,.04));border-radius:10px;border-left:3px solid var(--blue);font-size:12.5px;color:var(--text-muted);line-height:1.75">
+        💡 <strong style="color:var(--text)">PM 專業觀察 · 三產品錯開交付非常健康</strong><br>
+        <strong style="color:var(--text)">11 月</strong>：IAM 15 Features 上 STG + LS W4 功能凍結 →
+        <strong style="color:var(--text)">12 月</strong>：IAM PROD（12/29）+ LS W6→W9 開發 →
+        <strong style="color:var(--text)">1 月</strong>：LS MVP 上線（1/15）+ CS Sprint 1-2 STG →
+        <strong style="color:var(--text)">2–3 月</strong>：LS 對外上線 + CS Sprint 3-4 → CS 3/31 dogfooding
+        <br><br>
+        <strong style="color:#15803D">共享資源不打架</strong>：Brian (QA)、Sally (UIUX)、Gammy (FE) 同時支援 IAM / LS / CS，但三產品的「密集測試週」錯開 →
+        <span style="color:var(--text);font-weight:700">IAM 11/下 → LS 12/下–1/初 → CS 2/下–3/初</span>，PM 排期上刻意的健康設計。
       </div>
     </div>
 
@@ -4725,7 +5559,7 @@ body.ext .topic-tab[data-topic="delivery"]{display:none}
 <!-- ===== v4.5 SECTION 16 · Phase 1 Delivery Roadmap (INTERNAL ONLY) ===== -->
 <section class="sec internal-only no-tag" id="roadmap" data-topic="delivery">
   <div class="sec-inner">
-    <div class="sec-crumb">◆ 16 · DELIVERY ROADMAP ◆</div>
+    <div class="sec-crumb">◆ DL·02 · DELIVERY ROADMAP ◆</div>
     <h2 class="sec-h">IAM Phase 1 <em>10–12 月交付計畫</em></h2>
     <p class="sec-sub">6 職能 × 3 月份 &mdash; <span class="blue">12/15 上線目標</span></p>
 
@@ -4832,7 +5666,7 @@ body.ext .topic-tab[data-topic="delivery"]{display:none}
 
 <script>
 /* ============ v4.6 · TOPIC TABS · 階層式 sitemap ============ */
-const TOPIC_LIST = ['overview','iam','cs','delivery'];
+const TOPIC_LIST = ['overview','iam','cs','ls','delivery'];
 const TOPIC_NAMES = {all:'📍 全部',overview:'🏠 總覽',iam:'🛡 IAM & Access',cs:'⚡ Compute Studio',delivery:'📅 Delivery'};
 
 function setTopic(topic, skipHash) {
@@ -4866,7 +5700,7 @@ function setTopic(topic, skipHash) {
 }
 
 function updateTopicCounts() {
-  const counts = {overview:0, iam:0, cs:0, delivery:0};
+  const counts = {overview:0, iam:0, cs:0, ls:0, delivery:0};
   const isExt = document.body.classList.contains('ext');
   document.querySelectorAll('.sec[data-topic]').forEach(sec => {
     const t = sec.dataset.topic;
@@ -5331,39 +6165,49 @@ const CMDK_TOPICS = {
 };
 const cmdkData = [
   // Overview group
-  { topic:'overview', id:'hero',  num:'00', name:'Hero · 平台概覽',       kw:'首頁 hero intro dip' },
-  { topic:'overview', id:'s1',    num:'01', name:'四大核心產品',           kw:'iam dbrg ls cs core 四大 產品' },
-  { topic:'overview', id:'s2',    num:'02', name:'資料閉環 · 四階段',       kw:'lifecycle data flow 閉環 進來處理' },
-  { topic:'overview', id:'s5',    num:'05', name:'對外話術三原則 🔒',      kw:'話術 pitch 原則 internal 客戶' },
-  { topic:'overview', id:'topology',num:'06', name:'完整系統拓撲',         kw:'topology 系統圖 架構 全圖' },
-  { topic:'overview', id:'s7',    num:'07', name:'DIP 產品 + Tech 基礎',    kw:'stack tech 技術 層級 應用層 資產層' },
-  { topic:'overview', id:'s8',    num:'08', name:'資料流動時序 11 步',      kw:'sequence 時序 flow kafka 步驟' },
-  { topic:'overview', id:'s9',    num:'09', name:'DA 使用者旅程',           kw:'da journey 使用者 旅程 分析師' },
+  { topic:'overview', id:'hero',  num:'OV·00', name:'Hero · 平台概覽',       kw:'首頁 hero intro dip' },
+  { topic:'overview', id:'s1',    num:'OV·01', name:'四大核心產品',           kw:'iam dbrg ls cs core 四大 產品' },
+  { topic:'overview', id:'s2',    num:'OV·02', name:'資料閉環 · 四階段',       kw:'lifecycle data flow 閉環 進來處理' },
+  { topic:'overview', id:'s5',    num:'OV·03', name:'對外話術三原則 🔒',      kw:'話術 pitch 原則 internal 客戶' },
+  { topic:'overview', id:'topology',num:'OV·04', name:'完整系統拓撲',         kw:'topology 系統圖 架構 全圖' },
+  { topic:'overview', id:'s7',    num:'OV·06', name:'DIP 產品 + Tech 基礎',    kw:'stack tech 技術 層級 應用層 資產層' },
+  { topic:'overview', id:'s8',    num:'OV·07', name:'資料流動時序 11 步',      kw:'sequence 時序 flow kafka 步驟' },
+  { topic:'overview', id:'s9',    num:'OV·08', name:'DA 使用者旅程',           kw:'da journey 使用者 旅程 分析師' },
 
   // IAM group
-  { topic:'iam', id:'iam-hierarchy', num:'10.1', name:'資源 4 層階層',      kw:'org folder project resource 繼承 階層' },
-  { topic:'iam', id:'iam-ranger',    num:'10.2', name:'SpiceDB + Ranger 分工', kw:'spicedb ranger pdp pep 授權 authz' },
-  { topic:'iam', id:'iam-playground',num:'10.3', name:'SpiceDB 階層授權 Playground 🎮', kw:'playground 模擬 interactive 試玩' },
-  { topic:'iam', id:'iam-auth',      num:'10.4', name:'Auth Flow 登入流程 demo', kw:'auth flow keycloak login jwt 登入' },
-  { topic:'iam', id:'iam-cache',     num:'10.5', name:'Two-Layer Cache Demo (L1→L2→DB)', kw:'cache caffeine redis 快取 l1 l2' },
-  { topic:'iam', id:'iam-isolation', num:'10.6', name:'Multi-Project 隔離', kw:'multi tenant project 隔離 vpc kafka' },
-  { topic:'iam', id:'iam-roles',     num:'11', name:'4 Roles × 23 Permissions Matrix 🆕', kw:'roles matrix admin editor viewer auditor permission 權限矩陣' },
-  { topic:'iam', id:'super-admin',   num:'12', name:'SUPER_ADMIN 身分邊界 + Subject ID 🆕', kw:'super_admin superadmin 全域 subject id usr grp svc' },
-  { topic:'iam', id:'user-status',   num:'13', name:'User Status 狀態機 + Direct vs Inherited 🆕', kw:'user status pending active disabled direct inherited' },
-  { topic:'iam', id:'audit-logging', num:'14', name:'Audit / Security Logging pipeline 🆕', kw:'audit security logging kafka elasticsearch pipeline event' },
+  { topic:'iam', id:'iam-position',  num:'IAM·01', name:'IAM 定位 · 身分與權限中樞 🆕', kw:'positioning 定位 身分 權限 中樞 iam 職責 keycloak ldap spicedb ranger elasticsearch' },
+  { topic:'iam', id:'iam-hierarchy', num:'IAM·02', name:'權限模型 · 4 層資源階層', kw:'org folder project resource 繼承 階層 permission model' },
+  { topic:'iam', id:'iam-ranger',    num:'IAM·03', name:'SpiceDB + Ranger 兩步驟分工', kw:'spicedb ranger pdp pep 授權 authz pipeline' },
+  { topic:'iam', id:'iam-playground',num:'IAM·04', name:'SpiceDB Playground 🎮', kw:'playground 模擬 interactive 試玩 階層授權' },
+  { topic:'iam', id:'iam-auth',      num:'IAM·05', name:'兩條授權路徑 · 人 vs 系統呼叫', kw:'auth flow keycloak http kafka login jwt 登入 兩條路徑' },
+  { topic:'iam', id:'iam-cache',     num:'IAM·06', name:'兩層快取 Local + Redis', kw:'cache caffeine redis 快取 l1 l2 兩層' },
+  { topic:'iam', id:'iam-isolation', num:'IAM·07', name:'Multi-Project 隔離', kw:'multi tenant project 隔離 vpc kafka 資料分倉' },
+  { topic:'iam', id:'iam-roles',     num:'IAM·08', name:'4 大角色 × 23 Permissions Matrix', kw:'roles matrix admin editor viewer auditor permission 權限矩陣' },
+  { topic:'iam', id:'super-admin',   num:'IAM·09', name:'SUPER_ADMIN 身分邊界 + Subject ID', kw:'super_admin superadmin 全域 subject id usr grp svc' },
+  { topic:'iam', id:'user-status',   num:'IAM·10', name:'User Status 狀態機 + Direct vs Inherited', kw:'user status pending active disabled direct inherited' },
+  { topic:'iam', id:'audit-logging', num:'IAM·11', name:'Audit / Security Logging pipeline', kw:'audit security logging kafka elasticsearch pipeline event' },
 
   // CS group
-  { topic:'cs', id:'s3',         num:'03',    name:'CS 深度拆解 · 4 模組',    kw:'compute studio spark notebook image dashboard 1.0 2.0' },
-  { topic:'cs', id:'s4',         num:'04',    name:'CS 上下游關係',           kw:'upstream downstream hive api d-123 d-126' },
-  { topic:'cs', id:'cs-vs',      num:'CS·1', name:'CS 1.0 vs DIP CS 對照 🆕', kw:'vs 對照 capacity capability innovation cloud 1.0 mvp' },
-  { topic:'cs', id:'cs-ba',      num:'CS·2', name:'BA 改善前後對照 (9 痛點) 🆕', kw:'ba before after 改善 痛點 pitch' },
-  { topic:'cs', id:'cs-spark',   num:'CS·3', name:'4 大 Spark 類型 🆕',       kw:'spark pyspark r sql jar python java scala' },
-  { topic:'cs', id:'cs-credit',  num:'CS·4', name:'Compute Credit · Tier 計價 🆕', kw:'compute credit cc tier 計價 pricing 配額' },
-  { topic:'cs', id:'cs-adr',     num:'CS·5', name:'架構決策 ADR 🆕',          kw:'adr 架構決策 decision d-123 d-128 d-090 d-122' },
+  { topic:'cs', id:'s3',         num:'CS·01', name:'CS 深度拆解 · 4 模組',    kw:'compute studio spark notebook image dashboard 1.0 2.0' },
+  { topic:'cs', id:'s4',         num:'CS·02', name:'CS 上下游關係',           kw:'upstream downstream hive api d-123 d-126' },
+  { topic:'cs', id:'cs-vs',      num:'CS·03', name:'CS 1.0 vs DIP CS 對照', kw:'vs 對照 capacity capability innovation cloud 1.0 mvp' },
+  { topic:'cs', id:'cs-ba',      num:'CS·04', name:'BA 改善前後對照 (9 痛點)', kw:'ba before after 改善 痛點 pitch' },
+  { topic:'cs', id:'cs-spark',   num:'CS·05', name:'4 大 Spark 類型',       kw:'spark pyspark r sql jar python java scala' },
+  { topic:'cs', id:'cs-credit',  num:'CS·06', name:'Compute Credit · Tier 計價', kw:'compute credit cc tier 計價 pricing 配額' },
+  { topic:'cs', id:'cs-adr',     num:'CS·07', name:'架構決策 ADR',          kw:'adr 架構決策 decision d-123 d-128 d-090 d-122' },
+
+  // LS group 🆕
+  { topic:'ls', id:'ls-position',    num:'LS·01', name:'LS 定位與痛點',          kw:'lakespace lake space 定位 痛點 problem h7000 訪談' },
+  { topic:'ls', id:'ls-scope',       num:'LS·02', name:'24 Features MVP Scope',  kw:'ls mvp 24 features scope f-01 f-02 f-03 f-06 檔案 垃圾桶 用量' },
+  { topic:'ls', id:'ls-users',       num:'LS·03', name:'4 類使用者 × 要完成的事', kw:'ls users 使用者 dip admin project operator service account' },
+  { topic:'ls', id:'ls-ba',          num:'LS·04', name:'現在 vs LakeSpace',      kw:'ls before after 現在 對比 sre 下指令' },
+  { topic:'ls', id:'ls-arch',        num:'LS·05', name:'5 層架構 · 4 自建模組',   kw:'ls architecture 架構 platform access service metadata storage h7000 onefs' },
+  { topic:'ls', id:'ls-integration', num:'LS·06', name:'LS 跨產品整合',           kw:'ls integration 整合 iam cs dbrg 跨產品 依賴 window' },
 
   // Delivery group
-  { topic:'delivery', id:'product-progress', num:'15', name:'四產品甘特圖 · Q4 → Q1 🆕', kw:'product gantt 甘特圖 進度 iam cs dbrg ls 四產品 月 oct nov dec q1' },
-  { topic:'delivery', id:'roadmap',          num:'16', name:'IAM Phase 1 Roadmap · Oct/Nov/Dec', kw:'roadmap phase 1 oct nov dec 交付 時程 12月 上線' },
+  { topic:'delivery', id:'this-week',        num:'DL·00', name:'本週焦點 · This Week 🆕', kw:'this week 本週 焦點 week 46 standup 週會' },
+  { topic:'delivery', id:'product-progress', num:'DL·01', name:'四產品甘特圖 · Q4 → Q1', kw:'product gantt 甘特圖 進度 iam cs dbrg ls 四產品 月 oct nov dec q1' },
+  { topic:'delivery', id:'roadmap',          num:'DL·02', name:'IAM Phase 1 Roadmap · Oct/Nov/Dec', kw:'roadmap phase 1 oct nov dec 交付 時程 12月 上線' },
 
   // Actions
   { topic:'action', id:'__mode',  num:'⇄', name:'切換內部版 ⇄ 對外版',    kw:'mode toggle internal external 切換', action:'mode' }
