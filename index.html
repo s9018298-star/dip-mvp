@@ -1,10 +1,11 @@
-<!doctype html><html><head><meta charset=utf8><meta name=viewport content="width=device-width,initial-scale=1"><style>:root{color-scheme:light}body{margin:0;padding:0;font:14px -apple-system,BlinkMacSystemFont,sans-serif;background:#fff;color:#000}img{max-width:100%}[hidden]:not([hidden=until-found i]){display:none!important}</style></head><body>
 <!DOCTYPE html>
 <html lang="zh-TW">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>DIP MVP Architecture · Data Innovation Platform 架構總覽</title>
+<!-- v53 · Custom SVG Favicon (geometric D with brand gradient) -->
+<link rel="icon" type="image/svg+xml" href="data:image/svg+xml;utf8,%3Csvg%20xmlns%3D%27http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%27%20viewBox%3D%270%200%2064%2064%27%3E%3Cdefs%3E%3ClinearGradient%20id%3D%27g%27%20x1%3D%270%27%20y1%3D%270%27%20x2%3D%271%27%20y2%3D%271%27%3E%3Cstop%20offset%3D%270%27%20stop-color%3D%27%234A6CF7%27%2F%3E%3Cstop%20offset%3D%271%27%20stop-color%3D%27%23FF8A65%27%2F%3E%3C%2FlinearGradient%3E%3C%2Fdefs%3E%3Crect%20width%3D%2764%27%20height%3D%2764%27%20rx%3D%2714%27%20fill%3D%27url%28%23g%29%27%2F%3E%3Crect%20x%3D%2712%27%20y%3D%2716%27%20width%3D%2736%27%20height%3D%274%27%20rx%3D%272%27%20fill%3D%27%23fff%27%20opacity%3D%27.95%27%2F%3E%3Crect%20x%3D%2712%27%20y%3D%2724%27%20width%3D%2726%27%20height%3D%274%27%20rx%3D%272%27%20fill%3D%27%23fff%27%20opacity%3D%27.75%27%2F%3E%3Crect%20x%3D%2712%27%20y%3D%2732%27%20width%3D%2732%27%20height%3D%274%27%20rx%3D%272%27%20fill%3D%27%23fff%27%20opacity%3D%27.85%27%2F%3E%3Crect%20x%3D%2712%27%20y%3D%2740%27%20width%3D%2718%27%20height%3D%274%27%20rx%3D%272%27%20fill%3D%27%23fff%27%20opacity%3D%27.6%27%2F%3E%3Ccircle%20cx%3D%2748%27%20cy%3D%2748%27%20r%3D%275%27%20fill%3D%27%23fff%27%2F%3E%3C%2Fsvg%3E">
 <meta name="description" content="DIP 四大核心產品、資料閉環、對外話術 — Pitch / Onboarding 共用底圖">
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,700;0,9..144,900;1,9..144,400;1,9..144,700&family=Noto+Serif+TC:wght@400;700;900&family=Noto+Sans+TC:wght@300;400;500;700;900&family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;700&display=swap">
 <style>
@@ -4187,6 +4188,14 @@ body.ext .topic-tab[data-topic="delivery"]{display:none}
     <h2 class="sec-h">4 大內建角色 × 23 <em>Permissions</em></h2>
     <p class="sec-sub">iam_admin · editor · viewer · auditor &mdash; 哪個角色能做什麼，一張表看完</p>
 
+    <!-- v53 · 符號說明圖例 -->
+    <div class="reveal" style="margin-bottom:14px;padding:12px 18px;border-radius:10px;background:rgba(255,255,255,.65);border:1px solid rgba(74,108,247,.2);display:flex;gap:18px;flex-wrap:wrap;font-size:12.5px;color:var(--text-muted);align-items:center">
+      <strong style="color:var(--text);font-family:'JetBrains Mono',monospace;font-size:10.5px;letter-spacing:1.5px">📖 符號說明</strong>
+      <span style="display:inline-flex;align-items:center;gap:6px"><strong style="color:var(--dbrg);font-size:14px">✓</strong> 有權限</span>
+      <span style="display:inline-flex;align-items:center;gap:6px"><strong style="color:var(--text-dim);font-size:14px">—</strong> 無權限</span>
+      <span style="display:inline-flex;align-items:center;gap:6px"><strong style="color:var(--pink);font-size:14px">⚡</strong> 僅 <code style="font-family:'JetBrains Mono',monospace;background:rgba(236,64,122,.1);padding:1px 6px;border-radius:4px;color:var(--pink);font-weight:700">SUPER_ADMIN</code> · 一般 Admin 看得到 Status 但不能改</span>
+    </div>
+
     <div class="roles-matrix reveal">
       <div class="rm-row head">
         <div class="rm-cell rm-head-cell first"><span>Permission</span><span class="rh-sub">(Permission Code)</span></div>
@@ -5478,14 +5487,15 @@ body.ext .topic-tab[data-topic="delivery"]{display:none}
   .pg-pending{background:repeating-linear-gradient(135deg,rgba(148,163,184,.35),rgba(148,163,184,.35) 5px,rgba(255,255,255,.4) 5px,rgba(255,255,255,.4) 10px);color:#475569;border:1px dashed rgba(100,116,139,.5);box-shadow:none}
   @keyframes pg-pulse{0%,100%{box-shadow:0 2px 8px rgba(74,108,247,.3)}50%{box-shadow:0 2px 20px rgba(74,108,247,.55),0 0 0 3px rgba(74,108,247,.1)}}
 
-  /* Checkpoint pins · v41 上方日期標籤 */
-  .pg-cp{position:absolute;top:8px;transform:translateX(-50%);width:14px;height:14px;border-radius:50%;background:#4A6CF7;border:2px solid #fff;display:flex;align-items:center;justify-content:center;font-size:0;z-index:4;cursor:pointer;box-shadow:0 2px 6px rgba(74,108,247,.35);transition:transform .3s cubic-bezier(.22,1,.36,1),box-shadow .3s cubic-bezier(.22,1,.36,1)}
-  .pg-cp::after{content:attr(data-date);position:absolute;top:calc(100% + 3px);left:50%;transform:translateX(-50%);font-size:9px;font-weight:700;color:var(--text-muted);white-space:nowrap;letter-spacing:.2px;pointer-events:none;background:rgba(255,255,255,.75);padding:1px 4px;border-radius:3px}
-  .pg-cp:hover{transform:translateX(-50%) scale(1.5);box-shadow:0 4px 14px rgba(74,108,247,.55);z-index:6}
-  .pg-cp:hover::after{color:var(--text);font-weight:900}
-  .pg-cp:active{transform:translateX(-50%) scale(1.1)}
+  /* Checkpoint pins · v53 修：加大視覺 + 隱形 hit area，hover 不 scale 只強化陰影 */
+  .pg-cp{position:absolute;top:6px;transform:translateX(-50%);width:16px;height:16px;border-radius:50%;background:#4A6CF7;border:2px solid #fff;display:flex;align-items:center;justify-content:center;font-size:0;z-index:4;cursor:pointer;box-shadow:0 2px 6px rgba(74,108,247,.35);transition:box-shadow .3s cubic-bezier(.22,1,.36,1),border-width .2s}
+  .pg-cp::before{content:'';position:absolute;inset:-10px;border-radius:50%}
+  .pg-cp::after{content:attr(data-date);position:absolute;top:calc(100% + 4px);left:50%;transform:translateX(-50%);font-size:9px;font-weight:700;color:var(--text-muted);white-space:nowrap;letter-spacing:.2px;pointer-events:none;background:rgba(255,255,255,.85);padding:2px 5px;border-radius:4px;transition:color .2s,background .2s,box-shadow .2s}
+  .pg-cp:hover{box-shadow:0 0 0 6px rgba(74,108,247,.18),0 6px 16px rgba(74,108,247,.4);z-index:6;border-width:3px}
+  .pg-cp:hover::after{color:var(--text);font-weight:900;background:#fff;box-shadow:0 2px 8px rgba(74,108,247,.2)}
+  .pg-cp:active{box-shadow:0 0 0 4px rgba(74,108,247,.25)}
   .pg-cp.pg-cp-done{background:#22C55E;border-color:#fff;box-shadow:0 2px 6px rgba(21,128,61,.35)}
-  .pg-cp.pg-cp-done:hover{box-shadow:0 4px 14px rgba(21,128,61,.55)}
+  .pg-cp.pg-cp-done:hover{box-shadow:0 0 0 6px rgba(34,197,94,.18),0 6px 16px rgba(34,197,94,.4)}
 
   /* Now line · 貫穿整個 lane */
   .pg-now-line{top:0!important;bottom:0!important}
@@ -6246,18 +6256,44 @@ function updateTopicCounts() {
   });
 }
 
-/* Init topic from URL hash on load */
+/* Init topic from URL hash on load · v53 修：support bare section id (#iam-hierarchy) by inferring topic */
 function initTopic() {
-  const hash = location.hash.slice(1).split('/')[0];
-  const topic = TOPIC_LIST.includes(hash) ? hash : 'overview';
-  setTopic(topic, true);
-  // Deep link to section: #iam/roles → scroll to #iam-roles after topic switch
-  const sub = location.hash.slice(1).split('/')[1];
-  if (sub) {
+  const fullHash = location.hash.slice(1);
+  const parts = fullHash.split('/');
+  const firstPart = parts[0];
+  let topic = null;
+  let sectionId = null;
+
+  if (TOPIC_LIST.includes(firstPart)) {
+    // Explicit topic in hash: #iam or #iam/foo
+    topic = firstPart;
+    sectionId = parts[1] || null;
+  } else if (firstPart) {
+    // Bare section id: #iam-hierarchy → find its parent section & infer topic
+    const el = document.getElementById(firstPart);
+    if (el) {
+      const sec = el.closest('.sec[data-topic]');
+      if (sec && TOPIC_LIST.includes(sec.dataset.topic)) {
+        topic = sec.dataset.topic;
+        sectionId = firstPart;
+      }
+    }
+  }
+
+  // Default only if truly nothing matches
+  if (!topic) topic = 'overview';
+
+  // Only switch if different from current (avoid flicker when clicking inside same topic)
+  if (document.body.dataset.topic !== topic) {
+    setTopic(topic, true);
+  }
+
+  // Scroll to specific section if requested
+  if (sectionId) {
     setTimeout(() => {
-      const el = document.getElementById(sub) || document.getElementById(topic + '-' + sub);
+      const el = document.getElementById(sectionId) || document.getElementById(topic + '-' + sectionId);
       if (el) el.scrollIntoView({behavior:'smooth',block:'start'});
-    }, 500);
+    }, 300);
   }
 }
 
@@ -7574,5 +7610,3 @@ document.addEventListener('keydown',(e)=>{
 
 </body>
 </html>
-
-</body></html>
