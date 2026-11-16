@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>DIP MVP Architecture · Data Innovation Platform 架構總覽</title>
-<!-- v53 · Custom SVG Favicon (geometric D with brand gradient) -->
+<!-- v56 · P0-1 preserve explicit IDs · P0-2 dynamic TOC per tab · P0-3 dynamic section dots · P1-4 reveal re-trigger on tab switch · scroll-spy respect display:none -->
 <link rel="icon" type="image/svg+xml" href="data:image/svg+xml;utf8,%3Csvg%20xmlns%3D%27http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%27%20viewBox%3D%270%200%2064%2064%27%3E%3Cdefs%3E%3ClinearGradient%20id%3D%27g%27%20x1%3D%270%27%20y1%3D%270%27%20x2%3D%271%27%20y2%3D%271%27%3E%3Cstop%20offset%3D%270%27%20stop-color%3D%27%234A6CF7%27%2F%3E%3Cstop%20offset%3D%271%27%20stop-color%3D%27%23FF8A65%27%2F%3E%3C%2FlinearGradient%3E%3C%2Fdefs%3E%3Crect%20width%3D%2764%27%20height%3D%2764%27%20rx%3D%2714%27%20fill%3D%27url%28%23g%29%27%2F%3E%3Crect%20x%3D%2712%27%20y%3D%2716%27%20width%3D%2736%27%20height%3D%274%27%20rx%3D%272%27%20fill%3D%27%23fff%27%20opacity%3D%27.95%27%2F%3E%3Crect%20x%3D%2712%27%20y%3D%2724%27%20width%3D%2726%27%20height%3D%274%27%20rx%3D%272%27%20fill%3D%27%23fff%27%20opacity%3D%27.75%27%2F%3E%3Crect%20x%3D%2712%27%20y%3D%2732%27%20width%3D%2732%27%20height%3D%274%27%20rx%3D%272%27%20fill%3D%27%23fff%27%20opacity%3D%27.85%27%2F%3E%3Crect%20x%3D%2712%27%20y%3D%2740%27%20width%3D%2718%27%20height%3D%274%27%20rx%3D%272%27%20fill%3D%27%23fff%27%20opacity%3D%27.6%27%2F%3E%3Ccircle%20cx%3D%2748%27%20cy%3D%2748%27%20r%3D%275%27%20fill%3D%27%23fff%27%2F%3E%3C%2Fsvg%3E">
 <meta name="description" content="DIP 四大核心產品、資料閉環、對外話術 — Pitch / Onboarding 共用底圖">
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,700;0,9..144,900;1,9..144,400;1,9..144,700&family=Noto+Serif+TC:wght@400;700;900&family=Noto+Sans+TC:wght@300;400;500;700;900&family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;700&display=swap">
@@ -820,11 +820,14 @@ body:not(.ext) .mode-banner.external{display:none}
 
 /* Push content below fixed banner · 60(nav) + 38(banner) + 48(tabs) ≈ 146 */
 .hero{padding-top:70px}
-.sec{padding-top:80px}
+.sec{padding-top:80px;scroll-margin-top:160px}
+/* Non-overview topics: Hero hidden, so first visible .sec must clear sticky stack */
+body:not([data-topic="overview"]) .sec{padding-top:170px}
 @media (max-width:640px){
   .mode-banner{padding:7px 14px;font-size:10px;top:56px}
   .hero{padding-top:60px}
-  .sec{padding-top:60px}
+  .sec{padding-top:60px;scroll-margin-top:140px}
+  body:not([data-topic="overview"]) .sec{padding-top:150px}
 }
 
 /* Hero adjustments in external mode: hide the "Pitch" pill */
@@ -1591,19 +1594,8 @@ body.ext .topic-tab[data-topic="delivery"]{display:none}
     </div>
     <div class="toc-wrap">
       <div class="toc-btn" onclick="toggleToc(event)">📑 目錄 <span style="opacity:.5">▾</span></div>
-      <div class="toc-menu" id="toc-menu">
-        <div class="toc-item" data-target="hero" onclick="jumpTo('hero')"><span class="toc-num">00</span>Hero · 平台概覽</div>
-        <div class="toc-item" data-target="s1" onclick="jumpTo('s1')"><span class="toc-num">01</span>四大核心產品</div>
-        <div class="toc-item" data-target="s2" onclick="jumpTo('s2')"><span class="toc-num">02</span>資料閉環</div>
-        <div class="toc-item" data-target="s3" onclick="jumpTo('s3')"><span class="toc-num">03</span>CS 深度拆解</div>
-        <div class="toc-item" data-target="s4" onclick="jumpTo('s4')"><span class="toc-num">04</span>CS 上下游關係</div>
-        <div class="toc-item internal-only no-tag" data-target="s5" onclick="jumpTo('s5')"><span class="toc-num">05</span>對外話術三原則 🔒</div>
-        <div class="toc-item" data-target="s6" onclick="jumpTo('s6')"><span class="toc-num">06</span>完整系統拓撲</div>
-        <div class="toc-item" data-target="s7" onclick="jumpTo('s7')"><span class="toc-num">07</span>技術分層堆疊</div>
-        <div class="toc-item" data-target="s8" onclick="jumpTo('s8')"><span class="toc-num">08</span>資料流動時序</div>
-        <div class="toc-item" data-target="s9" onclick="jumpTo('s9')"><span class="toc-num">09</span>DA 操作流程</div>
-        <div class="toc-item" data-target="s10" onclick="jumpTo('s10')"><span class="toc-num">10</span>網路資安架構 <span class="toc-new">NEW</span></div>
-      </div>
+      <!-- v55 P0-2：改為動態產生，依當前 Tab 顯示對應的 sections -->
+      <div class="toc-menu" id="toc-menu"></div>
     </div>
   </div>
 </nav>
@@ -6227,13 +6219,21 @@ function setTopic(topic, skipHash) {
   }
   // Re-count visible sections for "all" badge (sync)
   updateTopicCounts();
+  // v55 P0-2/P0-3：每次切 Tab 同步重建 TOC 目錄與 Progress Ring 的 section dots
+  if (typeof buildToc === 'function') buildToc();
+  if (typeof buildPringDots === 'function') buildPringDots();
   // Smooth scroll to top so reader starts at Hero of new topic
   window.scrollTo({top: 0, behavior: 'smooth'});
-  // Trigger reveal animations for newly shown sections
+  // v55 P1-4：重新觀察新 Tab 下所有 reveal 元素 · 之前 unobserve 掉的 element 要重新掛上
   setTimeout(() => {
-    document.querySelectorAll('.reveal').forEach(el => {
+    document.querySelectorAll('.reveal, .reveal-l, .reveal-r, .reveal-s').forEach(el => {
+      el.classList.remove('visible', 'show');
+      if (typeof revealObserver !== 'undefined') revealObserver.observe(el);
+      // 若已在視窗內，立即觸發（IntersectionObserver 初次掛上會自動觸發，但 fallback 保險）
       const rect = el.getBoundingClientRect();
-      if (rect.top < window.innerHeight * .9) el.classList.add('show');
+      if (rect.top < window.innerHeight * .9 && rect.bottom > 0) {
+        el.classList.add('visible', 'show');
+      }
     });
   }, 300);
 }
@@ -6335,9 +6335,9 @@ try {
   else applyMode(false);
 } catch(e) { applyMode(false); }
 
-// 自動配 section id (hero + s1..s11)
+// v55 P0-1 修：僅對沒有明確 id 的 section 自動配 id，保留 HTML 中已寫的語意 ID（iam-hierarchy / cs-vs / this-week 等）
 document.querySelectorAll('section.sec, section.hero').forEach((s, i) => {
-  s.id = i === 0 ? 'hero' : 's' + i;
+  if (!s.id) s.id = i === 0 ? 'hero' : 's' + i;
 });
 
 // 自動為主要元件加上 reveal 類
@@ -6352,17 +6352,16 @@ document.querySelectorAll('.four-grid > *, .users-grid > *, .principles > *, .de
   el.classList.add('d' + ((i % 5) + 1));
 });
 
-// 滾動觸發：Intersection Observer
-const observer = new IntersectionObserver((entries) => {
+// v55 P1-4 修：Intersection Observer 不再 unobserve，切 Tab 後隱藏的 section 顯示時能重新觸發
+const revealObserver = new IntersectionObserver((entries) => {
   entries.forEach(e => {
     if (e.isIntersecting) {
-      e.target.classList.add('visible');
-      observer.unobserve(e.target);
+      e.target.classList.add('visible', 'show');
     }
   });
 }, { threshold: 0.1, rootMargin: '0px 0px -60px 0px' });
 
-document.querySelectorAll('.reveal, .reveal-l, .reveal-r, .reveal-s').forEach(el => observer.observe(el));
+document.querySelectorAll('.reveal, .reveal-l, .reveal-r, .reveal-s').forEach(el => revealObserver.observe(el));
 
 // 頂部進度條
 const progress = document.getElementById('progress');
@@ -6398,18 +6397,22 @@ document.addEventListener('click', (e) => {
 });
 
 // 滾動 spy · 標記目前所在 Section
-const tocSections = document.querySelectorAll('section[id]');
-const tocItems = document.querySelectorAll('.toc-item');
+// v55 修：Scroll Spy 動態抓當前 Tab 的可見 sections（display:none 的 offsetTop=0 會錯亂）
 let lastActive = '';
 window.addEventListener('scroll', () => {
   const sy = window.scrollY + 180;
-  let active = 'hero';
-  tocSections.forEach(s => {
+  let active = '';
+  // 只看當前 tab 的可見 sections
+  document.querySelectorAll('section[id]').forEach(s => {
+    // 過濾 display:none 的（offsetParent=null 代表不可見）
+    if (!s.offsetParent && s.tagName !== 'BODY') return;
     if (sy >= s.offsetTop) active = s.id;
   });
+  if (!active) active = (document.body.dataset.topic === 'overview') ? 'hero' : '';
   if (active !== lastActive) {
     lastActive = active;
-    tocItems.forEach(it => {
+    // tocItems 是動態產生的，每次都重抓
+    document.querySelectorAll('.toc-item').forEach(it => {
       it.classList.toggle('active', it.getAttribute('data-target') === active);
     });
   }
@@ -6984,30 +6987,76 @@ setTimeout(() => {
   update();
 })();
 
-/* ============ SMOOTH UI #8: SECTION DOTS (附加於 Progress Ring) ============ */
-const sectionDots = [
-  { id:'s1',  num:'01', name:'四大核心產品' },
-  { id:'s2',  num:'02', name:'資料閉環' },
-  { id:'s3',  num:'03', name:'CS 深度拆解' },
-  { id:'s4',  num:'04', name:'CS 上下游關係' },
-  { id:'s5',  num:'05', name:'對外話術三原則 🔒', internal:true },
-  { id:'s6',  num:'06', name:'完整系統拓撲' },
-  { id:'s7',  num:'07', name:'技術分層' },
-  { id:'s8',  num:'08', name:'資料流動時序' },
-  { id:'s9',  num:'09', name:'DA 操作流程' },
-  { id:'s10', num:'10', name:'網路資安架構' }
-];
+/* ============ v55 P0-2 / P0-3 · 共用：取得當前 Tab 的可見 sections ============ */
+// 回傳 [{id, num, title, isHero}]，依 DOM 順序、已過濾 internal/external 模式隱藏者
+function getVisibleTopicSections() {
+  const topic = document.body.dataset.topic || 'overview';
+  const isExt = document.body.classList.contains('ext');
+  const list = [];
+  // Hero 僅在 overview 顯示
+  const hero = document.querySelector('section.hero');
+  if (hero && topic === 'overview') {
+    list.push({ id: hero.id, num: '00', title: 'Hero · 平台概覽', internal: false });
+  }
+  let idx = 0;
+  document.querySelectorAll('.sec[data-topic]').forEach(sec => {
+    if (sec.dataset.topic !== topic) return;
+    const isInternalOnly = sec.classList.contains('internal-only');
+    const isExternalOnly = sec.classList.contains('external-only');
+    if (isExt && isInternalOnly) return;
+    if (!isExt && isExternalOnly) return;
+    idx++;
+    // 從 sec-h 抓標題；若無則用 sec-crumb 的尾段
+    let title = '';
+    const h = sec.querySelector('.sec-h');
+    if (h) {
+      title = h.textContent.trim().replace(/\s+/g, ' ');
+    } else {
+      const crumb = sec.querySelector('.sec-crumb');
+      if (crumb) {
+        const txt = crumb.textContent.replace(/[◆·]+/g, '·').trim();
+        title = txt.split('·').slice(-1)[0].trim() || txt;
+      }
+    }
+    if (!title) title = sec.id;
+    list.push({
+      id: sec.id,
+      num: String(idx).padStart(2, '0'),
+      title: title.length > 20 ? title.slice(0, 19) + '…' : title,
+      internal: isInternalOnly
+    });
+  });
+  return list;
+}
 
-(function() {
+/* ============ v55 P0-2 · 動態 TOC 目錄 ============ */
+function buildToc() {
+  const menu = document.getElementById('toc-menu');
+  if (!menu) return;
+  const items = getVisibleTopicSections();
+  menu.innerHTML = items.map(s =>
+    '<div class="toc-item' + (s.internal ? ' internal-only no-tag' : '') + '" data-target="' + s.id + '" onclick="jumpTo(\'' + s.id + '\')">' +
+    '<span class="toc-num">' + s.num + '</span>' + s.title + '</div>'
+  ).join('');
+}
+
+/* ============ v55 P0-3 · SECTION DOTS (附加於 Progress Ring) ============ */
+let sectionDots = [];
+function buildPringDots() {
   const pringWrap = document.getElementById('pring');
   if (!pringWrap) return;
+  // 移除舊的 dots 容器
+  const old = pringWrap.querySelector('.pring-dots');
+  if (old) old.remove();
+  sectionDots = getVisibleTopicSections();
+  if (sectionDots.length === 0) return;
   const dotsWrap = document.createElement('div');
   dotsWrap.className = 'pring-dots';
   sectionDots.forEach((s) => {
     const dot = document.createElement('div');
     dot.className = 'pring-dot' + (s.internal ? ' internal-only no-tag' : '');
     dot.dataset.target = s.id;
-    dot.innerHTML = '<div class="lbl"><span class="lbl-num">' + s.num + '</span>' + s.name + '</div>';
+    dot.innerHTML = '<div class="lbl"><span class="lbl-num">' + s.num + '</span>' + s.title + '</div>';
     dot.addEventListener('click', (e) => {
       e.stopPropagation();
       const el = document.getElementById(s.id);
@@ -7016,13 +7065,14 @@ const sectionDots = [
     dotsWrap.appendChild(dot);
   });
   pringWrap.appendChild(dotsWrap);
-})();
+}
 
 function updatePringDots() {
   const sy = window.scrollY + 180;
-  let activeId = 'hero';
-  document.querySelectorAll('section[id]').forEach(s => {
-    if (sy >= s.offsetTop) activeId = s.id;
+  let activeId = sectionDots[0] ? sectionDots[0].id : 'hero';
+  sectionDots.forEach(s => {
+    const el = document.getElementById(s.id);
+    if (el && sy >= el.offsetTop) activeId = s.id;
   });
   const activeIdx = sectionDots.findIndex(s => s.id === activeId);
   document.querySelectorAll('.pring-dot').forEach(dot => {
@@ -7032,6 +7082,11 @@ function updatePringDots() {
     dot.classList.toggle('visited', activeIdx >= 0 && idx < activeIdx);
   });
 }
+
+// 初始化：掛上一次（setTopic 之後也會呼叫）
+buildToc();
+buildPringDots();
+
 let pringTicking = false;
 window.addEventListener('scroll', () => {
   if (!pringTicking) {
