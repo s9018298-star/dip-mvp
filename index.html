@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>DIP MVP Architecture · Data Innovation Platform 架構總覽</title>
-<!-- v64 · Trust 加 PART 04 · SLA & 治理承諾（業界標準欄位，數字全標「待確認」等資安/法務對） -->
+<!-- v69 · DL·03 加納入規則（給分析師看依據）· 新增 OV·GUIDE 使用導引（6 角色 × 建議閱讀路徑 + 內建工具 + 編號系統） -->
 <link rel="icon" type="image/svg+xml" href="data:image/svg+xml;utf8,%3Csvg%20xmlns%3D%27http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%27%20viewBox%3D%270%200%2064%2064%27%3E%3Cdefs%3E%3ClinearGradient%20id%3D%27g%27%20x1%3D%270%27%20y1%3D%270%27%20x2%3D%271%27%20y2%3D%271%27%3E%3Cstop%20offset%3D%270%27%20stop-color%3D%27%234A6CF7%27%2F%3E%3Cstop%20offset%3D%271%27%20stop-color%3D%27%23FF8A65%27%2F%3E%3C%2FlinearGradient%3E%3C%2Fdefs%3E%3Crect%20width%3D%2764%27%20height%3D%2764%27%20rx%3D%2714%27%20fill%3D%27url%28%23g%29%27%2F%3E%3Crect%20x%3D%2712%27%20y%3D%2716%27%20width%3D%2736%27%20height%3D%274%27%20rx%3D%272%27%20fill%3D%27%23fff%27%20opacity%3D%27.95%27%2F%3E%3Crect%20x%3D%2712%27%20y%3D%2724%27%20width%3D%2726%27%20height%3D%274%27%20rx%3D%272%27%20fill%3D%27%23fff%27%20opacity%3D%27.75%27%2F%3E%3Crect%20x%3D%2712%27%20y%3D%2732%27%20width%3D%2732%27%20height%3D%274%27%20rx%3D%272%27%20fill%3D%27%23fff%27%20opacity%3D%27.85%27%2F%3E%3Crect%20x%3D%2712%27%20y%3D%2740%27%20width%3D%2718%27%20height%3D%274%27%20rx%3D%272%27%20fill%3D%27%23fff%27%20opacity%3D%27.6%27%2F%3E%3Ccircle%20cx%3D%2748%27%20cy%3D%2748%27%20r%3D%275%27%20fill%3D%27%23fff%27%2F%3E%3C%2Fsvg%3E">
 <meta name="description" content="DIP 四大核心產品、資料閉環、對外話術 — Pitch / Onboarding 共用底圖">
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,700;0,9..144,900;1,9..144,400;1,9..144,700&family=Noto+Serif+TC:wght@400;700;900&family=Noto+Sans+TC:wght@300;400;500;700;900&family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;700&display=swap">
@@ -1196,6 +1196,7 @@ section.sec{
 /* Section visibility by topic */
 body[data-topic="overview"] .sec:not([data-topic="overview"]){display:none}
 body[data-topic="iam"] .sec:not([data-topic="iam"]){display:none}
+body[data-topic="dbrg"] .sec:not([data-topic="dbrg"]){display:none}
 body[data-topic="cs"] .sec:not([data-topic="cs"]){display:none}
 body[data-topic="ls"] .sec:not([data-topic="ls"]){display:none}
 body[data-topic="lpm"] .sec:not([data-topic="lpm"]){display:none}
@@ -1207,12 +1208,15 @@ body:not([data-topic="overview"]) .topic-tabs{top:98px}
 /* v4.6.1 外部模式隱藏純內部 tab：IAM 新內容多半 internal-only · Delivery 全 internal-only
    v63 · CS 對外也隱藏 · CS 從客戶視角是「平台運算模組」不該獨立 pitch · 關鍵計價搬到 Overview */
 body.ext .topic-tab[data-topic="iam"],
+body.ext .topic-tab[data-topic="dbrg"],
 body.ext .topic-tab[data-topic="cs"],
 body.ext .topic-tab[data-topic="ls"],
 body.ext .topic-tab[data-topic="lpm"],
 body.ext .topic-tab[data-topic="delivery"]{display:none}
 /* v63 · 對外模式下 CS 所有 section 也隱藏（避免 URL hash #cs 讓客戶看到） */
 body.ext .sec[data-topic="cs"]{display:none}
+/* v67 · DBRG 全 internal-only · 對外隱藏 */
+body.ext .sec[data-topic="dbrg"]{display:none}
 
 /* RWD */
 @media (max-width:640px){
@@ -1609,10 +1613,11 @@ body.ext .sec[data-topic="cs"]{display:none}
   <span class="tt-label">VIEW</span>
   <button class="topic-tab active" data-topic="overview" onclick="setTopic('overview')"><span class="tt-ic">🏠</span>總覽<span class="tt-count">7</span></button>
   <button class="topic-tab" data-topic="iam" onclick="setTopic('iam')"><span class="tt-ic">🛡</span>IAM<span class="tt-count">11</span></button>
+  <button class="topic-tab" data-topic="dbrg" onclick="setTopic('dbrg')"><span class="tt-ic">🔄</span>DBRG<span class="tt-count">5</span></button>
   <button class="topic-tab" data-topic="cs" onclick="setTopic('cs')"><span class="tt-ic">⚡</span>CS<span class="tt-count">7</span></button>
   <button class="topic-tab" data-topic="ls" onclick="setTopic('ls')"><span class="tt-ic">📁</span>LS<span class="tt-count">6</span></button>
   <button class="topic-tab" data-topic="lpm" onclick="setTopic('lpm')"><span class="tt-ic">🧭</span>跨產品<span class="tt-count">5</span></button>
-  <button class="topic-tab" data-topic="delivery" onclick="setTopic('delivery')"><span class="tt-ic">📅</span>Delivery<span class="tt-count">3</span></button>
+  <button class="topic-tab" data-topic="delivery" onclick="setTopic('delivery')"><span class="tt-ic">📅</span>Delivery<span class="tt-count">4</span></button>
 </div>
 
 <!-- HERO (overview-only) -->
@@ -1630,6 +1635,197 @@ body.ext .sec[data-topic="cs"]{display:none}
       <span class="pill active"><span class="internal-only no-tag">👥 給資料團隊：DA + 工程師 + ML</span><span class="external-only">👥 Gaming Industry 資料團隊的選擇</span></span>
       <span class="pill"><span class="internal-only no-tag">☁️ iGaming B2B 雲端服務</span><span class="external-only">☁️ 雲端平台 · 快速上手</span></span>
       <span class="pill">🔒 平台級治理</span>
+    </div>
+  </div>
+</section>
+
+<!-- ===== v69 · USAGE GUIDE · 使用導引（internal-only · 新人 / 跨職能看這份文件前先讀） ===== -->
+<section class="sec internal-only no-tag" data-topic="overview" id="usage-guide">
+  <div class="grid-bg"></div>
+  <div class="sec-inner">
+    <div class="sec-crumb">◆ OV·GUIDE · HOW TO READ THIS DOC ◆<span class="sec-type-chip sec-type-why">🎯 Why</span></div>
+    <h2 class="sec-h reveal">使用導引 <em>How to Read</em></h2>
+    <p class="sec-sub reveal d1">這份文件服務多種角色 · <span class="blue">先知道自己是誰 → 直接跳到該看的地方</span></p>
+
+    <!-- 使用場景 · 角色 × 建議閱讀路徑 -->
+    <div class="reveal d2" style="margin-top:28px">
+      <div style="display:flex;align-items:baseline;gap:14px;margin-bottom:14px">
+        <div style="font-family:'JetBrains Mono',monospace;font-size:10.5px;color:var(--blue);letter-spacing:2.5px;font-weight:700">PART 01 · WHO · WHERE</div>
+        <h3 style="font-family:var(--font-h);font-size:20px;font-weight:900;color:var(--text);letter-spacing:-.3px;margin:0">你是哪個角色 · 建議從哪裡看起</h3>
+      </div>
+
+      <div class="ug-roles">
+        <div class="ug-role ug-role-newbie">
+          <div class="ug-role-ic">🌱</div>
+          <div class="ug-role-head">
+            <div class="ug-role-ttl">新人 Onboarding</div>
+            <div class="ug-role-sub">剛加入團隊 · 想快速理解 DIP 平台</div>
+          </div>
+          <div class="ug-role-path">
+            <strong>建議順序</strong>
+            <ol>
+              <li>🏠 總覽 Hero → OV·01 四大核心產品 → OV·02 資料閉環</li>
+              <li>OV·04 完整系統拓撲 → OV·07 資料流動時序 11 步</li>
+              <li>依負責產品深入該 Tab（🛡 IAM / 🔄 DBRG / ⚡ CS / 📁 LS）</li>
+            </ol>
+          </div>
+        </div>
+
+        <div class="ug-role ug-role-weekly">
+          <div class="ug-role-ic">📅</div>
+          <div class="ug-role-head">
+            <div class="ug-role-ttl">主管週會</div>
+            <div class="ug-role-sub">2 分鐘掃四產品狀態 · 準備對齊會議</div>
+          </div>
+          <div class="ug-role-path">
+            <strong>建議順序</strong>
+            <ol>
+              <li>📅 Delivery Tab → DL·00 本週焦點（四張卡一眼看完）</li>
+              <li>DL·01 四產品甘特圖（看時程全貌）</li>
+              <li>DL·02 Stage Ready Timeline（看交付節點）</li>
+            </ol>
+          </div>
+        </div>
+
+        <div class="ug-role ug-role-pitch">
+          <div class="ug-role-ic">🤝</div>
+          <div class="ug-role-head">
+            <div class="ug-role-ttl">客戶 Pitch · BD 準備</div>
+            <div class="ug-role-sub">帶客戶看 demo / 做簡報 / 準備話術</div>
+          </div>
+          <div class="ug-role-path">
+            <strong>建議順序</strong>
+            <ol>
+              <li>右上角切 <strong>對外版 External</strong>（隱藏內部細節）</li>
+              <li>OV·00 痛點 → OV·00.5 客戶旅程 → OV·01~05 平台敘事</li>
+              <li>OV·05.5 為什麼選 DIP → OV·06 計價 → OV·CTA 收尾</li>
+            </ol>
+          </div>
+        </div>
+
+        <div class="ug-role ug-role-analyst">
+          <div class="ug-role-ic">💼</div>
+          <div class="ug-role-head">
+            <div class="ug-role-ttl">計價分析師</div>
+            <div class="ug-role-sub">負責四產品計價 / 認列 / SKU 定義</div>
+          </div>
+          <div class="ug-role-path">
+            <strong>建議順序</strong>
+            <ol>
+              <li>📅 Delivery Tab → <strong>DL·03 計價變動軌跡</strong>（專為你設計）</li>
+              <li>看納入規則 → 看變動列表 → 不懂就找來源 PO</li>
+              <li>補充：各產品 Tab 的 ADR section（CS·07 / DBRG·03）</li>
+            </ol>
+          </div>
+        </div>
+
+        <div class="ug-role ug-role-cross">
+          <div class="ug-role-ic">🧭</div>
+          <div class="ug-role-head">
+            <div class="ug-role-ttl">跨職能對齊</div>
+            <div class="ug-role-sub">RD / UIUX / 業務 / DA 跨職能討論</div>
+          </div>
+          <div class="ug-role-path">
+            <strong>建議順序</strong>
+            <ol>
+              <li>OV·04 完整系統拓撲（跨產品共同底圖）</li>
+              <li>🧭 跨產品 Tab（Lead PM 全局視角）</li>
+              <li>依討論主題深入對應產品 Tab</li>
+            </ol>
+          </div>
+        </div>
+
+        <div class="ug-role ug-role-maintainer">
+          <div class="ug-role-ic">📝</div>
+          <div class="ug-role-head">
+            <div class="ug-role-ttl">文件維護者</div>
+            <div class="ug-role-sub">Lead PM / PO · 更新文件內容</div>
+          </div>
+          <div class="ug-role-path">
+            <strong>建議順序</strong>
+            <ol>
+              <li>認識結構：Tab × Section 編號系統（OV·XX / 產品·XX / DL·XX）</li>
+              <li>更新模式：改原始 HTML → 用 Copy Link 分享特定 section</li>
+              <li>對外話術三原則（OV·03）更動必讀</li>
+            </ol>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 內建工具 -->
+    <div class="reveal d3" style="margin-top:36px">
+      <div style="display:flex;align-items:baseline;gap:14px;margin-bottom:14px">
+        <div style="font-family:'JetBrains Mono',monospace;font-size:10.5px;color:var(--amber);letter-spacing:2.5px;font-weight:700">PART 02 · TOOLS</div>
+        <h3 style="font-family:var(--font-h);font-size:20px;font-weight:900;color:var(--text);letter-spacing:-.3px;margin:0">內建工具 · 6 個幫你更快找到想看的</h3>
+      </div>
+
+      <div class="ug-tools">
+        <div class="ug-tool">
+          <div class="ug-tool-key">⌘K</div>
+          <div class="ug-tool-body">
+            <div class="ug-tool-ttl">快速搜尋</div>
+            <div class="ug-tool-desc">輸入關鍵字（section 名、產品、關鍵詞）· Enter 跳到該節</div>
+          </div>
+        </div>
+        <div class="ug-tool">
+          <div class="ug-tool-key">📑</div>
+          <div class="ug-tool-body">
+            <div class="ug-tool-ttl">目錄（右上角）</div>
+            <div class="ug-tool-desc">當前 Tab 內所有 section 列表 · 點了直接跳</div>
+          </div>
+        </div>
+        <div class="ug-tool">
+          <div class="ug-tool-key">🔄</div>
+          <div class="ug-tool-body">
+            <div class="ug-tool-ttl">內部 / 對外模式切換</div>
+            <div class="ug-tool-desc">右上角按鈕 · 對外模式會自動隱藏內部 Tab 與技術細節</div>
+          </div>
+        </div>
+        <div class="ug-tool">
+          <div class="ug-tool-key">?</div>
+          <div class="ug-tool-body">
+            <div class="ug-tool-ttl">快捷鍵面板</div>
+            <div class="ug-tool-desc">按鍵盤 ? 打開 · 顯示所有快捷鍵說明</div>
+          </div>
+        </div>
+        <div class="ug-tool">
+          <div class="ug-tool-key">●</div>
+          <div class="ug-tool-body">
+            <div class="ug-tool-ttl">右側 Progress Ring</div>
+            <div class="ug-tool-desc">滑鼠靠近右側 · 展開當前 Tab 的 section dots · hover 看 section 名</div>
+          </div>
+        </div>
+        <div class="ug-tool">
+          <div class="ug-tool-key">📋</div>
+          <div class="ug-tool-body">
+            <div class="ug-tool-ttl">Copy Link</div>
+            <div class="ug-tool-desc">滑鼠移到任一 section → 標題旁出現「📋 Copy Link」· 複製直連</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Section 編號規則 -->
+    <div class="reveal d4" style="margin-top:36px">
+      <div style="display:flex;align-items:baseline;gap:14px;margin-bottom:14px">
+        <div style="font-family:'JetBrains Mono',monospace;font-size:10.5px;color:#15803D;letter-spacing:2.5px;font-weight:700">PART 03 · NOMENCLATURE</div>
+        <h3 style="font-family:var(--font-h);font-size:20px;font-weight:900;color:var(--text);letter-spacing:-.3px;margin:0">編號系統 · 一眼看出在哪個 Tab</h3>
+      </div>
+
+      <div class="ug-nomen">
+        <div class="ug-nomen-item"><span class="ug-nomen-code">OV·XX</span>總覽 Overview</div>
+        <div class="ug-nomen-item"><span class="ug-nomen-code" style="background:rgba(74,108,247,.15);color:var(--blue)">IAM·XX</span>身分與權限中樞</div>
+        <div class="ug-nomen-item"><span class="ug-nomen-code" style="background:rgba(8,145,178,.15);color:#0891B2">DBRG·XX</span>資料橋接</div>
+        <div class="ug-nomen-item"><span class="ug-nomen-code" style="background:rgba(194,24,91,.15);color:#C2185B">CS·XX</span>Compute Studio</div>
+        <div class="ug-nomen-item"><span class="ug-nomen-code" style="background:rgba(184,134,11,.15);color:#B8860B">LS·XX</span>Lake Space</div>
+        <div class="ug-nomen-item"><span class="ug-nomen-code" style="background:rgba(99,102,241,.15);color:#6366F1">LPM·XX</span>跨產品</div>
+        <div class="ug-nomen-item"><span class="ug-nomen-code" style="background:rgba(255,138,101,.15);color:#D86848">DL·XX</span>Delivery</div>
+      </div>
+
+      <div style="margin-top:12px;padding:12px 16px;border-radius:10px;background:rgba(74,108,247,.04);border:1px dashed rgba(74,108,247,.2);font-size:11.5px;color:var(--text-muted);line-height:1.65">
+        💡 小數點編號（如 OV·00.5 / OV·05.5）代表「補進來」的 section · 原編號不動，維持舊連結不會失效
+      </div>
     </div>
   </div>
 </section>
@@ -3262,6 +3458,37 @@ body.ext .sec[data-topic="cs"]{display:none}
   .sla-gov-grid{grid-template-columns:1fr}
   .sla-metric{font-size:32px}
   .sla-tbd{right:-10px;top:-8px;font-size:9px}
+}
+
+/* v65 · CS Design Phase CP Track */
+.cs-cp-track{display:flex;align-items:stretch;gap:0;margin-top:14px}
+.cs-cp-item{flex:1;display:flex;flex-direction:column;align-items:center;padding:12px 10px;border-radius:10px;background:rgba(255,255,255,.7);border:1px solid rgba(194,24,91,.18);transition:all .3s cubic-bezier(.22,1,.36,1);min-width:0}
+.cs-cp-item:hover{transform:translateY(-3px);border-color:rgba(194,24,91,.4);box-shadow:0 10px 24px rgba(194,24,91,.1)}
+.cs-cp-done{background:rgba(34,197,94,.08);border-color:rgba(21,128,61,.3)}
+.cs-cp-done:hover{border-color:rgba(21,128,61,.5)}
+.cs-cp-pivot{background:linear-gradient(135deg,rgba(194,24,91,.1),rgba(255,138,101,.06));border:1.5px solid rgba(194,24,91,.45);box-shadow:0 4px 16px rgba(194,24,91,.15)}
+.cs-cp-dot{width:30px;height:30px;border-radius:50%;background:#C2185B;color:#fff;display:flex;align-items:center;justify-content:center;font-family:var(--font-h);font-weight:900;font-size:13px;margin-bottom:8px;box-shadow:0 3px 8px rgba(194,24,91,.35)}
+.cs-cp-done .cs-cp-dot{background:#15803D;box-shadow:0 3px 8px rgba(21,128,61,.35)}
+.cs-cp-pivot .cs-cp-dot{background:linear-gradient(135deg,#C2185B,#FF8A65);box-shadow:0 4px 12px rgba(194,24,91,.5);transform:scale(1.1)}
+.cs-cp-info{text-align:center;width:100%;min-width:0}
+.cs-cp-head{display:flex;align-items:center;justify-content:center;gap:5px;flex-wrap:wrap;margin-bottom:4px}
+.cs-cp-code{font-family:'JetBrains Mono',monospace;font-size:10px;font-weight:800;color:#C2185B;letter-spacing:.5px}
+.cs-cp-done .cs-cp-code{color:#15803D}
+.cs-cp-date{font-family:'JetBrains Mono',monospace;font-size:10px;color:var(--text-muted);font-weight:700}
+.cs-cp-status{padding:1px 5px;border-radius:5px;font-size:8.5px;font-weight:700;letter-spacing:.3px;line-height:1.4}
+.cs-cp-status-done{background:rgba(34,197,94,.2);color:#15803D}
+.cs-cp-status-wait{background:rgba(148,163,184,.2);color:#64748B}
+.cs-cp-status-pivot{background:#C2185B;color:#fff}
+.cs-cp-title{font-family:var(--font-h);font-size:12px;font-weight:800;color:var(--text);line-height:1.3;margin-bottom:4px}
+.cs-cp-detail{font-size:10.5px;color:var(--text-muted);line-height:1.45}
+.cs-cp-connector{align-self:center;flex-shrink:0;width:18px;height:2px;background:repeating-linear-gradient(90deg,#C2185B,#C2185B 3px,transparent 3px,transparent 6px);margin:0 2px}
+@media (max-width:900px){
+  .cs-cp-track{flex-direction:column;gap:10px}
+  .cs-cp-item{flex-direction:row;align-items:center;gap:12px;padding:10px 14px;text-align:left}
+  .cs-cp-info{text-align:left}
+  .cs-cp-head{justify-content:flex-start}
+  .cs-cp-dot{margin-bottom:0}
+  .cs-cp-connector{width:2px;height:12px;background:repeating-linear-gradient(180deg,#C2185B,#C2185B 3px,transparent 3px,transparent 6px);margin:0 0 0 24px}
 }
 </style>
 
@@ -5112,6 +5339,355 @@ body.ext .sec[data-topic="cs"]{display:none}
   </div>
 </section>
 
+<!-- =============================================================
+     v67 · DBRG TAB (INTERNAL ONLY · Data Bridge Deep Dive · 5 sections)
+     依 ClickUp 2026-11-17 匯出 + PRD 異動紀錄整理
+============================================================= -->
+
+<style>
+  /* ===== DBRG Tab Styles ===== */
+  .dbrg-hero{display:grid;grid-template-columns:1.2fr 1fr;gap:22px;align-items:stretch}
+  .dbrg-hero-card{padding:26px;border-radius:18px;background:linear-gradient(135deg,rgba(103,232,249,.12),rgba(255,255,255,.65));backdrop-filter:blur(14px);border:1px solid rgba(8,145,178,.3);box-shadow:0 10px 32px rgba(8,145,178,.08)}
+  .dbrg-hero-eye{font-family:'JetBrains Mono',monospace;font-size:10.5px;letter-spacing:2.5px;color:#0891B2;font-weight:700;margin-bottom:8px}
+  .dbrg-hero-ttl{font-family:var(--font-h);font-size:26px;font-weight:900;color:var(--text);letter-spacing:-.5px;line-height:1.25;margin-bottom:10px}
+  .dbrg-hero-ttl em{font-family:var(--font-h-en);font-style:italic;font-weight:400;color:#0891B2}
+  .dbrg-hero-body{font-size:13.5px;color:var(--text);line-height:1.8;margin-bottom:12px}
+  .dbrg-hero-tags{display:flex;gap:6px;flex-wrap:wrap}
+  .dbrg-tag{padding:3px 10px;border-radius:9px;background:rgba(8,145,178,.12);color:#0891B2;font-size:11px;font-weight:700}
+
+  .dbrg-fm-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:16px;margin-top:20px}
+  .dbrg-fm{padding:20px;border-radius:14px;background:rgba(255,255,255,.75);backdrop-filter:blur(10px);border:1px solid rgba(8,145,178,.2);border-left:4px solid #0891B2;transition:all .4s cubic-bezier(.22,1,.36,1)}
+  .dbrg-fm:hover{transform:translateY(-3px);box-shadow:0 14px 32px rgba(8,145,178,.12)}
+  .dbrg-fm-head{display:flex;justify-content:space-between;align-items:center;margin-bottom:10px}
+  .dbrg-fm-code{font-family:'JetBrains Mono',monospace;font-size:10.5px;color:#0891B2;font-weight:800;letter-spacing:1.2px}
+  .dbrg-fm-status{padding:2px 8px;border-radius:8px;font-size:10px;font-weight:700;font-family:'JetBrains Mono',monospace}
+  .dbrg-fm-dev{background:rgba(74,108,247,.15);color:var(--blue)}
+  .dbrg-fm-stg{background:rgba(34,197,94,.15);color:#15803D}
+  .dbrg-fm-backlog{background:rgba(148,163,184,.2);color:#64748B}
+  .dbrg-fm-mvp12{background:linear-gradient(135deg,rgba(255,138,101,.18),rgba(255,138,101,.08));color:#D86848}
+  .dbrg-fm-ttl{font-family:var(--font-h);font-size:17px;font-weight:900;color:var(--text);margin-bottom:6px;letter-spacing:-.3px}
+  .dbrg-fm-desc{font-size:12.5px;color:var(--text-muted);line-height:1.7;margin-bottom:10px}
+  .dbrg-fm-meta{padding-top:10px;border-top:1px dashed rgba(8,145,178,.2);font-size:11px;color:var(--text-muted);font-family:'JetBrains Mono',monospace;letter-spacing:.3px}
+
+  .dbrg-adr{display:flex;flex-direction:column;gap:14px;margin-top:20px}
+  .dbrg-adr-item{display:grid;grid-template-columns:90px 1fr;gap:16px;padding:18px 20px;border-radius:14px;background:rgba(255,255,255,.75);backdrop-filter:blur(10px);border:1px solid rgba(8,145,178,.18);border-left:4px solid #0891B2;transition:all .3s cubic-bezier(.22,1,.36,1)}
+  .dbrg-adr-item:hover{background:rgba(255,255,255,.9);box-shadow:0 10px 28px rgba(8,145,178,.1)}
+  .dbrg-adr-key{text-align:center}
+  .dbrg-adr-code{font-family:'JetBrains Mono',monospace;font-size:10px;color:#0891B2;font-weight:800;letter-spacing:1px;margin-bottom:4px}
+  .dbrg-adr-date{font-family:'JetBrains Mono',monospace;font-size:11px;color:var(--text);font-weight:700}
+  .dbrg-adr-info strong{font-family:var(--font-h);font-size:15px;font-weight:900;color:var(--text);display:block;margin-bottom:6px}
+  .dbrg-adr-info p{font-size:12.5px;color:var(--text-muted);line-height:1.7;margin:0 0 6px}
+  .dbrg-adr-why{padding:8px 12px;border-radius:9px;background:rgba(8,145,178,.07);border-left:3px solid #0891B2;font-size:11.5px;color:var(--text);margin-top:6px}
+
+  .dbrg-topic-flow{display:grid;grid-template-columns:repeat(3,1fr);gap:0;align-items:stretch;margin-top:20px}
+  .dbrg-tf-item{position:relative;padding:18px 16px;border-radius:14px;background:rgba(255,255,255,.75);border:1px solid rgba(8,145,178,.18);text-align:center}
+  .dbrg-tf-item + .dbrg-tf-item{margin-left:16px}
+  .dbrg-tf-item::before{content:'→';position:absolute;left:-14px;top:50%;transform:translateY(-50%);font-size:20px;color:#0891B2;font-weight:900}
+  .dbrg-tf-item:first-child::before{display:none}
+  .dbrg-tf-ic{font-size:30px;margin-bottom:8px}
+  .dbrg-tf-ttl{font-family:var(--font-h);font-size:15px;font-weight:900;color:var(--text);margin-bottom:6px}
+  .dbrg-tf-code{display:inline-block;padding:2px 8px;border-radius:7px;background:rgba(8,145,178,.12);color:#0891B2;font-family:'JetBrains Mono',monospace;font-size:10px;font-weight:700;letter-spacing:.5px;margin-bottom:8px}
+  .dbrg-tf-desc{font-size:11.5px;color:var(--text-muted);line-height:1.6}
+
+  .dbrg-mvp-grid{display:grid;grid-template-columns:1fr 1fr;gap:18px;margin-top:20px}
+  .dbrg-mvp{padding:22px;border-radius:16px;backdrop-filter:blur(12px)}
+  .dbrg-mvp-current{background:linear-gradient(135deg,rgba(74,108,247,.1),rgba(103,232,249,.06));border:1.5px solid rgba(74,108,247,.3);box-shadow:0 8px 24px rgba(74,108,247,.1)}
+  .dbrg-mvp-next{background:rgba(255,138,101,.07);border:1.5px dashed rgba(255,138,101,.4)}
+  .dbrg-mvp-tag{display:inline-block;padding:3px 10px;border-radius:9px;font-family:'JetBrains Mono',monospace;font-size:10px;font-weight:800;letter-spacing:.5px;margin-bottom:10px}
+  .dbrg-mvp-current .dbrg-mvp-tag{background:var(--blue);color:#fff}
+  .dbrg-mvp-next .dbrg-mvp-tag{background:#FF8A65;color:#fff}
+  .dbrg-mvp-ttl{font-family:var(--font-h);font-size:19px;font-weight:900;color:var(--text);margin-bottom:10px;letter-spacing:-.3px}
+  .dbrg-mvp-body{font-size:12.5px;color:var(--text);line-height:1.8}
+  .dbrg-mvp-body ul{list-style:none;padding:0;margin:8px 0}
+  .dbrg-mvp-body li{padding:4px 0;color:var(--text-muted)}
+  .dbrg-mvp-body li strong{color:var(--text)}
+
+  @media (max-width:900px){
+    .dbrg-hero,.dbrg-fm-grid,.dbrg-topic-flow,.dbrg-mvp-grid{grid-template-columns:1fr}
+    .dbrg-tf-item + .dbrg-tf-item{margin-left:0;margin-top:30px}
+    .dbrg-tf-item::before{content:'↓';left:50%;top:-22px;transform:translateX(-50%)}
+    .dbrg-adr-item{grid-template-columns:1fr}
+  }
+</style>
+
+<!-- ===== DBRG·01 · POSITIONING · 定位 ===== -->
+<section class="sec internal-only no-tag" id="dbrg-position" data-topic="dbrg">
+  <div class="sec-inner">
+    <div class="sec-crumb">◆ DBRG·01 · POSITIONING ◆<span class="sec-type-chip sec-type-why">🎯 Why</span></div>
+    <h2 class="sec-h reveal">Data Bridge <em>資料樞紐</em></h2>
+    <p class="sec-sub reveal d1">11 個 DIP 產品之間<span class="blue">資料流動的管線</span> &mdash; Topic × Schema × Pipeline 的中央調度</p>
+
+    <div class="dbrg-hero reveal d2" style="margin-top:28px">
+      <div class="dbrg-hero-card">
+        <div class="dbrg-hero-eye">PRODUCT ANCHOR</div>
+        <div class="dbrg-hero-ttl">把<em>資料的進出</em>標準化</div>
+        <div class="dbrg-hero-body">
+          DBRG 處理 DIP 內<strong>任何兩個產品之間</strong>的資料同步 · 不論來源是 Kafka、下游是 Hive、還是未來擴到 Query Sight，使用者只需定義「從哪裡 → 到哪裡」，不用自己寫 ETL、不用管底層排程。
+        </div>
+        <div class="dbrg-hero-tags">
+          <span class="dbrg-tag">🔄 Pipeline 調度</span>
+          <span class="dbrg-tag">📨 Topic × Schema</span>
+          <span class="dbrg-tag">🎯 Classification 設計</span>
+        </div>
+      </div>
+
+      <div style="display:flex;flex-direction:column;gap:12px">
+        <div style="padding:18px;border-radius:12px;background:rgba(255,255,255,.75);border:1px solid rgba(8,145,178,.2);border-top:3px solid #0891B2">
+          <div style="font-family:'JetBrains Mono',monospace;font-size:10px;color:#0891B2;letter-spacing:1.5px;font-weight:700;margin-bottom:4px">USER VALUE</div>
+          <div style="font-size:13px;color:var(--text);line-height:1.65"><strong>DA / Engineer / ML</strong> 不用學排程工具 · 在 DIP UI 點選就能建 Pipeline</div>
+        </div>
+        <div style="padding:18px;border-radius:12px;background:rgba(255,255,255,.75);border:1px solid rgba(8,145,178,.2);border-top:3px solid var(--amber)">
+          <div style="font-family:'JetBrains Mono',monospace;font-size:10px;color:#D86848;letter-spacing:1.5px;font-weight:700;margin-bottom:4px">PLATFORM VALUE</div>
+          <div style="font-size:13px;color:var(--text);line-height:1.65"><strong>資料閉環</strong>的管線 · 資料從 DBRG 進、CS 算、LS 存、DF/QS/下游取用，DBRG 是第一哩路</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== DBRG·02 · 4 大功能模組 · FUNCTIONAL MAP ===== -->
+<section class="sec internal-only no-tag" id="dbrg-fmap" data-topic="dbrg">
+  <div class="sec-inner">
+    <div class="sec-crumb">◆ DBRG·02 · FUNCTIONAL MAP ◆<span class="sec-type-chip sec-type-scope">📦 Scope</span></div>
+    <h2 class="sec-h reveal">4 大功能模組 <em>Features Scope</em></h2>
+    <p class="sec-sub reveal d1">依 ClickUp WBS & Sprint 分工 &mdash; <span class="blue">每個模組的 Stage 清楚標示</span></p>
+
+    <div class="dbrg-fm-grid reveal d2">
+      <!-- WBS 1.3.1 -->
+      <div class="dbrg-fm">
+        <div class="dbrg-fm-head">
+          <span class="dbrg-fm-code">WBS 1.3.1 · Sprint S2-S5</span>
+          <span class="dbrg-fm-status dbrg-fm-stg">Ready for STG</span>
+        </div>
+        <div class="dbrg-fm-ttl">① Data Pipelines 同步中心</div>
+        <div class="dbrg-fm-desc">
+          Pipeline 列表（串接 Airflow / 新 PowerJob）· <strong>Create / Edit / Delete</strong> Pipeline · <strong>Pause / Resume</strong> 排程操作
+        </div>
+        <div class="dbrg-fm-meta">📅 原 Due: 2026-08-29 · ClickUp in progress</div>
+      </div>
+
+      <!-- WBS 1.3.2 -->
+      <div class="dbrg-fm">
+        <div class="dbrg-fm-head">
+          <span class="dbrg-fm-code">WBS 1.3.2 · Sprint S5</span>
+          <span class="dbrg-fm-status dbrg-fm-stg">Ready for STG</span>
+        </div>
+        <div class="dbrg-fm-ttl">② Manual Trigger 功能</div>
+        <div class="dbrg-fm-desc">
+          Manual Trigger BE（<strong>Type 1</strong>: DBRG → DW Kafka sync to ODS）· FE 設定頁面（Pipeline Docs 唯讀 + conf Parameters 輸入）
+        </div>
+        <div class="dbrg-fm-meta">📅 原 Due: 2026-09-05 · ClickUp in progress</div>
+      </div>
+
+      <!-- WBS 1.3.3 -->
+      <div class="dbrg-fm">
+        <div class="dbrg-fm-head">
+          <span class="dbrg-fm-code">WBS 1.3.3 · Sprint S5-S6</span>
+          <span class="dbrg-fm-status dbrg-fm-dev">Development</span>
+        </div>
+        <div class="dbrg-fm-ttl">③ Pipeline Detail 頁面</div>
+        <div class="dbrg-fm-desc">
+          Overview Tab（基本資訊 + Runs Summary + Run 直方圖）· <strong>Runs Tab</strong>（執行歷史 + Mark status + Delete run）· <strong>Run Details</strong> 子頁
+        </div>
+        <div class="dbrg-fm-meta">📅 原 Due: 2026-09-19 · ClickUp in progress</div>
+      </div>
+
+      <!-- Topic/Schema Management -->
+      <div class="dbrg-fm">
+        <div class="dbrg-fm-head">
+          <span class="dbrg-fm-code">WBS Topic × Schema</span>
+          <span class="dbrg-fm-status dbrg-fm-dev">Development</span>
+        </div>
+        <div class="dbrg-fm-ttl">④ Topic / Schema 管理</div>
+        <div class="dbrg-fm-desc">
+          Topic Center（Create / Evolve / Classifications 設計）· Schema Registry（版本控制 + <strong>FULL mode</strong> 相容性）
+        </div>
+        <div class="dbrg-fm-meta">持續 Bug Fix · Ingest Data / Validation / UI 調整</div>
+      </div>
+    </div>
+
+    <!-- Integration task -->
+    <div class="reveal d3" style="margin-top:16px;padding:16px 20px;border-radius:12px;background:rgba(216,104,72,.07);border:1px dashed rgba(216,104,72,.35);border-left:4px solid #D86848">
+      <div style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:8px;margin-bottom:6px">
+        <strong style="font-family:var(--font-h);font-size:14px;color:var(--text)">⚠ WBS 1.4 · 整合測試與上線（Backlog · 原 Due 2026-09-22）</strong>
+        <span class="dbrg-fm-status dbrg-fm-backlog">Backlog</span>
+      </div>
+      <div style="font-size:12px;color:var(--text-muted);line-height:1.6">E2E 驗收測試 · Bug 修復 · 正式環境部署 · 上線通知 · <strong style="color:#D86848">時程待 PO 更新</strong></div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== DBRG·03 · 架構決策 ADR ===== -->
+<section class="sec internal-only no-tag" id="dbrg-adr" data-topic="dbrg">
+  <div class="sec-inner">
+    <div class="sec-crumb">◆ DBRG·03 · ARCHITECTURE DECISIONS ◆<span class="sec-type-chip sec-type-deep">🔬 Deep Dive</span></div>
+    <h2 class="sec-h reveal">架構決策 <em>ADR Records</em></h2>
+    <p class="sec-sub reveal d1">5 個影響整個 DBRG 走向的決策 &mdash; <span class="blue">新人入職 10 分鐘看完補齊脈絡</span></p>
+
+    <div class="dbrg-adr reveal d2">
+      <div class="dbrg-adr-item">
+        <div class="dbrg-adr-key">
+          <div class="dbrg-adr-code">ADR-DBRG-001</div>
+          <div class="dbrg-adr-date">2026 初</div>
+        </div>
+        <div class="dbrg-adr-info">
+          <strong>🔄 排程工具 Airflow → PowerJob</strong>
+          <p>DBRG Pipeline 底層排程工具由 Airflow 改為 PowerJob · 因 DBRG 尚未上線，不需新舊並行切換，直接於 PowerJob 開發</p>
+          <div class="dbrg-adr-why">💡 <strong>影響範圍</strong>：Pipeline 排程邏輯改寫（DAG → PowerJob 任務／工作流）· API 介接 · 監控告警 · Log 串接 · 移除 Airflow 相依</div>
+        </div>
+      </div>
+
+      <div class="dbrg-adr-item">
+        <div class="dbrg-adr-key">
+          <div class="dbrg-adr-code">ADR-DBRG-002</div>
+          <div class="dbrg-adr-date">2026-09-06</div>
+        </div>
+        <div class="dbrg-adr-info">
+          <strong>📝 Data Contract → Schema（命名變更）</strong>
+          <p>Data Contract 更名為 Schema · 因為易用性測試發現<strong>大多數人無法直接將 Schema 和 Data Contract 做聯想</strong></p>
+          <div class="dbrg-adr-why">💡 <strong>設計原則</strong>：命名要符合使用者心智模型 · 不要用工程師自嗨的術語當 UI 文字</div>
+        </div>
+      </div>
+
+      <div class="dbrg-adr-item">
+        <div class="dbrg-adr-key">
+          <div class="dbrg-adr-code">ADR-DBRG-003</div>
+          <div class="dbrg-adr-date">2026-10-21</div>
+        </div>
+        <div class="dbrg-adr-info">
+          <strong>🏷 Topic Type → Classifications（屬性疊加）</strong>
+          <p>Topic 的 type 改成 Classifications · 變成<strong>屬性疊加</strong>概念（而非單選）· MVP 只有 Event 一種</p>
+          <div class="dbrg-adr-why">💡 <strong>為什麼</strong>：未來要支援多種分類（Event / Live / Metric...）同時掛在一個 Topic 上，一開始就用 array 設計</div>
+        </div>
+      </div>
+
+      <div class="dbrg-adr-item">
+        <div class="dbrg-adr-key">
+          <div class="dbrg-adr-code">ADR-DBRG-004</div>
+          <div class="dbrg-adr-date">2026</div>
+        </div>
+        <div class="dbrg-adr-info">
+          <strong>🔐 Compatibility Mode: Backward → FULL</strong>
+          <p>Schema 相容性模式由 Backward 改為 <strong>FULL</strong> · 採取<strong>最嚴格</strong>的相容性策略</p>
+          <div class="dbrg-adr-why">💡 <strong>治理承諾</strong>：Schema 演化不會破壞上下游任一端 · 新舊 producer / consumer 都能繼續運作（trade-off：Schema 修改自由度降低）</div>
+        </div>
+      </div>
+
+      <div class="dbrg-adr-item">
+        <div class="dbrg-adr-key">
+          <div class="dbrg-adr-code">ADR-DBRG-005</div>
+          <div class="dbrg-adr-date">2026-08-24</div>
+        </div>
+        <div class="dbrg-adr-info">
+          <strong>⏳ Topic Status 新增 processing（非同步建立）</strong>
+          <p>送出建立 Topic 時，Schema Registry 或 Kafka 服務可能異常 · 為避免使用者混亂，<strong>只要非 DB 儲存失敗，使用者都會看到建立成功</strong>，狀態為 processing，表示 Topic 仍在建立中</p>
+          <div class="dbrg-adr-why">💡 <strong>UX 設計</strong>：不用紅字錯誤嚇使用者，背後讓系統 retry，狀態機處理</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== DBRG·04 · Topic × Schema 生命週期 ===== -->
+<section class="sec internal-only no-tag" id="dbrg-lifecycle" data-topic="dbrg">
+  <div class="sec-inner">
+    <div class="sec-crumb">◆ DBRG·04 · TOPIC × SCHEMA LIFECYCLE ◆<span class="sec-type-chip sec-type-how">🏗 How</span></div>
+    <h2 class="sec-h reveal">Topic × Schema <em>生命週期</em></h2>
+    <p class="sec-sub reveal d1">draft → processing → active &mdash; <span class="blue">三段狀態機 + Schema 版本演化</span></p>
+
+    <div class="dbrg-topic-flow reveal d2">
+      <div class="dbrg-tf-item">
+        <div class="dbrg-tf-ic">📝</div>
+        <div class="dbrg-tf-code">DRAFT</div>
+        <div class="dbrg-tf-ttl">起草階段</div>
+        <div class="dbrg-tf-desc">Topic 已建但未啟用 · Schema 可為空 · 使用者可自由編輯、刪除</div>
+      </div>
+      <div class="dbrg-tf-item" style="border-color:rgba(255,138,101,.3);border-left-color:#D86848">
+        <div class="dbrg-tf-ic">⏳</div>
+        <div class="dbrg-tf-code" style="background:rgba(255,138,101,.15);color:#D86848">PROCESSING</div>
+        <div class="dbrg-tf-ttl">非同步建立中</div>
+        <div class="dbrg-tf-desc">DB 已存 · Schema Registry / Kafka 服務建立中 · 系統 retry · 使用者不用管</div>
+      </div>
+      <div class="dbrg-tf-item" style="border-color:rgba(34,197,94,.3);border-left-color:#15803D">
+        <div class="dbrg-tf-ic">✅</div>
+        <div class="dbrg-tf-code" style="background:rgba(34,197,94,.15);color:#15803D">ACTIVE</div>
+        <div class="dbrg-tf-ttl">運作中</div>
+        <div class="dbrg-tf-desc">全系統可用 · Schema 已註冊 · 可接收/消費 message · 已啟用的 Topic <strong>Schema 一定要存在</strong></div>
+      </div>
+    </div>
+
+    <!-- Schema Evolution -->
+    <div class="reveal d3" style="margin-top:28px">
+      <div style="display:flex;align-items:baseline;gap:14px;margin-bottom:14px">
+        <div style="font-family:var(--font-mono);font-size:10.5px;color:#0891B2;letter-spacing:2.5px;font-weight:700">SCHEMA EVOLUTION</div>
+        <h3 style="font-family:var(--font-h);font-size:20px;font-weight:900;color:var(--text);letter-spacing:-.3px;margin:0">Schema 版本演化 <em style="font-family:var(--font-h-en);font-style:italic;font-weight:400;color:#0891B2">FULL mode</em></h3>
+      </div>
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px">
+        <div style="padding:18px;border-radius:12px;background:rgba(255,255,255,.7);border:1px solid rgba(8,145,178,.2)">
+          <div style="font-family:var(--font-h);font-size:14px;font-weight:900;color:var(--text);margin-bottom:8px">版本保留</div>
+          <div style="font-size:12px;color:var(--text-muted);line-height:1.7">每次 Evolve 都新增版本 · 舊版本保留可讀 · currentVersion 指向現用版</div>
+        </div>
+        <div style="padding:18px;border-radius:12px;background:rgba(255,255,255,.7);border:1px solid rgba(8,145,178,.2)">
+          <div style="font-family:var(--font-h);font-size:14px;font-weight:900;color:var(--text);margin-bottom:8px">FULL 相容性</div>
+          <div style="font-size:12px;color:var(--text-muted);line-height:1.7">新 Schema 要讓舊 producer + 新 consumer + 舊 consumer + 新 producer 全部能運作</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== DBRG·05 · MVP 1.0 → MVP 1-2 展望 ===== -->
+<section class="sec internal-only no-tag" id="dbrg-roadmap" data-topic="dbrg">
+  <div class="sec-inner">
+    <div class="sec-crumb">◆ DBRG·05 · MVP ROADMAP ◆<span class="sec-type-chip sec-type-integration">🔗 Integration</span></div>
+    <h2 class="sec-h reveal">MVP 1.0 → <em>MVP 1-2</em> 路徑</h2>
+    <p class="sec-sub reveal d1">現在做的 vs 下一波要做的 &mdash; <span class="blue">分階段擴充同步路徑</span></p>
+
+    <div class="dbrg-mvp-grid reveal d2">
+      <div class="dbrg-mvp dbrg-mvp-current">
+        <div class="dbrg-mvp-tag">MVP 1.0 · 當前主線</div>
+        <div class="dbrg-mvp-ttl">DBRG → DW 單一路徑</div>
+        <div class="dbrg-mvp-body">
+          <strong>類型</strong>：Kafka → HDFS（Type 1 Manual Trigger）
+          <ul>
+            <li>▸ <strong>Source</strong>：Data Bridge（Kafka Topic）</li>
+            <li>▸ <strong>Destination</strong>：Data Warehouse（ODS）</li>
+            <li>▸ <strong>Template</strong>：KAFKA_TO_HDFS</li>
+            <li>▸ <strong>Pipelines 中心 / Detail / Manual Trigger</strong> 全線服務這條路徑</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="dbrg-mvp dbrg-mvp-next">
+        <div class="dbrg-mvp-tag">MVP 1-2 · 下一波擴充</div>
+        <div class="dbrg-mvp-ttl">Data Forge → Query Sight 新路徑</div>
+        <div class="dbrg-mvp-body">
+          <strong>類型</strong>：Type 2 Manual Trigger（DF → QS）
+          <ul>
+            <li>▸ <strong>Source</strong>：Data Forge（原 Data Warehouse 更名）</li>
+            <li>▸ <strong>Destination</strong>：Query Sight（原 Query Service 更名）</li>
+            <li>▸ <strong>擴充</strong>：Data Pipelines 總覽新增此路徑 · Pipeline Detail 專屬頁</li>
+            <li>▸ <strong style="color:#D86848">相依</strong>：PowerJob 遷移（ADR-DBRG-001）要先完成</li>
+            <li>▸ <strong style="color:#D86848">待補</strong>：PRD DF→QS 欄位規格 · Manual Trigger Type 2 參數規格</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <!-- 跨產品整合 -->
+    <div class="reveal d3" style="margin-top:28px;padding:22px;border-radius:14px;background:linear-gradient(135deg,rgba(8,145,178,.07),rgba(103,232,249,.04));border:1px solid rgba(8,145,178,.2)">
+      <div style="font-family:'JetBrains Mono',monospace;font-size:10.5px;color:#0891B2;letter-spacing:2.5px;font-weight:700;margin-bottom:10px">CROSS-PRODUCT INTEGRATION</div>
+      <div style="font-family:var(--font-h);font-size:17px;font-weight:900;color:var(--text);margin-bottom:12px">DBRG 跟其他產品的關係</div>
+      <div style="display:grid;grid-template-columns:repeat(2,1fr);gap:12px;font-size:12.5px;color:var(--text);line-height:1.7">
+        <div><strong style="color:var(--blue)">🛡 IAM</strong>：Topic / Pipeline 權限 · User / Project 層級控管 · Audit 稽核 log</div>
+        <div><strong style="color:var(--pink)">⚡ CS</strong>：Pipeline 運算走 CS YuniKorn queue（ADR-005 DBRG 資源獨立）</div>
+        <div><strong style="color:#B8860B">📁 LS</strong>：DBRG 刪除改走 LS API（12/7 W8 完成串接）· <strong style="color:#D86848">待確認對接方式</strong></div>
+        <div><strong style="color:#0891B2">🔬 DF / QS</strong>：MVP 1-2 新路徑 · 完整 DIP 資料閉環第二條</div>
+      </div>
+    </div>
+  </div>
+</section>
+
 <!-- ===== v5.1 · LS TAB (INTERNAL ONLY · Lake Space Deep Dive) ===== -->
 <style>
   /* ===== LS Tab Styles ===== */
@@ -6001,16 +6577,18 @@ body.ext .sec[data-topic="cs"]{display:none}
       <div style="padding:20px;border-radius:14px;background:linear-gradient(135deg,rgba(103,232,249,.1),rgba(255,255,255,.65));border:1px solid rgba(103,232,249,.4);border-top:4px solid #0891B2">
         <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:10px">
           <div style="font-family:'Noto Serif TC',serif;font-size:16px;font-weight:900;color:var(--text)">🔄 DBRG</div>
-          <span style="padding:3px 9px;border-radius:10px;background:rgba(8,145,178,.15);color:#0891B2;font-size:10px;font-weight:700">配合中</span>
+          <span style="padding:3px 9px;border-radius:10px;background:rgba(8,145,178,.15);color:#0891B2;font-size:10px;font-weight:700">BUILD · MVP</span>
         </div>
         <div style="font-size:12.5px;color:var(--text);line-height:1.75">
-          <strong>本週 (11/9–11/13)</strong><br>
-          · <strong style="color:#D86848">⏰ 11/13 前</strong>需確認「DBRG 刪除改走 LS API」的對接方式<br>
-          · 11/16 開始配合 CS 跨 PO 第一輪<br><br>
-          <strong style="color:#0891B2">下個節點</strong>：12/7 W8 完成 LS API 串接
+          <strong>本週 (11/10–11/16)</strong><br>
+          · <strong style="color:#0891B2">Pipeline Detail 頁面</strong> 開發中（WBS 1.3.3 · S5-S6）<br>
+          · <strong style="color:#0891B2">Airflow → PowerJob</strong> 遷移中（排程工具底層改寫）<br>
+          · Pipeline 同步中心 / Manual Trigger 已到 <strong style="color:var(--text)">Ready for STG</strong><br>
+          · 持續處理 MVP AC 缺陷（Topic / Schema / Classification 相關）<br><br>
+          <strong style="color:#0891B2">下個節點</strong>：MVP 1.4 整合測試 → DF→QS 路徑擴充（MVP 1-2）
         </div>
         <div style="margin-top:12px;padding-top:10px;border-top:1px dashed rgba(8,145,178,.25);font-size:10.5px;color:var(--text-muted);font-family:'JetBrains Mono',monospace;letter-spacing:.5px">
-          📊 進度來源：<strong style="color:#D86848">待本週與 DBRG PO 確認</strong>
+          📊 進度來源：<strong style="color:#0891B2">ClickUp</strong>
         </div>
       </div>
     </div>
@@ -6702,17 +7280,94 @@ body.ext .sec[data-topic="cs"]{display:none}
           </div>
         </div>
 
-        <!-- 2027-02-12 · CS Sprint 3 -->
+        <!-- v65 · CS Design 階段 CP 軌跡（CP1-4 → Dev Kickoff 才能進 Build） -->
+        <div style="position:relative;margin-bottom:22px">
+          <div style="position:absolute;left:-18px;top:4px;width:14px;height:14px;border-radius:50%;background:#C2185B;border:2px dashed #fff;box-shadow:0 2px 6px rgba(194,24,91,.4);background:repeating-linear-gradient(45deg,#C2185B,#C2185B 3px,#fff 3px,#fff 5px)"></div>
+          <div style="padding:16px 18px;border-radius:12px;background:rgba(244,114,182,.05);border:1px dashed rgba(244,114,182,.4);border-left:4px solid #C2185B">
+            <div style="margin-bottom:14px">
+              <span style="font-family:'JetBrains Mono',monospace;font-size:11px;color:#C2185B;font-weight:700;letter-spacing:1.5px">⚡ CS DESIGN PHASE · 11/12 → 12/24</span>
+              <div style="font-family:'Noto Serif TC',serif;font-size:16px;font-weight:900;color:var(--text);margin-top:2px">CS 還在 Design · 走完 4 個 CP 才會進 Build</div>
+            </div>
+
+            <!-- CS CP 細項軌跡 -->
+            <div class="cs-cp-track">
+              <div class="cs-cp-item cs-cp-done">
+                <div class="cs-cp-dot">✓</div>
+                <div class="cs-cp-info">
+                  <div class="cs-cp-head">
+                    <span class="cs-cp-code">CP1</span>
+                    <span class="cs-cp-date">11/12</span>
+                    <span class="cs-cp-status cs-cp-status-done">已完成</span>
+                  </div>
+                  <div class="cs-cp-title">Product Brief 定版</div>
+                  <div class="cs-cp-detail">產品定位、目標客群、價值主張對齊完成</div>
+                </div>
+              </div>
+
+              <div class="cs-cp-connector"></div>
+
+              <div class="cs-cp-item">
+                <div class="cs-cp-dot">2</div>
+                <div class="cs-cp-info">
+                  <div class="cs-cp-head">
+                    <span class="cs-cp-code">CP2</span>
+                    <span class="cs-cp-date">12/10</span>
+                    <span class="cs-cp-status cs-cp-status-wait">待</span>
+                  </div>
+                  <div class="cs-cp-title">產品方案定版</div>
+                  <div class="cs-cp-detail">Functional Map · 功能切分 · MVP Scope 定案</div>
+                </div>
+              </div>
+
+              <div class="cs-cp-connector"></div>
+
+              <div class="cs-cp-item">
+                <div class="cs-cp-dot">3</div>
+                <div class="cs-cp-info">
+                  <div class="cs-cp-head">
+                    <span class="cs-cp-code">CP3</span>
+                    <span class="cs-cp-date">12/17</span>
+                    <span class="cs-cp-status cs-cp-status-wait">待</span>
+                  </div>
+                  <div class="cs-cp-title">架構路線拍板</div>
+                  <div class="cs-cp-detail">技術架構 · ADR 定案 · 系統邊界確認</div>
+                </div>
+              </div>
+
+              <div class="cs-cp-connector"></div>
+
+              <div class="cs-cp-item cs-cp-pivot">
+                <div class="cs-cp-dot">4</div>
+                <div class="cs-cp-info">
+                  <div class="cs-cp-head">
+                    <span class="cs-cp-code">CP4</span>
+                    <span class="cs-cp-date">12/24</span>
+                    <span class="cs-cp-status cs-cp-status-pivot">Dev 啟動</span>
+                  </div>
+                  <div class="cs-cp-title">開發 Kickoff</div>
+                  <div class="cs-cp-detail"><strong style="color:#C2185B">↓ 從這一刻起 CS 才進入 BUILD 階段</strong></div>
+                </div>
+              </div>
+            </div>
+
+            <div style="margin-top:14px;padding:11px 14px;border-radius:9px;background:rgba(216,104,72,.08);border-left:3px solid #D86848;font-size:11.5px;color:var(--text);line-height:1.65">
+              ⚠ <strong>給 BD 的提醒</strong>：12/24 之前 CS 都還在產品 / 架構確認期 · Sprint 時程、Stage 可試範圍都要等 <strong>CP4 後</strong>才會明朗 · 下方 Sprint 1-4 時間是 PM 預估，待 CP4 後與 BD 窗口對齊
+            </div>
+          </div>
+        </div>
+
+        <!-- 2027-02-12 · CS Sprint 3 (CP4 後才啟動的推估) -->
         <div style="position:relative;margin-bottom:22px">
           <div style="position:absolute;left:-18px;top:4px;width:14px;height:14px;border-radius:50%;background:#C2185B;border:2px solid #fff;box-shadow:0 2px 6px rgba(194,24,91,.4)"></div>
-          <div style="padding:16px 18px;border-radius:12px;background:rgba(244,114,182,.08);border:1px solid rgba(244,114,182,.3);border-left:4px solid #C2185B">
+          <div style="padding:16px 18px;border-radius:12px;background:rgba(244,114,182,.08);border:1px solid rgba(244,114,182,.3);border-left:4px solid #C2185B;position:relative">
+            <span style="position:absolute;top:-10px;right:14px;padding:2px 9px;border-radius:7px;background:#D86848;color:#fff;font-family:'JetBrains Mono',monospace;font-size:9.5px;font-weight:800;letter-spacing:.5px;transform:rotate(3deg);box-shadow:0 4px 10px rgba(216,104,72,.35)">PM 預估 · 待 CP4 確認</span>
             <div style="margin-bottom:6px">
               <span style="font-family:'JetBrains Mono',monospace;font-size:11px;color:#C2185B;font-weight:700;letter-spacing:1.5px">2027-01-15 → 02-26 · CS Sprint 1-4 STG</span>
               <div style="font-family:'Noto Serif TC',serif;font-size:16px;font-weight:900;color:var(--text);margin-top:2px">⚡ CS 分階段上 Stage（Sprint 1 → 4）</div>
             </div>
             <div style="font-size:12.5px;color:var(--text-muted);line-height:1.75">
-              <strong style="color:var(--text)">BD 能帶客戶看（分階段）</strong>：Sprint 1-2 核心運算 → Sprint 3-4 整合完成<br>
-              <strong style="color:#D86848">⚠ Scope 待 CP4（12/24）後確定</strong>，BD demo 腳本要配合 Sprint 內容調整
+              <strong style="color:var(--text)">BD 能帶客戶看（分階段推估）</strong>：Sprint 1-2 核心運算 → Sprint 3-4 整合完成<br>
+              <strong style="color:#D86848">⚠ Scope 待 CP4（12/24）後確定</strong>，實際 Sprint 日期與內容請以 CP4 定案為準
             </div>
           </div>
         </div>
@@ -6749,6 +7404,332 @@ body.ext .sec[data-topic="cs"]{display:none}
     </div>
   </div>
 </section>
+
+<!-- =============================================================
+     v67 · DL·03 · PRICING-RELEVANT CHANGELOG · 計價變動軌跡
+     目標讀者：計價分析師（責任為 4 核心產品 IAM/DBRG/CS/LS 的計價認列）
+     只記：影響計價、SKU、認列範圍、Credit / Tier 定義的變動
+============================================================= -->
+<section class="sec internal-only no-tag" id="pricing-changelog" data-topic="delivery">
+  <div class="sec-inner">
+    <div class="sec-crumb">◆ DL·03 · PRICING-RELEVANT CHANGELOG ◆<span class="sec-type-chip sec-type-integration">🔗 Integration</span></div>
+    <h2 class="sec-h reveal">計價變動軌跡 <em>For Pricing Analyst</em></h2>
+    <p class="sec-sub reveal d1">只記「<span class="blue">會改變計價 / 認列方式</span>的變動」&mdash; 分析師看這份就能規劃，不用翻 PRD / ADR</p>
+
+    <!-- 使用說明 -->
+    <div class="reveal d2" style="margin-bottom:18px;padding:14px 18px;border-radius:10px;background:rgba(74,108,247,.06);border:1px solid rgba(74,108,247,.2);font-size:12px;color:var(--text);line-height:1.75">
+      💼 <strong style="color:var(--text)">這份表格的用途</strong>：記錄「<strong>會影響產品計價 / 認列範圍 / SKU 定義</strong>」的變動 · 每筆標示<strong style="color:var(--amber)">「對計價影響」</strong>分類供參考 · 如果看了還不懂某筆變動的細節，可以回「來源」欄指向的 PO 窗口確認。
+    </div>
+
+    <!-- 納入規則 · 給分析師透明說明依據 -->
+    <div class="reveal d3 pc-rules">
+      <div class="pc-rules-head">
+        <span style="font-family:'JetBrains Mono',monospace;font-size:10.5px;color:var(--text-muted);letter-spacing:2px;font-weight:700">EDITORIAL CRITERIA</span>
+        <h3 style="font-family:var(--font-h);font-size:18px;font-weight:900;color:var(--text);margin:4px 0 0;letter-spacing:-.3px">📋 納入規則 · 這份表格的依據</h3>
+      </div>
+
+      <div class="pc-rules-grid">
+        <!-- 會納入 -->
+        <div class="pc-rule pc-rule-in">
+          <div class="pc-rule-ic">✅</div>
+          <div class="pc-rule-ttl">會納入</div>
+          <div class="pc-rule-list">
+            <div class="pc-rule-item">
+              <strong>SKU / Tier 定義變動</strong>
+              <span>產品版本結構、計價單位、分級切割方式改變</span>
+            </div>
+            <div class="pc-rule-item">
+              <strong>認列範圍改變</strong>
+              <span>原本算 A 產品的現在算 B 產品 / 跨產品資源歸屬調整</span>
+            </div>
+            <div class="pc-rule-item">
+              <strong>計價邏輯決策</strong>
+              <span>pay-as-you-go 改 Tier、固定費改用量、新計價公式</span>
+            </div>
+            <div class="pc-rule-item">
+              <strong>新功能影響 MVP 範圍</strong>
+              <span>MVP 新增 / 刪除 feature 導致 SKU 內容變動</span>
+            </div>
+            <div class="pc-rule-item">
+              <strong>技術遷移可能影響成本結構</strong>
+              <span>底層系統替換、資源池重組、架構重大改變（即使當下不影響也先登記）</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- 不納入 -->
+        <div class="pc-rule pc-rule-out">
+          <div class="pc-rule-ic">❌</div>
+          <div class="pc-rule-ttl">不納入</div>
+          <div class="pc-rule-list">
+            <div class="pc-rule-item">
+              <strong>UI 微調 / 版型調整</strong>
+              <span>按鈕位置、顏色、字型變動</span>
+            </div>
+            <div class="pc-rule-item">
+              <strong>Bug 修復</strong>
+              <span>既有功能的異常修復（即使 release note 有寫也不列入）</span>
+            </div>
+            <div class="pc-rule-item">
+              <strong>內部重構 / 性能優化</strong>
+              <span>不改變使用者可感知的功能範圍或計費方式</span>
+            </div>
+            <div class="pc-rule-item">
+              <strong>單純命名變更</strong>
+              <span>除非該名詞會出現在報價文件 / 計價說明（有的話仍列入並標 ℹ️）</span>
+            </div>
+            <div class="pc-rule-item">
+              <strong>單一 PO 內部排程</strong>
+              <span>Sprint 內調整、Backlog 細節、WBS 子任務拆分</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- 更新機制 · 判定責任 -->
+      <div class="pc-rule-meta">
+        <div class="pc-rule-meta-item">
+          <div class="pc-rule-meta-eye">⏱ 更新時機</div>
+          <div class="pc-rule-meta-txt">
+            每次 <strong>PO 會議 / ADR 定案 / 重大 PRD 異動</strong>後，由 Lead PM 或對應 PO 新增一列 · 無固定頻率，事件驅動
+          </div>
+        </div>
+        <div class="pc-rule-meta-item">
+          <div class="pc-rule-meta-eye">⚖ 判定責任</div>
+          <div class="pc-rule-meta-txt">
+            Lead PM 統一把關「有沒有計價影響」· 不確定時<strong>預設納入並標 ℹ️ 僅通知</strong> · 寧願多記不要漏記
+          </div>
+        </div>
+        <div class="pc-rule-meta-item">
+          <div class="pc-rule-meta-eye">🔙 回饋機制</div>
+          <div class="pc-rule-meta-txt">
+            分析師若發現表格漏了某項變動、或對某筆分類有不同看法，可直接找對應 PO 或 Lead PM 討論
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Legend -->
+    <div class="reveal d3" style="display:flex;gap:10px;flex-wrap:wrap;margin-bottom:18px;font-size:11px">
+      <span style="padding:4px 10px;border-radius:8px;background:rgba(216,104,72,.15);color:#D86848;font-weight:700">↑ 成本提升</span>
+      <span style="padding:4px 10px;border-radius:8px;background:rgba(34,197,94,.15);color:#15803D;font-weight:700">↓ 成本下降</span>
+      <span style="padding:4px 10px;border-radius:8px;background:rgba(74,108,247,.15);color:var(--blue);font-weight:700">⟲ 認列範圍改變</span>
+      <span style="padding:4px 10px;border-radius:8px;background:rgba(255,138,101,.15);color:#D86848;font-weight:700">⚡ SKU / Tier 變動</span>
+      <span style="padding:4px 10px;border-radius:8px;background:rgba(148,163,184,.2);color:#64748B;font-weight:700">ℹ️ 僅通知 · 無立即影響</span>
+    </div>
+
+    <!-- Changelog Table -->
+    <div class="reveal d4 pc-wrap">
+      <table class="pc-table">
+        <thead>
+          <tr>
+            <th style="width:92px">📅 日期</th>
+            <th style="width:72px">🏷 產品</th>
+            <th style="width:110px">類型</th>
+            <th>變動內容</th>
+            <th style="width:140px">💰 計價影響</th>
+            <th style="width:130px">🔗 來源</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td class="pc-date">2026-11-12</td>
+            <td><span class="pc-prod pc-prod-cs">⚡ CS</span></td>
+            <td><span class="pc-type pc-type-decision">計價邏輯</span></td>
+            <td>
+              <strong>ADR-005 · DBRG 資源獨立</strong><br>
+              <span class="pc-detail">DBRG 自己管 queue 資源與計價，不放在 CS 資源裡一起算 · 原因：DBRG 可能用外部資源 + Kafka Connect 用量難計算</span>
+            </td>
+            <td><span class="pc-impact pc-impact-scope">⟲ 認列範圍改變</span></td>
+            <td class="pc-src">CS 11/12 會議</td>
+          </tr>
+
+          <tr>
+            <td class="pc-date">2026-11-12</td>
+            <td><span class="pc-prod pc-prod-cs">⚡ CS</span></td>
+            <td><span class="pc-type pc-type-decision">計價邏輯</span></td>
+            <td>
+              <strong>ADR-006 · Project 資源集中後切分</strong><br>
+              <span class="pc-detail">Project 資源先全部在 CS YuniKorn queue · 產品要用時：(a) 選現有 queue 或 (b) 從 CS queue 切新 queue · <strong>同一 queue 可能多產品共用</strong></span>
+            </td>
+            <td><span class="pc-impact pc-impact-sku">⚡ SKU / Tier 變動</span></td>
+            <td class="pc-src">CS 11/12 會議</td>
+          </tr>
+
+          <tr>
+            <td class="pc-date">2026-11-12</td>
+            <td><span class="pc-prod pc-prod-cs">⚡ CS</span></td>
+            <td><span class="pc-type pc-type-defer">暫緩</span></td>
+            <td>
+              <strong>Secret 開發暫緩</strong><br>
+              <span class="pc-detail">Secret 功能暫緩，等需求量變多再做</span>
+            </td>
+            <td><span class="pc-impact pc-impact-info">ℹ️ 僅通知</span></td>
+            <td class="pc-src">CS 11/12 會議</td>
+          </tr>
+
+          <tr>
+            <td class="pc-date">2026 初</td>
+            <td><span class="pc-prod pc-prod-dbrg">🔄 DBRG</span></td>
+            <td><span class="pc-type pc-type-migration">技術遷移</span></td>
+            <td>
+              <strong>Airflow → PowerJob（排程工具替換）</strong><br>
+              <span class="pc-detail">DBRG Pipeline 底層排程工具由 Airflow 改為 PowerJob · DBRG 尚未上線不需並行切換 · 若日後以「排程使用量」計費，算法將以 PowerJob 為基礎</span>
+            </td>
+            <td><span class="pc-impact pc-impact-info">ℹ️ 僅通知</span></td>
+            <td class="pc-src">ADR-DBRG-001</td>
+          </tr>
+
+          <tr>
+            <td class="pc-date">2026-10-21</td>
+            <td><span class="pc-prod pc-prod-dbrg">🔄 DBRG</span></td>
+            <td><span class="pc-type pc-type-feature">新功能</span></td>
+            <td>
+              <strong>MVP 1-2 · Data Forge → Query Sight 新路徑</strong><br>
+              <span class="pc-detail">DBRG 擴充第二條同步路徑 · 從 DF（原 DW）到 QS（原 Query Service）· Type 2 Manual Trigger</span>
+            </td>
+            <td><span class="pc-impact pc-impact-sku">⚡ SKU / Tier 變動</span></td>
+            <td class="pc-src">ClickUp z8wrftbpqe/qq</td>
+          </tr>
+
+          <tr>
+            <td class="pc-date">2026-09-06</td>
+            <td><span class="pc-prod pc-prod-dbrg">🔄 DBRG</span></td>
+            <td><span class="pc-type pc-type-info">命名變更</span></td>
+            <td>
+              <strong>Data Contract → Schema（UI 用詞）</strong><br>
+              <span class="pc-detail">Topic 內的 Data Contract 改名為 Schema · 使用者端 UI 用詞變動 · 對外文件若有此名詞建議同步更新</span>
+            </td>
+            <td><span class="pc-impact pc-impact-info">ℹ️ 僅通知</span></td>
+            <td class="pc-src">ADR-DBRG-002</td>
+          </tr>
+
+          <tr>
+            <td class="pc-date">待補</td>
+            <td><span class="pc-prod pc-prod-iam">🛡 IAM</span></td>
+            <td><span class="pc-type pc-type-feature">新功能</span></td>
+            <td>
+              <strong>Phase 1 · 15 Features 上 Stage（11/27）</strong><br>
+              <span class="pc-detail"><strong style="color:#D86848">待 IAM PO 補 15 Features 清單</strong>，IAM MVP 1.0 功能範圍定案</span>
+            </td>
+            <td><span class="pc-impact pc-impact-sku">⚡ SKU / Tier 變動</span></td>
+            <td class="pc-src">待 IAM PO 提供</td>
+          </tr>
+
+          <tr>
+            <td class="pc-date">待補</td>
+            <td><span class="pc-prod pc-prod-ls">📁 LS</span></td>
+            <td><span class="pc-type pc-type-feature">新功能</span></td>
+            <td>
+              <strong>24 Features MVP 上線（1/15）</strong><br>
+              <span class="pc-detail"><strong style="color:#D86848">待 LS PO 補 24 Features 清單</strong>，LS MVP 1.0 功能範圍定案</span>
+            </td>
+            <td><span class="pc-impact pc-impact-sku">⚡ SKU / Tier 變動</span></td>
+            <td class="pc-src">待 LS PO 提供</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <!-- 空白待填欄位提示 -->
+    <div class="reveal d5" style="margin-top:18px;padding:14px 20px;border-radius:12px;background:linear-gradient(135deg,rgba(74,108,247,.06),rgba(255,138,101,.04));border:1px dashed rgba(74,108,247,.3);font-size:12px;color:var(--text);line-height:1.7">
+      📝 <strong>維護規則</strong>：每次 PO 會議 / ADR 定案 / 重大 PRD 異動後，由 Lead PM 或 PO 負責在此表新增一列 · 空白欄位 =「待補」=「還沒跟分析師對齊」· 計價分析師可根據此表主動找對應 PO 要細節
+    </div>
+  </div>
+</section>
+
+<style>
+/* v67 · Pricing Changelog Table */
+.pc-wrap{overflow-x:auto;border-radius:14px;background:rgba(255,255,255,.75);backdrop-filter:blur(12px);border:1px solid rgba(74,108,247,.15);box-shadow:0 10px 32px rgba(74,108,247,.06)}
+.pc-table{width:100%;border-collapse:collapse;font-size:12.5px;min-width:960px}
+.pc-table thead{background:linear-gradient(135deg,rgba(74,108,247,.08),rgba(255,138,101,.05));position:sticky;top:0}
+.pc-table th{padding:14px 12px;text-align:left;font-family:var(--font-h);font-weight:900;color:var(--text);font-size:12px;letter-spacing:.3px;border-bottom:2px solid rgba(74,108,247,.2)}
+.pc-table td{padding:14px 12px;vertical-align:top;border-bottom:1px solid rgba(74,108,247,.08);color:var(--text);line-height:1.6}
+.pc-table tbody tr:hover{background:rgba(74,108,247,.03)}
+.pc-date{font-family:'JetBrains Mono',monospace;font-size:11px;font-weight:700;color:var(--blue);white-space:nowrap}
+.pc-prod{display:inline-block;padding:3px 9px;border-radius:9px;font-size:11px;font-weight:700;letter-spacing:.3px;white-space:nowrap}
+.pc-prod-iam{background:rgba(74,108,247,.15);color:var(--blue)}
+.pc-prod-dbrg{background:rgba(8,145,178,.15);color:#0891B2}
+.pc-prod-cs{background:rgba(194,24,91,.15);color:#C2185B}
+.pc-prod-ls{background:rgba(184,134,11,.15);color:#B8860B}
+.pc-type{display:inline-block;padding:2px 8px;border-radius:7px;font-family:'JetBrains Mono',monospace;font-size:10px;font-weight:700;letter-spacing:.3px;white-space:nowrap}
+.pc-type-decision{background:rgba(255,138,101,.15);color:#D86848}
+.pc-type-migration{background:rgba(74,108,247,.1);color:var(--blue)}
+.pc-type-feature{background:rgba(34,197,94,.12);color:#15803D}
+.pc-type-info{background:rgba(148,163,184,.2);color:#64748B}
+.pc-type-defer{background:rgba(148,163,184,.15);color:#94A3B8}
+.pc-detail{display:block;margin-top:4px;font-size:11.5px;color:var(--text-muted);line-height:1.6}
+.pc-impact{display:inline-block;padding:3px 9px;border-radius:8px;font-size:10.5px;font-weight:700;white-space:nowrap}
+.pc-impact-sku{background:rgba(255,138,101,.15);color:#D86848}
+.pc-impact-scope{background:rgba(74,108,247,.15);color:var(--blue)}
+.pc-impact-up{background:rgba(216,104,72,.15);color:#D86848}
+.pc-impact-down{background:rgba(34,197,94,.15);color:#15803D}
+.pc-impact-info{background:rgba(148,163,184,.2);color:#64748B}
+.pc-action{font-size:12px;color:var(--text);line-height:1.6}
+.pc-src{font-family:'JetBrains Mono',monospace;font-size:10.5px;color:var(--text-muted);white-space:nowrap}
+
+/* v69 · Pricing Changelog · Editorial Rules */
+.pc-rules{margin-bottom:24px;padding:22px 24px;border-radius:14px;background:linear-gradient(135deg,rgba(74,108,247,.04),rgba(255,138,101,.03));border:1px solid rgba(74,108,247,.18)}
+.pc-rules-head{margin-bottom:18px}
+.pc-rules-grid{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-bottom:18px}
+.pc-rule{padding:18px 20px;border-radius:12px;backdrop-filter:blur(10px)}
+.pc-rule-in{background:rgba(34,197,94,.05);border:1px solid rgba(34,197,94,.2);border-left:4px solid #15803D}
+.pc-rule-out{background:rgba(148,163,184,.06);border:1px solid rgba(148,163,184,.25);border-left:4px solid #94A3B8}
+.pc-rule-ic{font-size:22px;margin-bottom:6px;line-height:1}
+.pc-rule-ttl{font-family:var(--font-h);font-size:16px;font-weight:900;color:var(--text);margin-bottom:12px;letter-spacing:-.2px}
+.pc-rule-in .pc-rule-ttl{color:#15803D}
+.pc-rule-out .pc-rule-ttl{color:#64748B}
+.pc-rule-list{display:flex;flex-direction:column;gap:9px}
+.pc-rule-item{padding:8px 10px;border-radius:8px;background:rgba(255,255,255,.55);font-size:12px;line-height:1.55}
+.pc-rule-item strong{display:block;color:var(--text);font-weight:800;margin-bottom:2px}
+.pc-rule-item span{color:var(--text-muted);font-size:11.5px}
+.pc-rule-meta{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;padding-top:16px;border-top:1px dashed rgba(74,108,247,.2)}
+.pc-rule-meta-item{padding:12px 14px;border-radius:10px;background:rgba(255,255,255,.55);border:1px solid rgba(74,108,247,.12)}
+.pc-rule-meta-eye{font-family:'JetBrains Mono',monospace;font-size:10px;color:var(--blue);letter-spacing:1.5px;font-weight:700;margin-bottom:6px}
+.pc-rule-meta-txt{font-size:11.5px;color:var(--text);line-height:1.6}
+@media (max-width:900px){
+  .pc-rules-grid{grid-template-columns:1fr}
+  .pc-rule-meta{grid-template-columns:1fr}
+}
+
+/* v69 · Usage Guide Section */
+.ug-roles{display:grid;grid-template-columns:repeat(3,1fr);gap:14px}
+.ug-role{padding:20px 20px 22px;border-radius:14px;background:rgba(255,255,255,.75);backdrop-filter:blur(12px);border:1px solid rgba(74,108,247,.15);transition:all .4s cubic-bezier(.22,1,.36,1)}
+.ug-role:hover{transform:translateY(-4px);box-shadow:0 14px 36px rgba(74,108,247,.12)}
+.ug-role-newbie{border-top:3px solid #15803D}
+.ug-role-weekly{border-top:3px solid var(--blue)}
+.ug-role-pitch{border-top:3px solid var(--amber)}
+.ug-role-analyst{border-top:3px solid #0891B2}
+.ug-role-cross{border-top:3px solid #6366F1}
+.ug-role-maintainer{border-top:3px solid var(--pink)}
+.ug-role-ic{font-size:30px;margin-bottom:10px;line-height:1}
+.ug-role-head{margin-bottom:12px;padding-bottom:10px;border-bottom:1px dashed rgba(74,108,247,.2)}
+.ug-role-ttl{font-family:var(--font-h);font-size:17px;font-weight:900;color:var(--text);letter-spacing:-.2px;margin-bottom:4px}
+.ug-role-sub{font-size:11.5px;color:var(--text-muted);line-height:1.4}
+.ug-role-path strong{display:block;font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:1.5px;color:var(--text-muted);font-weight:700;margin-bottom:8px}
+.ug-role-path ol{list-style:decimal;padding-left:18px;margin:0;font-size:11.5px;color:var(--text);line-height:1.65}
+.ug-role-path li{padding:3px 0}
+
+.ug-tools{display:grid;grid-template-columns:repeat(3,1fr);gap:14px}
+.ug-tool{display:flex;gap:14px;align-items:flex-start;padding:14px 16px;border-radius:12px;background:rgba(255,255,255,.75);border:1px solid rgba(255,138,101,.15);transition:all .3s cubic-bezier(.22,1,.36,1)}
+.ug-tool:hover{border-color:rgba(255,138,101,.35);transform:translateY(-2px);box-shadow:0 10px 24px rgba(255,138,101,.08)}
+.ug-tool-key{flex-shrink:0;width:42px;height:42px;border-radius:10px;background:linear-gradient(135deg,var(--amber),#E66B4A);color:#fff;display:flex;align-items:center;justify-content:center;font-family:var(--font-h);font-weight:900;font-size:15px;box-shadow:0 4px 12px rgba(255,138,101,.3)}
+.ug-tool-body{flex:1;min-width:0}
+.ug-tool-ttl{font-family:var(--font-h);font-size:14px;font-weight:900;color:var(--text);margin-bottom:3px;letter-spacing:-.2px}
+.ug-tool-desc{font-size:11.5px;color:var(--text-muted);line-height:1.55}
+
+.ug-nomen{display:flex;flex-wrap:wrap;gap:10px}
+.ug-nomen-item{display:flex;align-items:center;gap:8px;padding:8px 14px;border-radius:10px;background:rgba(255,255,255,.7);border:1px solid rgba(74,108,247,.12);font-size:12.5px;color:var(--text)}
+.ug-nomen-code{padding:3px 9px;border-radius:7px;background:rgba(74,108,247,.12);color:var(--blue);font-family:'JetBrains Mono',monospace;font-size:11px;font-weight:800;letter-spacing:.5px}
+
+@media (max-width:900px){
+  .ug-roles,.ug-tools{grid-template-columns:1fr}
+  .ug-nomen-item{flex-basis:calc(50% - 5px)}
+}
+@media (max-width:640px){
+  .ug-nomen-item{flex-basis:100%}
+}
+</style>
 
 <!-- ===== v61 · CTA · 聯絡窗口 (external-only) ===== -->
 <section class="sec external-only" data-topic="overview" id="cta" style="padding-bottom:60px">
@@ -6869,7 +7850,7 @@ body.ext .sec[data-topic="cs"]{display:none}
 
 <script>
 /* ============ v4.6 · TOPIC TABS · 階層式 sitemap ============ */
-const TOPIC_LIST = ['overview','iam','cs','ls','lpm','delivery'];
+const TOPIC_LIST = ['overview','iam','dbrg','cs','ls','lpm','delivery'];
 const TOPIC_NAMES = {all:'📍 全部',overview:'🏠 總覽',iam:'🛡 IAM & Access',cs:'⚡ Compute Studio',delivery:'📅 Delivery'};
 
 function setTopic(topic, skipHash) {
@@ -6909,7 +7890,7 @@ function setTopic(topic, skipHash) {
 }
 
 function updateTopicCounts() {
-  const counts = {overview:0, iam:0, cs:0, ls:0, lpm:0, delivery:0};
+  const counts = {overview:0, iam:0, dbrg:0, cs:0, ls:0, lpm:0, delivery:0};
   const isExt = document.body.classList.contains('ext');
   document.querySelectorAll('.sec[data-topic]').forEach(sec => {
     const t = sec.dataset.topic;
@@ -6979,7 +7960,7 @@ function applyMode(isExt, showNotification) {
   // v63 修：對外版隱藏 iam/cs/ls/lpm/delivery 五個頁籤，切到對外時若當前 tab 屬於其中之一 → 自動切回 overview
   if (isExt) {
     const cur = document.body.dataset.topic;
-    const extHidden = ['iam', 'cs', 'ls', 'lpm', 'delivery'];
+    const extHidden = ['iam', 'dbrg', 'cs', 'ls', 'lpm', 'delivery'];
     if (extHidden.includes(cur)) {
       if (typeof setTopic === 'function') setTopic('overview');
     }
@@ -7412,6 +8393,7 @@ const cmdkData = [
 
   // Overview group · v61 用明確 ID，含新增的 customer-journey / why-dip / cta
   { topic:'overview', id:'hero',             num:'OV·00',   name:'Hero · 平台概覽',        kw:'首頁 hero intro dip' },
+  { topic:'overview', id:'usage-guide',      num:'OV·GUIDE',name:'使用導引 · How to Read 🔒 🆕', kw:'guide tour onboarding help 導引 新人 教學 use 使用 role path 角色 路徑' },
   { topic:'overview', id:'pain',             num:'OV·00',   name:'客戶痛點 · WHY ✦',       kw:'痛點 why pain 客戶 external 對外' },
   { topic:'overview', id:'customer-journey', num:'OV·00.5', name:'90 天客戶旅程 ✦ 🆕',     kw:'journey customer 旅程 90 天 roi demo external 對外' },
   { topic:'overview', id:'four-core',        num:'OV·01',   name:'四大核心產品',            kw:'iam dbrg ls cs core 四大 產品' },
@@ -7439,6 +8421,14 @@ const cmdkData = [
   { topic:'iam', id:'user-status',   num:'IAM·10', name:'User Status 狀態機 + Direct vs Inherited', kw:'user status pending active disabled direct inherited' },
   { topic:'iam', id:'audit-logging', num:'IAM·11', name:'Audit / Security Logging pipeline', kw:'audit security logging kafka elasticsearch pipeline event' },
 
+  // DBRG group · v67
+  { topic:'dbrg', id:'dbrg-position', num:'DBRG·01', name:'Data Bridge 定位 · 資料樞紐 🆕', kw:'dbrg data bridge 定位 資料樞紐 pipeline topic kafka schema 管線' },
+  { topic:'dbrg', id:'dbrg-fmap',     num:'DBRG·02', name:'4 大功能模組 · WBS 1.3.1~1.3.3 🆕', kw:'dbrg feature functional map wbs sprint pipelines manual trigger detail topic schema ready for stg development' },
+  { topic:'dbrg', id:'dbrg-adr',      num:'DBRG·03', name:'架構決策 ADR · 5 筆 🆕', kw:'dbrg adr architecture decision powerjob airflow schema contract classifications full mode compatibility topic status processing' },
+  { topic:'dbrg', id:'dbrg-lifecycle',num:'DBRG·04', name:'Topic × Schema 生命週期 🆕', kw:'dbrg topic schema lifecycle draft processing active evolution full compatibility 版本' },
+  { topic:'dbrg', id:'dbrg-roadmap',  num:'DBRG·05', name:'MVP 1.0 → MVP 1-2 路徑 🆕', kw:'dbrg mvp roadmap data forge query sight df qs type 2 manual trigger pipeline 新路徑 跨產品' },
+
+
   // CS group · v61 用明確 ID
   { topic:'cs', id:'cs-decomp',  num:'CS·01', name:'CS 深度拆解 · 4 模組',    kw:'compute studio spark notebook image dashboard 1.0 2.0' },
   { topic:'cs', id:'cs-upstream',num:'CS·02', name:'CS 上下游關係',           kw:'upstream downstream hive api d-123 d-126' },
@@ -7459,7 +8449,8 @@ const cmdkData = [
   // Delivery group
   { topic:'delivery', id:'this-week',        num:'DL·00', name:'本週焦點 · This Week', kw:'this week 本週 焦點 week 46 standup 週會' },
   { topic:'delivery', id:'product-progress', num:'DL·01', name:'四產品甘特圖 · Q4 → Q1', kw:'product gantt 甘特圖 進度 iam cs dbrg ls 四產品 月 oct nov dec q1' },
-  { topic:'delivery', id:'stage-timeline',   num:'DL·02', name:'Stage Ready Timeline · BD 可試功能軸 🆕', kw:'stage timeline bd lexi 試玩 demo 推廣 可試 功能 11/27 1/15 3/31 dogfooding' },
+  { topic:'delivery', id:'stage-timeline',   num:'DL·02', name:'Stage Ready Timeline · BD 可試功能軸', kw:'stage timeline bd lexi 試玩 demo 推廣 可試 功能 11/27 1/15 3/31 dogfooding' },
+  { topic:'delivery', id:'pricing-changelog',num:'DL·03', name:'計價變動軌跡 · 給分析師看的 🆕', kw:'pricing changelog 計價 變動 分析師 analyst sku tier credit scope 認列 adr' },
 
   // Actions
   { topic:'action', id:'__mode',  num:'⇄', name:'切換內部版 ⇄ 對外版',    kw:'mode toggle internal external 切換', action:'mode' }
