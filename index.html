@@ -1,10 +1,11 @@
+<!doctype html><html><head><meta charset=utf8><meta name=viewport content="width=device-width,initial-scale=1"><style>:root{color-scheme:light}body{margin:0;padding:0;font:14px -apple-system,BlinkMacSystemFont,sans-serif;background:#fff;color:#000}img{max-width:100%}[hidden]:not([hidden=until-found i]){display:none!important}</style></head><body>
 <!DOCTYPE html>
 <html lang="zh-TW">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>DIP MVP Architecture · Data Innovation Platform 架構總覽</title>
-<!-- v69 · DL·03 加納入規則（給分析師看依據）· 新增 OV·GUIDE 使用導引（6 角色 × 建議閱讀路徑 + 內建工具 + 編號系統） -->
+<!-- v73 · 2026-11-18 11/17 CS 會議：D-152~D-156 新增（兩 Queue / SA 送 Job / 濾 DBRG / 不受超額 / Queue API 拒絕）· D-136 被 D-153 覆蓋 · ADR-006 更新 · LPM / DL·03 / DL·00 同步 -->
 <link rel="icon" type="image/svg+xml" href="data:image/svg+xml;utf8,%3Csvg%20xmlns%3D%27http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%27%20viewBox%3D%270%200%2064%2064%27%3E%3Cdefs%3E%3ClinearGradient%20id%3D%27g%27%20x1%3D%270%27%20y1%3D%270%27%20x2%3D%271%27%20y2%3D%271%27%3E%3Cstop%20offset%3D%270%27%20stop-color%3D%27%234A6CF7%27%2F%3E%3Cstop%20offset%3D%271%27%20stop-color%3D%27%23FF8A65%27%2F%3E%3C%2FlinearGradient%3E%3C%2Fdefs%3E%3Crect%20width%3D%2764%27%20height%3D%2764%27%20rx%3D%2714%27%20fill%3D%27url%28%23g%29%27%2F%3E%3Crect%20x%3D%2712%27%20y%3D%2716%27%20width%3D%2736%27%20height%3D%274%27%20rx%3D%272%27%20fill%3D%27%23fff%27%20opacity%3D%27.95%27%2F%3E%3Crect%20x%3D%2712%27%20y%3D%2724%27%20width%3D%2726%27%20height%3D%274%27%20rx%3D%272%27%20fill%3D%27%23fff%27%20opacity%3D%27.75%27%2F%3E%3Crect%20x%3D%2712%27%20y%3D%2732%27%20width%3D%2732%27%20height%3D%274%27%20rx%3D%272%27%20fill%3D%27%23fff%27%20opacity%3D%27.85%27%2F%3E%3Crect%20x%3D%2712%27%20y%3D%2740%27%20width%3D%2718%27%20height%3D%274%27%20rx%3D%272%27%20fill%3D%27%23fff%27%20opacity%3D%27.6%27%2F%3E%3Ccircle%20cx%3D%2748%27%20cy%3D%2748%27%20r%3D%275%27%20fill%3D%27%23fff%27%2F%3E%3C%2Fsvg%3E">
 <meta name="description" content="DIP 四大核心產品、資料閉環、對外話術 — Pitch / Onboarding 共用底圖">
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,700;0,9..144,900;1,9..144,400;1,9..144,700&family=Noto+Serif+TC:wght@400;700;900&family=Noto+Sans+TC:wght@300;400;500;700;900&family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;700&display=swap">
@@ -1827,6 +1828,64 @@ body.ext .sec[data-topic="dbrg"]{display:none}
         💡 小數點編號（如 OV·00.5 / OV·05.5）代表「補進來」的 section · 原編號不動，維持舊連結不會失效
       </div>
     </div>
+
+    <!-- ===== PART 04 · 對內 vs 對外版差異 ===== -->
+    <div class="reveal d5" style="margin-top:36px">
+      <div style="display:flex;align-items:baseline;gap:14px;margin-bottom:14px">
+        <div style="font-family:'JetBrains Mono',monospace;font-size:10.5px;color:#C2185B;letter-spacing:2.5px;font-weight:700">PART 04 · INT / EXT DIFF</div>
+        <h3 style="font-family:var(--font-h);font-size:20px;font-weight:900;color:var(--text);letter-spacing:-.3px;margin:0">對內 vs 對外版差異說明</h3>
+      </div>
+
+      <div class="pc-rules-grid">
+        <div class="pc-rule pc-rule-out">
+          <div class="pc-rule-ic">🚫</div>
+          <div class="pc-rule-ttl">A · 對外版隱藏的 Tab</div>
+          <div class="pc-rule-list">
+            <div class="pc-rule-item"><strong>IAM</strong><span>身分與權限中樞</span></div>
+            <div class="pc-rule-item"><strong>DBRG</strong><span>資料橋接</span></div>
+            <div class="pc-rule-item"><strong>CS</strong><span>Compute Studio</span></div>
+            <div class="pc-rule-item"><strong>LS</strong><span>Lake Space</span></div>
+            <div class="pc-rule-item"><strong>LPM</strong><span>跨產品決策</span></div>
+            <div class="pc-rule-item"><strong>Delivery</strong><span>交付進度</span></div>
+          </div>
+          <div style="margin-top:8px;font-size:11px;color:var(--text-muted);line-height:1.5">對外版只剩 <strong>Overview</strong> 一個 Tab</div>
+        </div>
+
+        <div class="pc-rule pc-rule-out">
+          <div class="pc-rule-ic">🔒</div>
+          <div class="pc-rule-ttl">B · 對外版隱藏的 Overview Section</div>
+          <div class="pc-rule-list">
+            <div class="pc-rule-item"><strong>usage-guide</strong><span>使用指南（本頁）</span></div>
+            <div class="pc-rule-item"><strong>principles</strong><span>治理原則</span></div>
+            <div class="pc-rule-item"><strong>dip-tech-stack</strong><span>技術棧總覽</span></div>
+            <div class="pc-rule-item"><strong>da-journey</strong><span>分析師旅程</span></div>
+          </div>
+          <div style="margin-top:8px;font-size:11px;color:var(--text-muted);line-height:1.5">class=<code style="font-size:10px;padding:1px 5px;border-radius:4px;background:rgba(74,108,247,.08)">internal-only</code></div>
+        </div>
+
+        <div class="pc-rule pc-rule-in">
+          <div class="pc-rule-ic">✦</div>
+          <div class="pc-rule-ttl">C · 對外版才顯示的 Overview Section</div>
+          <div class="pc-rule-list">
+            <div class="pc-rule-item"><strong>pain</strong><span>資料團隊日常困境</span></div>
+            <div class="pc-rule-item"><strong>customer-journey</strong><span>客戶旅程</span></div>
+            <div class="pc-rule-item"><strong>trust</strong><span>信任訊號</span></div>
+            <div class="pc-rule-item"><strong>why-dip</strong><span>為什麼選 DIP</span></div>
+            <div class="pc-rule-item"><strong>pricing-model</strong><span>計價模型</span></div>
+            <div class="pc-rule-item"><strong>cta</strong><span>Call to Action</span></div>
+          </div>
+          <div style="margin-top:8px;font-size:11px;color:var(--text-muted);line-height:1.5">class=<code style="font-size:10px;padding:1px 5px;border-radius:4px;background:rgba(74,108,247,.08)">external-only</code></div>
+        </div>
+
+        <div class="pc-rule" style="background:rgba(255,138,101,.04);border-color:rgba(255,138,101,.2)">
+          <div class="pc-rule-ic">📝</div>
+          <div class="pc-rule-ttl">D · 對外版用詞差異</div>
+          <div class="pc-rule-list">
+            <div class="pc-rule-item"><strong>iGaming → Gaming Industry</strong><span>對外不使用 iGaming 一詞</span></div>
+          </div>
+        </div>
+      </div>
+    </div>
   </div>
 </section>
 
@@ -2676,8 +2735,8 @@ body.ext .sec[data-topic="dbrg"]{display:none}
           <span style="color:var(--text-muted)">DBRG 自己管 queue 資源與計價，不放在 CS 資源裡一起算。原因：DBRG 可能用到外部資源，Kafka Connect 用量難計算。</span>
         </div>
         <div>
-          <strong style="color:#15803D">ADR-006 · Project 資源集中後切分</strong><br>
-          <span style="color:var(--text-muted)">Project 資源先全部在 CS YuniKorn queue，產品要用時：(a) 選現有 queue 或 (b) 從 CS queue 切新 queue。同一 queue 可能多產品共用。</span>
+          <strong style="color:#15803D">ADR-006 · Project 資源集中後切分 → D-152 更新</strong><br>
+          <span style="color:var(--text-muted)"><s style="opacity:.65">原：先全部在 CS queue，產品要用時再切</s> → 11/17 D-152：建 Project 時直接建兩個同級 queue（Project + DBRG）。</span>
         </div>
       </div>
       <div style="margin-top:10px;padding-top:10px;border-top:1px dashed rgba(76,183,130,.3);font-size:11.5px;color:var(--text-muted)">
@@ -2752,14 +2811,17 @@ body.ext .sec[data-topic="dbrg"]{display:none}
     <!-- v39 · 2026-11-12 最新決議 banner -->
     <div class="reveal" style="margin-bottom:22px;padding:20px 24px;border-radius:14px;background:linear-gradient(135deg,rgba(76,183,130,.12),rgba(252,211,77,.06));border:1px solid rgba(76,183,130,.3);border-left:4px solid #15803D">
       <div style="display:flex;align-items:center;gap:10px;margin-bottom:12px">
-        <span style="padding:4px 10px;border-radius:12px;background:#15803D;color:#fff;font-size:10px;font-weight:700;letter-spacing:1px">🆕 FRESH · 2026-11-12</span>
-        <span style="font-family:'JetBrains Mono',monospace;font-size:11px;color:var(--text-muted)">CS × Platform × SRE 對焦結果</span>
+        <span style="padding:4px 10px;border-radius:12px;background:#15803D;color:#fff;font-size:10px;font-weight:700;letter-spacing:1px">🆕 FRESH · 2026-11-12 ~ 11/17</span>
+        <span style="font-family:'JetBrains Mono',monospace;font-size:11px;color:var(--text-muted)">CS × Platform × SRE × DBRG 連續多日大量決議</span>
       </div>
-      <div style="font-family:'Noto Serif TC',serif;font-size:16px;font-weight:900;color:var(--text);margin-bottom:8px">11/12 會議兩大結論 + Secret 暫緩</div>
+      <div style="font-family:'Noto Serif TC',serif;font-size:16px;font-weight:900;color:var(--text);margin-bottom:8px">11/12–11/17 核心決議（D-129 ~ D-156）</div>
       <div style="font-size:12.5px;color:var(--text-muted);line-height:1.75">
-        <strong style="color:var(--text)">結論 1</strong>：DBRG 資源與費用<strong style="color:#15803D">獨立管理</strong>，不放在 CS 資源裡一起算（ADR-005）<br>
-        <strong style="color:var(--text)">結論 2</strong>：Project 資源改成<strong style="color:#15803D">「先全部在 CS queue，產品要用再切」</strong>（ADR-006）<br>
-        <strong style="color:var(--text)">補充</strong>：Secret 開發<strong style="color:#D86848">暫緩</strong>，等需求量變多再開發
+        <strong style="color:var(--text)">結論 1</strong>：DBRG 資源與費用<strong style="color:#15803D">獨立管理</strong>，不放在 CS 資源裡一起算（ADR-005 · D-129）<br>
+        <strong style="color:var(--text)">結論 2</strong>：建 Project 時建<strong style="color:#15803D">兩個同級 queue</strong>（Project queue + DBRG queue）（D-152 · 更新 ADR-006）<br>
+        <strong style="color:var(--text)">結論 3</strong>：DBRG Job<strong style="color:#0891B2">仍經 CS</strong>（Service Account 呼叫 CS API，用 DBRG 自己的 queue）（D-153 · 覆蓋 D-136）<br>
+        <strong style="color:var(--text)">結論 4</strong>：新 CS = <strong style="color:#C2185B">完全重寫</strong>，不再以 1.0 為基礎（D-138 / D-141）<br>
+        <strong style="color:var(--text)">結論 5</strong>：CS<strong style="color:#0891B2">記錄</strong> DBRG Job 與用量但<strong style="color:#15803D">不計入 Project</strong>，UI / API 濾掉（D-154）<br>
+        <strong style="color:var(--text)">暫緩</strong>：Secret 開發<strong style="color:#D86848">暫停</strong>（D-142）· Queue 權限 4 筆<strong style="color:#15803D">已決議</strong>
       </div>
     </div>
 
@@ -2803,12 +2865,10 @@ body.ext .sec[data-topic="dbrg"]{display:none}
       <div style="padding:20px;border-radius:16px;background:linear-gradient(135deg,rgba(76,183,130,.1),rgba(255,255,255,.65));backdrop-filter:blur(24px);border:1px solid rgba(255,255,255,.75);border-left:4px solid #15803D;box-shadow:var(--shadow-sm);position:relative">
         <span style="position:absolute;top:12px;right:12px;padding:2px 7px;border-radius:8px;background:#15803D;color:#fff;font-size:9px;font-weight:700;letter-spacing:.5px">🆕 11/12</span>
         <div style="font-family:var(--font-mono);font-size:10px;color:#15803D;letter-spacing:2px;font-weight:700;margin-bottom:4px">ADR-006</div>
-        <div style="font-family:var(--font-h);font-size:17px;font-weight:900;color:var(--text);margin-bottom:8px">Project 資源 <em style="font-family:var(--font-h-en);font-style:italic;font-weight:400;color:#15803D">集中後切分</em></div>
+        <div style="font-family:var(--font-h);font-size:17px;font-weight:900;color:var(--text);margin-bottom:8px">Project 資源 <em style="font-family:var(--font-h-en);font-style:italic;font-weight:400;color:#15803D">集中後切分</em> <span style="font-size:11px;font-weight:600;color:#D97706;background:rgba(217,119,6,.1);padding:2px 8px;border-radius:6px;vertical-align:middle">D-152 更新</span></div>
         <div style="font-size:12.5px;color:var(--text-muted);line-height:1.7">
-          Project 資源<strong style="color:var(--text)">一開始全部放 CS YuniKorn queue</strong>，產品要用時：<br>
-          <span style="padding-left:8px;display:block;margin:4px 0">(a) 直接選一個現有 queue</span>
-          <span style="padding-left:8px;display:block;margin:4px 0">(b) 從 CS queue 切一個新 queue</span>
-          所以同一 queue 可能有多個產品共用。
+          <s style="opacity:.6">原：一開始全部放 CS YuniKorn queue，產品要用時再切</s><br>
+          <strong style="color:var(--text)">11/17 D-152 更新：建 Project 時直接建兩個同級 queue（Project + DBRG）</strong>，SRE 自動建立。
         </div>
       </div>
     </div>
@@ -2839,25 +2899,107 @@ body.ext .sec[data-topic="dbrg"]{display:none}
       </div>
     </div>
 
+    <!-- v72 · 2026-11-13 核心決議 D-131~D-143 補齊 -->
+    <div class="reveal d3" style="margin-top:22px;padding:18px 22px;border-radius:12px;background:linear-gradient(135deg,rgba(194,24,91,.08),rgba(252,211,77,.04));border:1px solid rgba(194,24,91,.25);border-left:4px solid #C2185B">
+      <div style="display:flex;align-items:center;gap:10px;margin-bottom:12px">
+        <span style="padding:3px 9px;border-radius:10px;background:#C2185B;color:#fff;font-size:10px;font-weight:700;letter-spacing:.5px">🔥 2026-11-13 核心決議</span>
+        <span style="font-family:'JetBrains Mono',monospace;font-size:11px;color:var(--text-muted)">D-131 ~ D-143 · Queue 模型 + 架構大改</span>
+      </div>
+      <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:12px;font-size:12px;color:var(--text);line-height:1.7">
+        <div style="padding:12px 14px;border-radius:10px;background:rgba(255,255,255,.7);border-left:3px solid #C2185B">
+          <div style="font-family:'JetBrains Mono',monospace;font-size:10px;color:#94A3B8;letter-spacing:1.5px;font-weight:700;margin-bottom:4px">D-136 · <del>DBRG Q1 完全不經 CS</del> → ⚠️ 11/17 被 D-153 覆蓋</div>
+          <span style="color:var(--text-muted);text-decoration:line-through">原 11/13 決議：DBRG Job 完全不經 CS</span><br><strong style="color:#0891B2">11/17 更正（D-153）</strong>：DBRG Job <strong>仍經 CS</strong>，以 Service Account 呼叫 CS API，用 DBRG 自己的 queue
+        </div>
+        <div style="padding:12px 14px;border-radius:10px;background:rgba(255,255,255,.7);border-left:3px solid #0891B2">
+          <div style="font-family:'JetBrains Mono',monospace;font-size:10px;color:#0891B2;letter-spacing:1.5px;font-weight:700;margin-bottom:4px">D-137 · Q1 沒有下游產品</div>
+          Q1 沒有產品以服務身分呼叫 CS · 服務身分、產品標籤等需求仍留在 Q1，驗收用<strong>測試用的服務身分</strong> · <span style="color:var(--text-muted);font-size:11px">（DBRG 的 Service Account〔D-153〕是特殊做法，不算正式產品串接）</span>
+        </div>
+        <div style="padding:12px 14px;border-radius:10px;background:rgba(255,255,255,.7);border-left:3px solid var(--pink)">
+          <div style="font-family:'JetBrains Mono',monospace;font-size:10px;color:var(--pink);letter-spacing:1.5px;font-weight:700;margin-bottom:4px">D-138 / D-141 · CS 完全重寫</div>
+          新 CS = 全新後端，Spark 後端新建、<strong>不和 1.0 共用部署</strong> · 從 API 到後端都用新結構，不做 1.0 格式轉換 · 取代 D-001
+        </div>
+        <div style="padding:12px 14px;border-radius:10px;background:rgba(255,255,255,.7);border-left:3px solid #15803D">
+          <div style="font-family:'JetBrains Mono',monospace;font-size:10px;color:#15803D;letter-spacing:1.5px;font-weight:700;margin-bottom:4px">D-131 · Queue 操作規則</div>
+          切 queue 兩種方式（設定頁 / API）· 刪除需更高權限並確認兩次 · 預設 queue 不可改名刪除 · 一個產品同時只選一個 queue
+        </div>
+        <div style="padding:12px 14px;border-radius:10px;background:rgba(255,255,255,.7);border-left:3px solid var(--blue)">
+          <div style="font-family:'JetBrains Mono',monospace;font-size:10px;color:var(--blue);letter-spacing:1.5px;font-weight:700;margin-bottom:4px">D-132 · Queue 權限細節</div>
+          產品選 queue 用獨立權限點 <code style="font-family:var(--font-mono);font-size:10px;background:rgba(74,108,247,.08);padding:1px 5px;border-radius:3px">cs.queues.products.update</code> · 切新 queue 看 <code style="font-family:var(--font-mono);font-size:10px;background:rgba(74,108,247,.08);padding:1px 5px;border-radius:3px">cs.queues.create</code> · 產品可隨時改選
+        </div>
+        <div style="padding:12px 14px;border-radius:10px;background:rgba(255,255,255,.7);border-left:3px solid var(--amber)">
+          <div style="font-family:'JetBrains Mono',monospace;font-size:10px;color:var(--amber);letter-spacing:1.5px;font-weight:700;margin-bottom:4px">D-134 · API 參數結構</div>
+          新 API 以 C-0200 B 部分結構為基準 · Job 有 <code style="font-family:var(--font-mono);font-size:10px">batchId</code>（使用者自訂）與 <code style="font-family:var(--font-mono);font-size:10px">jobId</code>（CS 產生）兩個 ID
+        </div>
+        <div style="padding:12px 14px;border-radius:10px;background:rgba(255,255,255,.7);border-left:3px solid #D86848">
+          <div style="font-family:'JetBrains Mono',monospace;font-size:10px;color:#D86848;letter-spacing:1.5px;font-weight:700;margin-bottom:4px">D-135 · 刪除 Queue 通知</div>
+          改選 queue 時排隊中 Job 留在原 queue · 刪除 queue 的權限為 <code style="font-family:var(--font-mono);font-size:10px">cs.queues.delete</code> · Q1 就通知選用它的產品
+        </div>
+        <div style="padding:12px 14px;border-radius:10px;background:rgba(255,255,255,.7);border-left:3px solid #64748B">
+          <div style="font-family:'JetBrains Mono',monospace;font-size:10px;color:#64748B;letter-spacing:1.5px;font-weight:700;margin-bottom:4px">D-139 · 權限預設 / D-140 · 只走 API-95</div>
+          建立 / 調整 / 刪除 queue 預設由平台團隊與 project 管理者持有 · 產品選 queue <strong>只走 API-95</strong>，API-37 只管大小
+        </div>
+        <div style="padding:12px 14px;border-radius:10px;background:rgba(255,255,255,.7);border-left:3px solid #94A3B8">
+          <div style="font-family:'JetBrains Mono',monospace;font-size:10px;color:#94A3B8;letter-spacing:1.5px;font-weight:700;margin-bottom:4px">D-142 · 密鑰暫停 / D-143 · Python 檔路徑</div>
+          密鑰管理暫停開發、Q1 不做，密碼由使用者自己處理 · 額外的 Python 檔可放 Lakespace 或 image 內路徑
+        </div>
+      </div>
+    </div>
+
+    <!-- v73 · 2026-11-17 決議 D-152~D-156 · DBRG × CS 整合模型 -->
+    <div class="reveal d3" style="margin-top:22px;padding:18px 22px;border-radius:12px;background:linear-gradient(135deg,rgba(8,145,178,.08),rgba(76,183,130,.04));border:1px solid rgba(8,145,178,.25);border-left:4px solid #0891B2">
+      <div style="display:flex;align-items:center;gap:10px;margin-bottom:12px">
+        <span style="padding:3px 9px;border-radius:10px;background:#0891B2;color:#fff;font-size:10px;font-weight:700;letter-spacing:.5px">🆕 2026-11-17 決議</span>
+        <span style="font-family:'JetBrains Mono',monospace;font-size:11px;color:var(--text-muted)">D-152 ~ D-156 · DBRG × CS 整合模型定案</span>
+      </div>
+      <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:12px;font-size:12px;color:var(--text);line-height:1.7">
+        <div style="padding:12px 14px;border-radius:10px;background:rgba(255,255,255,.7);border-left:3px solid #0891B2">
+          <div style="font-family:'JetBrains Mono',monospace;font-size:10px;color:#0891B2;letter-spacing:1.5px;font-weight:700;margin-bottom:4px">D-152 · 建 Project 時建兩個同級 Queue</div>
+          建立 Project 即建好 <strong>Project queue</strong> + <strong>DBRG queue</strong> · DBRG queue 大小由 SRE 算出預設值，不揭露、不可調整 · 更新 ADR-006 的「先全在 CS queue 再切」模型
+        </div>
+        <div style="padding:12px 14px;border-radius:10px;background:rgba(255,255,255,.7);border-left:3px solid #C2185B">
+          <div style="font-family:'JetBrains Mono',monospace;font-size:10px;color:#C2185B;letter-spacing:1.5px;font-weight:700;margin-bottom:4px">D-153 · DBRG Job 仍經 CS（覆蓋 D-136）</div>
+          DBRG 以 <strong>Service Account</strong> 呼叫 CS API 送出 Job，用 DBRG 自己的 queue（不用 Project queue）· Q1 就開始 · <span style="color:#D86848;font-size:11px">覆蓋 D-136 的「完全不經 CS」</span>
+        </div>
+        <div style="padding:12px 14px;border-radius:10px;background:rgba(255,255,255,.7);border-left:3px solid #15803D">
+          <div style="font-family:'JetBrains Mono',monospace;font-size:10px;color:#15803D;letter-spacing:1.5px;font-weight:700;margin-bottom:4px">D-154 · CS 記錄但不計入 Project</div>
+          CS <strong>記錄</strong> DBRG Job 與用量但<strong>不計入 Project 資源與用量</strong> · Q1 CS 畫面（Job 清單、資源頁、queue 設定頁）與用量 API 皆濾掉 DBRG · 之後要開放時改篩選即可
+        </div>
+        <div style="padding:12px 14px;border-radius:10px;background:rgba(255,255,255,.7);border-left:3px solid var(--amber)">
+          <div style="font-family:'JetBrains Mono',monospace;font-size:10px;color:var(--amber);letter-spacing:1.5px;font-weight:700;margin-bottom:4px">D-155 · DBRG 不受超額檢查</div>
+          CS 不對 DBRG Job 做超額檢查 · Project 還沒選 Tier 時 DBRG Job 仍可送出 · DBRG Job 失敗與 log 由 DBRG 自己的畫面呈現（可用 CS API 查自己的 Job）
+        </div>
+        <div style="padding:12px 14px;border-radius:10px;background:rgba(255,255,255,.7);border-left:3px solid var(--pink)">
+          <div style="font-family:'JetBrains Mono',monospace;font-size:10px;color:var(--pink);letter-spacing:1.5px;font-weight:700;margin-bottom:4px">D-156 · DBRG Queue API 一律拒絕</div>
+          對 DBRG queue 呼叫 queue API（建立 / 調整 / 刪除 / 選用）一律拒絕 · 判定方式：看發起的 Service Account 是不是 DBRG 的 · Job 送進 DBRG queue 也用這個判定
+        </div>
+      </div>
+      <div style="margin-top:10px;padding-top:10px;border-top:1px dashed rgba(8,145,178,.3);font-size:11.5px;color:var(--text-muted)">
+        🔴 <strong>待確認</strong>：DBRG queue 在 YuniKorn 的名稱與位置 · SRE 預設值怎麼算 · 建立 Project 時由誰建立這個 queue
+      </div>
+    </div>
+
     <!-- 補充說明 · Queue 權限已定 · Secret 暫緩 -->
     <div class="reveal d3" style="margin-top:14px;display:grid;grid-template-columns:1fr 1fr;gap:12px">
       <div style="padding:16px 18px;border-radius:12px;background:rgba(76,183,130,.08);border:1px solid rgba(76,183,130,.3);border-left:3px solid #15803D">
-        <div style="font-family:'JetBrains Mono',monospace;font-size:10px;color:#15803D;letter-spacing:1.5px;font-weight:700;margin-bottom:6px">✅ RESOLVED · Queue 權限 4 筆已決議</div>
+        <div style="font-family:'JetBrains Mono',monospace;font-size:10px;color:#15803D;letter-spacing:1.5px;font-weight:700;margin-bottom:6px">✅ RESOLVED · Queue 權限 4 筆已決議（D-132 / D-135 / D-139 / D-140）</div>
         <div style="font-size:12.5px;color:var(--text);line-height:1.65">
-          <strong>Queue 權限管理</strong>：誰可以選、誰可以切 · 2026-11-13 Eric 已逐題回覆，四筆都改為已決議。
+          <strong>Queue 權限管理</strong>：誰可以選、誰可以切 · 2026-11-13 Eric 已逐題回覆，四筆都改為已決議 · 詳見上方 D-132 / D-135 / D-139 / D-140
         </div>
       </div>
       <div style="padding:16px 18px;border-radius:12px;background:rgba(148,163,184,.08);border:1px solid rgba(148,163,184,.3);border-left:3px solid #64748B">
-        <div style="font-family:'JetBrains Mono',monospace;font-size:10px;color:#64748B;letter-spacing:1.5px;font-weight:700;margin-bottom:6px">⏸ ON HOLD · 暫緩</div>
+        <div style="font-family:'JetBrains Mono',monospace;font-size:10px;color:#64748B;letter-spacing:1.5px;font-weight:700;margin-bottom:6px">⏸ ON HOLD · D-142 · 暫緩</div>
         <div style="font-size:12.5px;color:var(--text);line-height:1.65">
-          <strong>Secret 開發</strong>：先暫緩，等需求量變多再來開發。
+          <strong>Secret 開發</strong>：密鑰管理頁與 Job 密鑰引用暫停、Q1 不做 · 密碼由使用者自己處理 · 保留「參數疑似密碼出現在 log」的提醒
         </div>
       </div>
     </div>
 
     <div style="margin-top:18px;padding:16px 20px;border-radius:14px;background:linear-gradient(135deg,rgba(74,108,247,.06),rgba(255,138,101,.04));border:1px solid rgba(74,108,247,.18);font-size:13px;color:var(--text);line-height:1.7">
       💡 <strong style="color:var(--blue)">關鍵決議對齊：</strong>
-      <span style="display:inline-block;margin-top:6px">▸ <strong>D-123</strong>：Data Forge metadata 在 Q1 接 <strong>Hive API</strong>，不等 Data Forge 新倉</span><br>
+      <span style="display:inline-block;margin-top:6px">▸ <strong>D-153</strong>：DBRG Job Q1 起<strong style="color:#0891B2">仍經 CS</strong>（Service Account 呼叫 CS API，用 DBRG queue）· <span style="color:#D86848">覆蓋 D-136</span></span><br>
+      <span style="display:inline-block">▸ <strong>D-152</strong>：建 Project 時建<strong style="color:#0891B2">兩個同級 queue</strong>（Project + DBRG）· 更新 ADR-006</span><br>
+      <span style="display:inline-block">▸ <strong>D-141</strong>：新 CS = <strong style="color:#C2185B">完全重寫</strong>，不再以 1.0 為基礎（取代 D-001）</span><br>
+      <span style="display:inline-block">▸ <strong>D-123</strong>：Data Forge metadata 在 Q1 接 <strong>Hive API</strong>，不等 Data Forge 新倉</span><br>
       <span style="display:inline-block">▸ <strong>D-128</strong>：新 CS API 不沿用 1.0 規格 · 走全新路徑</span><br>
       <span style="display:inline-block">▸ <strong>D-090</strong>：1.0 客戶不接到新 CS · 1.0 獨立繼續運作</span><br>
       <span style="display:inline-block">▸ <strong>D-122</strong>：Notebook 直接轉成 Job 不做（用「Notebook 測好程式 → 存 LS → 建 Job 選」取代）</span>
@@ -6221,7 +6363,9 @@ body.ext .sec[data-topic="dbrg"]{display:none}
   .lpm-heat-h{padding:8px 4px;text-align:center;font-family:'JetBrains Mono',monospace;font-size:10px;color:var(--text-muted);font-weight:700;letter-spacing:1px}
   .lpm-heat-h.hl{color:#D86848;background:rgba(255,138,101,.08);border-radius:6px}
   .lpm-heat-r{padding:10px 14px;font-weight:900;font-family:'Noto Serif TC',serif;font-size:13px;color:var(--text);background:rgba(255,255,255,.55);border-radius:8px;display:flex;align-items:center}
-  .lpm-heat-c{aspect-ratio:1.5;border-radius:4px;display:flex;align-items:center;justify-content:center;font-size:10px;font-weight:700;color:#fff}
+  .lpm-heat-c{aspect-ratio:1.5;border-radius:4px;display:flex;align-items:center;justify-content:center;font-size:10px;font-weight:700;color:#fff;position:relative}
+  .lpm-heat-c[data-tip]:hover::after{content:attr(data-tip);position:absolute;bottom:calc(100% + 6px);left:50%;transform:translateX(-50%);white-space:nowrap;padding:5px 10px;border-radius:6px;background:rgba(30,41,59,.92);color:#fff;font-size:10.5px;font-weight:400;letter-spacing:0;pointer-events:none;z-index:10;box-shadow:0 2px 8px rgba(0,0,0,.18)}
+  .lpm-heat-c[data-tip]:hover::before{content:'';position:absolute;bottom:calc(100% + 2px);left:50%;transform:translateX(-50%);border:4px solid transparent;border-top-color:rgba(30,41,59,.92);pointer-events:none;z-index:10}
   .lpm-heat-c.lv0{background:rgba(148,163,184,.15);color:#64748B}
   .lpm-heat-c.lv1{background:rgba(76,183,130,.4)}
   .lpm-heat-c.lv2{background:rgba(74,108,247,.55)}
@@ -6358,7 +6502,7 @@ body.ext .sec[data-topic="dbrg"]{display:none}
     </div>
 
     <div class="reveal d3" style="margin-top:20px;padding:14px 18px;border-radius:10px;background:rgba(216,104,72,.06);border:1px solid rgba(216,104,72,.25);font-size:12.5px;color:var(--text-muted);line-height:1.75">
-      ⚠ <strong style="color:#D86848">關鍵依賴鏈</strong>：11/13 DBRG 窗口確認 → 12/7-11 DBRG 完成 LS API 串接 → 12/下 IAM × DBRG E2E → 1/15 LS MVP 上線（三產品完整閉環）· 任何一環延遲都連動後續
+      ⚠ <strong style="color:#D86848">關鍵依賴鏈</strong>：11/13 DBRG 窗口確認 → 12/7-11 DBRG 完成 LS API 串接 → 12/下 IAM × DBRG E2E → 02/19 LS MVP 上線（三產品完整閉環）· 任何一環延遲都連動後續
     </div>
   </div>
 </section>
@@ -6384,28 +6528,28 @@ body.ext .sec[data-topic="dbrg"]{display:none}
         <div class="lpm-heat-r">👤 Brian (QA)</div>
         <div class="lpm-heat-c lv1">L</div>
         <div class="lpm-heat-c lv2">M</div>
-        <div class="lpm-heat-c lv3">H</div>
-        <div class="lpm-heat-c lv4">XH</div>
-        <div class="lpm-heat-c lv3">H</div>
-        <div class="lpm-heat-c lv3">H</div>
+        <div class="lpm-heat-c lv3" data-tip="IAM 功能驗收 + LS W6 核心流程">H</div>
+        <div class="lpm-heat-c lv4" data-tip="IAM 15 features + LS W6 同週交付">XH</div>
+        <div class="lpm-heat-c lv3" data-tip="CS 新後端 + DBRG×LS 串接驗證">H</div>
+        <div class="lpm-heat-c lv3" data-tip="DBRG×LS API 串接 E2E">H</div>
         <div class="lpm-heat-c lv2">M</div>
         <div class="lpm-heat-c lv2">M</div>
 
         <div class="lpm-heat-r">🎨 Sally (UIUX)</div>
         <div class="lpm-heat-c lv2">M</div>
-        <div class="lpm-heat-c lv4">XH</div>
+        <div class="lpm-heat-c lv4" data-tip="LS 定稿 + IAM 持續調整，兩產品同時搶">XH</div>
         <div class="lpm-heat-c lv2">M</div>
         <div class="lpm-heat-c lv1">L</div>
-        <div class="lpm-heat-c lv3">H</div>
-        <div class="lpm-heat-c lv3">H</div>
+        <div class="lpm-heat-c lv3" data-tip="CS 新介面 + LS 細節修正">H</div>
+        <div class="lpm-heat-c lv3" data-tip="CS Job 頁面 + DBRG 串接相關 UI">H</div>
         <div class="lpm-heat-c lv2">M</div>
         <div class="lpm-heat-c lv1">L</div>
 
         <div class="lpm-heat-r">💻 Gammy (FE)</div>
         <div class="lpm-heat-c lv2">M</div>
-        <div class="lpm-heat-c lv3">H</div>
-        <div class="lpm-heat-c lv3">H</div>
-        <div class="lpm-heat-c lv3">H</div>
+        <div class="lpm-heat-c lv3" data-tip="IAM 權限元件 + LS 上傳模組">H</div>
+        <div class="lpm-heat-c lv3" data-tip="LS 核心頁面 + CS 新前端啟動">H</div>
+        <div class="lpm-heat-c lv3" data-tip="CS Job 頁面 + LS 瀏覽器整合">H</div>
         <div class="lpm-heat-c lv2">M</div>
         <div class="lpm-heat-c lv1">L</div>
         <div class="lpm-heat-c lv1">L</div>
@@ -6415,21 +6559,28 @@ body.ext .sec[data-topic="dbrg"]{display:none}
         <div class="lpm-heat-c lv2">M</div>
         <div class="lpm-heat-c lv2">M</div>
         <div class="lpm-heat-c lv2">M</div>
-        <div class="lpm-heat-c lv3">H</div>
-        <div class="lpm-heat-c lv3">H</div>
+        <div class="lpm-heat-c lv3" data-tip="CS YuniKorn queue 建置 + DBRG queue 新增">H</div>
+        <div class="lpm-heat-c lv3" data-tip="LS 環境部署 + CS 新後端上線">H</div>
         <div class="lpm-heat-c lv2">M</div>
         <div class="lpm-heat-c lv2">M</div>
         <div class="lpm-heat-c lv1">L</div>
       </div>
 
-      <!-- Legend -->
-      <div style="display:flex;gap:10px;flex-wrap:wrap;margin-top:16px;padding:10px 14px;background:rgba(74,108,247,.04);border-radius:8px;font-size:11px;color:var(--text-muted)">
-        <span>負載：</span>
-        <span style="display:flex;align-items:center;gap:4px"><span class="lpm-heat-c lv0" style="width:16px;height:12px;border-radius:3px"></span> 無</span>
-        <span style="display:flex;align-items:center;gap:4px"><span class="lpm-heat-c lv1" style="width:16px;height:12px;border-radius:3px"></span> L 輕</span>
-        <span style="display:flex;align-items:center;gap:4px"><span class="lpm-heat-c lv2" style="width:16px;height:12px;border-radius:3px"></span> M 中</span>
-        <span style="display:flex;align-items:center;gap:4px"><span class="lpm-heat-c lv3" style="width:16px;height:12px;border-radius:3px"></span> H 高</span>
-        <span style="display:flex;align-items:center;gap:4px"><span class="lpm-heat-c lv4" style="width:16px;height:12px;border-radius:3px"></span> XH 爆表</span>
+      <!-- Legend + 判定標準 -->
+      <div style="margin-top:16px;padding:14px 18px;background:rgba(74,108,247,.04);border-radius:10px;font-size:11.5px;color:var(--text-muted);line-height:1.8">
+        <div style="font-weight:700;color:var(--text);margin-bottom:6px;font-size:12px">負載判定標準</div>
+        <div style="display:grid;grid-template-columns:auto 1fr;gap:4px 12px;align-items:center">
+          <span style="display:flex;align-items:center;gap:5px"><span class="lpm-heat-c lv0" style="width:18px;height:14px;border-radius:4px;font-size:9px">—</span> <strong>無</strong></span>
+          <span>該週無需求，可支援其他產品</span>
+          <span style="display:flex;align-items:center;gap:5px"><span class="lpm-heat-c lv1" style="width:18px;height:14px;border-radius:4px;font-size:9px">L</span> <strong>輕</strong></span>
+          <span>1 個產品有需求，非關鍵路徑</span>
+          <span style="display:flex;align-items:center;gap:5px"><span class="lpm-heat-c lv2" style="width:18px;height:14px;border-radius:4px;font-size:9px">M</span> <strong>中</strong></span>
+          <span>1～2 個產品有需求，或含 1 條關鍵路徑任務</span>
+          <span style="display:flex;align-items:center;gap:5px"><span class="lpm-heat-c lv3" style="width:18px;height:14px;border-radius:4px;font-size:9px">H</span> <strong>高</strong></span>
+          <span>2+ 產品同時搶人，含關鍵路徑交付</span>
+          <span style="display:flex;align-items:center;gap:5px"><span class="lpm-heat-c lv4" style="width:18px;height:14px;border-radius:4px;font-size:9px">XH</span> <strong>爆表</strong></span>
+          <span>3+ 產品撞期，或關鍵路徑卡死需立即協調</span>
+        </div>
       </div>
     </div>
 
@@ -6447,19 +6598,64 @@ body.ext .sec[data-topic="dbrg"]{display:none}
 
     <div class="reveal d2">
       <div class="lpm-dec">
+        <div class="lpm-dec-hdr"><span class="lpm-dec-id">D-152 · CS</span><span class="lpm-dec-date">2026-11-17</span></div>
+        <div class="lpm-dec-title">建 Project 時建兩個同級 Queue（Project + DBRG）</div>
+        <div class="lpm-dec-note">取代原「先全部放 CS queue」(ADR-006) · SRE 自動建 · DBRG queue YuniKorn 命名待確認</div>
+      </div>
+      <div class="lpm-dec">
+        <div class="lpm-dec-hdr"><span class="lpm-dec-id">D-153 · CS × DBRG</span><span class="lpm-dec-date">2026-11-17</span></div>
+        <div class="lpm-dec-title">DBRG Job 仍經 CS 送出（Service Account，走 DBRG queue）</div>
+        <div class="lpm-dec-note">覆蓋 D-136 · DBRG 以 Service Account 呼叫 CS、CS 識別後導入 DBRG queue · 失敗 log 在 DBRG 畫面</div>
+      </div>
+      <div class="lpm-dec">
+        <div class="lpm-dec-hdr"><span class="lpm-dec-id">D-154 · CS</span><span class="lpm-dec-date">2026-11-17</span></div>
+        <div class="lpm-dec-title">CS 記錄 DBRG Job 但不計入 Project 用量，UI / API 濾掉</div>
+        <div class="lpm-dec-note">CS Job 表仍有 DBRG 紀錄、加 source tag · 前端 Project 視圖預設不顯示 · API 也過濾</div>
+      </div>
+      <div class="lpm-dec">
+        <div class="lpm-dec-hdr"><span class="lpm-dec-id">D-155 · CS × DBRG</span><span class="lpm-dec-date">2026-11-17</span></div>
+        <div class="lpm-dec-title">DBRG Job 不受 CS 超額檢查</div>
+        <div class="lpm-dec-note">DBRG queue 獨立於 Project 配額 · 無 Tier 的 Project 仍可送 DBRG Job</div>
+      </div>
+      <div class="lpm-dec">
+        <div class="lpm-dec-hdr"><span class="lpm-dec-id">D-156 · CS</span><span class="lpm-dec-date">2026-11-17</span></div>
+        <div class="lpm-dec-title">DBRG Queue API 一律拒絕</div>
+        <div class="lpm-dec-note">CS API 不開放 DBRG queue 操作（建立 / 刪除 / 調配額） · queue 由 SRE 自動管理</div>
+      </div>
+      <div class="lpm-dec">
         <div class="lpm-dec-hdr"><span class="lpm-dec-id">ADR-005 · CS</span><span class="lpm-dec-date">2026-11-12</span></div>
         <div class="lpm-dec-title">DBRG 資源獨立管理，不放 CS 計算</div>
         <div class="lpm-dec-note">原因：DBRG 可能用外部資源、Kafka Connect 用量難算 · 連動產品：DBRG 自管 queue 與計價</div>
       </div>
       <div class="lpm-dec">
         <div class="lpm-dec-hdr"><span class="lpm-dec-id">ADR-006 · CS</span><span class="lpm-dec-date">2026-11-12</span></div>
-        <div class="lpm-dec-title">Project 資源先全部放 CS queue，產品要用再切</div>
-        <div class="lpm-dec-note">同一 queue 可能多產品共用 · Queue 權限管理後續討論（D-146 已決：刪除提示顯示到個別關閉）</div>
+        <div class="lpm-dec-title">Project 資源先全部放 CS queue，產品要用再切 → D-152 更新為兩個同級 queue</div>
+        <div class="lpm-dec-note">11/17 更新：建 Project 時建 Project queue + DBRG queue 兩個同級 queue · Queue 權限管理後續討論（D-146 已決：刪除提示顯示到個別關閉）</div>
       </div>
       <div class="lpm-dec">
         <div class="lpm-dec-hdr"><span class="lpm-dec-id">D-147 · CS</span><span class="lpm-dec-date">2026-11-13</span></div>
         <div class="lpm-dec-title">CS Job 範本（F-10）不做</div>
         <div class="lpm-dec-note">Kafka → ODS 這類搬移任務由 DBRG 自己的畫面處理 · 原 D-054 Q2 2027 加入的計畫取消</div>
+      </div>
+      <div class="lpm-dec" style="opacity:.6">
+        <div class="lpm-dec-hdr"><span class="lpm-dec-id">D-136 · CS × DBRG</span><span class="lpm-dec-date">2026-11-13</span></div>
+        <div class="lpm-dec-title"><s>DBRG Job Q1 起完全不經 CS</s> → 11/17 被 D-153 覆蓋</div>
+        <div class="lpm-dec-note">原結論已被推翻：DBRG Job 仍經 CS（Service Account，用 DBRG 專屬 queue）· 見 D-153</div>
+      </div>
+      <div class="lpm-dec">
+        <div class="lpm-dec-hdr"><span class="lpm-dec-id">D-141 · CS</span><span class="lpm-dec-date">2026-11-13</span></div>
+        <div class="lpm-dec-title">新 CS = 完全重寫，不再以 1.0 為基礎</div>
+        <div class="lpm-dec-note">Spark 後端新建、不和 1.0 共用部署 · 取代 D-001 · PRD NG-5 作廢</div>
+      </div>
+      <div class="lpm-dec">
+        <div class="lpm-dec-hdr"><span class="lpm-dec-id">D-142 · CS</span><span class="lpm-dec-date">2026-11-13</span></div>
+        <div class="lpm-dec-title">密鑰功能暫停開發</div>
+        <div class="lpm-dec-note">密鑰管理頁與 Job 密鑰引用暫停、Q1 不做 · 密碼由使用者自己處理 · 時間未定</div>
+      </div>
+      <div class="lpm-dec">
+        <div class="lpm-dec-hdr"><span class="lpm-dec-id">D-137 · CS</span><span class="lpm-dec-date">2026-11-13</span></div>
+        <div class="lpm-dec-title">Q1 沒有產品以服務身分呼叫 CS</div>
+        <div class="lpm-dec-note">服務身分、產品標籤等需求仍留在 Q1，驗收用測試用的服務身分 · 首個下游：Data Forge Q2 2027（D-145） · ⚬ 這裡指的是「產品串接 CS」的正式整合，DBRG 的 Service Account（D-153）是特殊做法，不算在這個範圍</div>
       </div>
       <div class="lpm-dec">
         <div class="lpm-dec-hdr"><span class="lpm-dec-id">D-145 · CS</span><span class="lpm-dec-date">2026-11-13</span></div>
@@ -6484,7 +6680,7 @@ body.ext .sec[data-topic="dbrg"]{display:none}
   <div class="sec-inner">
     <div class="sec-crumb">◆ LPM·05 · OPEN QUESTIONS ◆<span class="sec-type-chip sec-type-why">🎯 Why</span></div>
     <h2 class="sec-h reveal">待決 <em>Open Questions</em></h2>
-    <p class="sec-sub reveal d1">還沒拍板但需要有 owner 的議題 &mdash; <span class="orange">週會檢視 · 老闆 1-on-1 agenda</span></p>
+    <p class="sec-sub reveal d1">需要多個 PO 一起對齊才能推進的議題 &mdash; <span class="orange">週會檢視 · 跨產品同步</span></p>
 
     <div class="reveal d2">
       <div class="lpm-q">
@@ -6492,20 +6688,12 @@ body.ext .sec[data-topic="dbrg"]{display:none}
         <div style="font-size:12px;color:var(--text-muted);line-height:1.7">誰核發？審核流程？資料隔離？資源回收 SOP？ · <strong style="color:var(--text)">Owner 待定</strong> · 需跨職能三方定</div>
       </div>
       <div class="lpm-q">
-        <div class="lpm-q-hdr"><span class="lpm-q-id">Q·02</span><span class="lpm-q-topic">DBRG 自身 Q1 feature roadmap</span></div>
-        <div style="font-size:12px;color:var(--text-muted);line-height:1.7">LS 上線後 DBRG 要做什麼？Q1 有無新 feature？ · <strong style="color:var(--text)">Owner: DBRG PO</strong> · 11 月下盤點</div>
+        <div class="lpm-q-hdr"><span class="lpm-q-id">Q·02</span><span class="lpm-q-topic">Q2 2027 補哪個應用產品</span></div>
+        <div style="font-size:12px;color:var(--text-muted);line-height:1.7">四核心穩定後要先補 EDP / RG / EH 哪個？ · <strong style="color:var(--text)">Owner: Lead PM</strong> · Q4 內提案對齊</div>
       </div>
       <div class="lpm-q">
-        <div class="lpm-q-hdr"><span class="lpm-q-id">Q·03</span><span class="lpm-q-topic">Q2 2027 補哪個應用產品</span></div>
-        <div style="font-size:12px;color:var(--text-muted);line-height:1.7">四核心穩定後要先補 EDP / RG / EH 哪個？ · <strong style="color:var(--text)">Owner: Lead PM + 老闆</strong> · Q4 內拍板</div>
-      </div>
-      <div class="lpm-q">
-        <div class="lpm-q-hdr"><span class="lpm-q-id">Q·04</span><span class="lpm-q-topic">BD 導入試玩時機共識</span></div>
-        <div style="font-size:12px;color:var(--text-muted);line-height:1.7">建議從 1/15 LS 上線起，而非更早 · <strong style="color:var(--text)">Owner: Lead PM + BD 窗口</strong> · 下次雙週會定</div>
-      </div>
-      <div class="lpm-q">
-        <div class="lpm-q-hdr"><span class="lpm-q-id">Q·05</span><span class="lpm-q-topic">Secret 開發何時啟動</span></div>
-        <div style="font-size:12px;color:var(--text-muted);line-height:1.7">目前暫緩 · 需求量達到多少再開工？ · <strong style="color:var(--text)">Owner: CS PO</strong> · 2027 Q1 盤點</div>
+        <div class="lpm-q-hdr"><span class="lpm-q-id">Q·03</span><span class="lpm-q-topic">BD 導入試玩時機共識</span></div>
+        <div style="font-size:12px;color:var(--text-muted);line-height:1.7">建議從 2/19 LS 上線起，而非更早 · <strong style="color:var(--text)">Owner: Lead PM + BD 窗口</strong> · 下次雙週會定</div>
       </div>
     </div>
   </div>
@@ -6515,22 +6703,22 @@ body.ext .sec[data-topic="dbrg"]{display:none}
 <section class="sec internal-only no-tag" id="this-week" data-topic="delivery">
   <div class="sec-inner">
     <div class="sec-crumb">◆ DL·00 · THIS WEEK ◆<span class="sec-type-chip sec-type-why">🎯 Why</span></div>
-    <h2 class="sec-h reveal">本週焦點 · <em>Week 46 · 11/10–11/16</em></h2>
-    <p class="sec-sub reveal d1">三產品同步進行中 &mdash; <span class="blue">主管週會打開直接看</span></p>
+    <h2 class="sec-h reveal">本週焦點 · <em>Week 47 · 11/17–11/23</em></h2>
+    <p class="sec-sub reveal d1">CS 設計衝刺 · LS 里程碑定案 · IAM 衝刺驗收 &mdash; <span class="blue">主管週會打開直接看</span></p>
 
     <div class="reveal d2" style="display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:14px">
       <!-- IAM this week -->
       <div style="padding:20px;border-radius:14px;background:linear-gradient(135deg,rgba(125,211,252,.14),rgba(255,255,255,.65));border:1px solid rgba(125,211,252,.4);border-top:4px solid var(--blue)">
         <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:10px">
           <div style="font-family:'Noto Serif TC',serif;font-size:16px;font-weight:900;color:var(--text)">🛡 IAM</div>
-          <span style="padding:3px 9px;border-radius:10px;background:rgba(74,108,247,.15);color:var(--blue);font-size:10px;font-weight:700">BUILD · W46</span>
+          <span style="padding:3px 9px;border-radius:10px;background:rgba(74,108,247,.15);color:var(--blue);font-size:10px;font-weight:700">BUILD · W47</span>
         </div>
         <div style="font-size:12.5px;color:var(--text);line-height:1.75">
-          <strong>本週 (11/10–11/16)</strong><br>
-          · Web AuthZ Flow 測試收尾（11/13 due）<br>
-          · FE 動態路由串接（11/11–11/16）<br>
-          · UAT 使用者邀請流程<br><br>
-          <strong style="color:var(--blue)">11/27 里程碑</strong>：15 Features 最終驗收
+          <strong>本週 (11/17–11/23)</strong><br>
+          · Web AuthZ Flow 測試完成 → 整合測試中<br>
+          · FE 動態路由串接收尾<br>
+          · UAT 使用者邀請流程驗收<br><br>
+          <strong style="color:var(--blue)">11/27 里程碑</strong>：15 Features 最終驗收（倒數 10 天）
         </div>
         <div style="margin-top:12px;padding-top:10px;border-top:1px dashed rgba(74,108,247,.25);font-size:10.5px;color:var(--text-muted);font-family:'JetBrains Mono',monospace;letter-spacing:.5px">
           📊 進度來源：<strong style="color:var(--blue)">ClickUp</strong>
@@ -6541,14 +6729,14 @@ body.ext .sec[data-topic="dbrg"]{display:none}
       <div style="padding:20px;border-radius:14px;background:linear-gradient(135deg,rgba(244,114,182,.12),rgba(255,255,255,.65));border:1px solid rgba(244,114,182,.4);border-top:4px solid #C2185B">
         <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:10px">
           <div style="font-family:'Noto Serif TC',serif;font-size:16px;font-weight:900;color:var(--text)">⚡ CS</div>
-          <span style="padding:3px 9px;border-radius:10px;background:rgba(194,24,91,.15);color:#C2185B;font-size:10px;font-weight:700">DESIGN · W4-5</span>
+          <span style="padding:3px 9px;border-radius:10px;background:rgba(194,24,91,.15);color:#C2185B;font-size:10px;font-weight:700">DESIGN · W5-6</span>
         </div>
         <div style="font-size:12.5px;color:var(--text);line-height:1.75">
-          <strong>本週 (11/10–11/16)</strong><br>
-          · <strong style="color:#C2185B">CP1 ✅ 11/12</strong> Product Brief 定版<br>
-          · Functional Map 執行中（11/9–11/27）<br>
-          · 11/16 跨 PO 第一輪對齊啟動<br><br>
-          <strong style="color:#C2185B">下個節點</strong>：11/27 Functional Map Finalize
+          <strong>本週 (11/17–11/23)</strong><br>
+          · <strong style="color:#C2185B">🔥 11/18 Functional Map 交付</strong>（A-013）<br>
+          · 11/10 會議三決議落地：D-122 Notebook→Job 取消 · D-123 改接 Hive API · D-130 Queue 切分模式<br>
+          · 11/12 決議：DBRG 資源獨立（ADR-005）· CS 完全重寫（D-141）<br><br>
+          <strong style="color:#C2185B">下個節點</strong>：11/27 Functional Map Finalize · 12/10 CP2 產品方案定版
         </div>
         <div style="margin-top:12px;padding-top:10px;border-top:1px dashed rgba(194,24,91,.25);font-size:10.5px;color:var(--text-muted);font-family:'JetBrains Mono',monospace;letter-spacing:.5px">
           📊 進度來源：<strong style="color:#C2185B">Portal</strong>
@@ -6559,14 +6747,14 @@ body.ext .sec[data-topic="dbrg"]{display:none}
       <div style="padding:20px;border-radius:14px;background:linear-gradient(135deg,rgba(252,211,77,.14),rgba(255,255,255,.65));border:1px solid rgba(184,134,11,.4);border-top:4px solid #B8860B">
         <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:10px">
           <div style="font-family:'Noto Serif TC',serif;font-size:16px;font-weight:900;color:var(--text)">📁 LS</div>
-          <span style="padding:3px 9px;border-radius:10px;background:rgba(184,134,11,.15);color:#B8860B;font-size:10px;font-weight:700">BUILD · W4</span>
+          <span style="padding:3px 9px;border-radius:10px;background:rgba(184,134,11,.15);color:#B8860B;font-size:10px;font-weight:700">PLAN → DESIGN</span>
         </div>
         <div style="font-size:12.5px;color:var(--text);line-height:1.75">
-          <strong>本週 (11/11–11/13)</strong><br>
-          · <strong style="color:#B8860B">W4 功能凍結</strong>（11/11–11/13）<br>
-          · UIUX Sally Mockup 定稿（11/13）<br>
-          · BE James 5 週開發範圍評估<br><br>
-          <strong style="color:#B8860B">下個節點</strong>：11/27 W6 末 核心流程打通
+          <strong>本週 (11/17–11/23)</strong><br>
+          · <strong style="color:#B8860B">✅ 11/17 里程碑會議完成</strong>：全團隊時程對齊（Stefani 主持）<br>
+          · MVP 上線日確認：<strong style="color:#D86848">2027/02/19</strong>（已扣春節 2/4–2/10）<br>
+          · 11/23 Design Phase 啟動（Sally Files UIUX 初版 → 11/27）<br><br>
+          <strong style="color:#B8860B">下個節點</strong>：11/27 架構審查 + HDFS 路徑 + Files UIUX 初版交付
         </div>
         <div style="margin-top:12px;padding-top:10px;border-top:1px dashed rgba(184,134,11,.25);font-size:10.5px;color:var(--text-muted);font-family:'JetBrains Mono',monospace;letter-spacing:.5px">
           📊 進度來源：<strong style="color:#B8860B">Portal</strong>
@@ -6580,11 +6768,11 @@ body.ext .sec[data-topic="dbrg"]{display:none}
           <span style="padding:3px 9px;border-radius:10px;background:rgba(8,145,178,.15);color:#0891B2;font-size:10px;font-weight:700">BUILD · MVP</span>
         </div>
         <div style="font-size:12.5px;color:var(--text);line-height:1.75">
-          <strong>本週 (11/10–11/16)</strong><br>
+          <strong>本週 (11/17–11/23)</strong><br>
           · <strong style="color:#0891B2">Pipeline Detail 頁面</strong> 開發中（WBS 1.3.3 · S5-S6）<br>
           · <strong style="color:#0891B2">Airflow → PowerJob</strong> 遷移中（排程工具底層改寫）<br>
           · Pipeline 同步中心 / Manual Trigger 已到 <strong style="color:var(--text)">Ready for STG</strong><br>
-          · 持續處理 MVP AC 缺陷（Topic / Schema / Classification 相關）<br><br>
+          · 11/12 確認：<strong style="color:#0891B2">DBRG 資源獨立</strong>（ADR-005）· 11/17 確認：DBRG Job <strong style="color:#0891B2">仍經 CS</strong>（Service Account，用 DBRG queue · D-153）<br><br>
           <strong style="color:#0891B2">下個節點</strong>：MVP 1.4 整合測試 → DF→QS 路徑擴充（MVP 1-2）
         </div>
         <div style="margin-top:12px;padding-top:10px;border-top:1px dashed rgba(8,145,178,.25);font-size:10.5px;color:var(--text-muted);font-family:'JetBrains Mono',monospace;letter-spacing:.5px">
@@ -6597,9 +6785,9 @@ body.ext .sec[data-topic="dbrg"]{display:none}
     <div class="reveal d3" style="margin-top:22px;padding:18px 22px;border-radius:12px;background:linear-gradient(135deg,rgba(255,138,101,.08),rgba(248,113,113,.04));border:1px solid rgba(255,138,101,.3);border-left:4px solid #FF8A65">
       <div style="color:#D86848;font-size:11px;letter-spacing:3px;font-weight:700;margin-bottom:8px">⚠ 本週跨團隊負載與依賴</div>
       <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:14px;font-size:12.5px;color:var(--text);line-height:1.7">
-        <div><strong style="color:#D86848">UIUX 跨產品支援</strong>：LS W4 Mockup 定稿（11/13） × IAM 持續 UX 調整。Mockup 定稿為 LS 開發前置。</div>
-        <div><strong style="color:#D86848">QA 高峰週</strong>：IAM 11/27 驗收 + LS W6 核心流程打通同週到期，需提前盤點測試資源。</div>
-        <div><strong style="color:#D86848">跨產品依賴決議</strong>：11/13 前需確認 DBRG 改走 LS API 的對接方式，避免 LS 12/7 串接延期。</div>
+        <div><strong style="color:#D86848">CS 本週關鍵交付</strong>：Functional Map 11/18 到期（A-013），為 CP2 前的核心輸出。Eric 負責，影響後續 MVP Scope。</div>
+        <div><strong style="color:#D86848">LS 里程碑定案</strong>：11/17 會議確認 MVP 上線延至 2/19（原 1/15）。11/27 有三項前置到期：架構審查 · HDFS 路徑 · Files UIUX 初版。</div>
+        <div><strong style="color:#D86848">IAM 11/27 倒數</strong>：15 Features 最終驗收剩 10 天。同日 LS 也有架構審查，SRE Jeff 需同步完成 HDFS 路徑建置。</div>
       </div>
     </div>
   </div>
@@ -6721,7 +6909,7 @@ body.ext .sec[data-topic="dbrg"]{display:none}
         <div>
           <div style="color:var(--blue);font-size:11px;letter-spacing:3px;font-weight:700;margin-bottom:4px">📊 PRODUCT GANTT · 2026 Q4 → 2027 Q1</div>
           <div class="pg-head-title">四產品時間軸</div>
-          <div class="pg-head-sub">今天：<span id="pg-today">2026-11-13</span> · 資料擷取：ClickUp（IAM）+ WBS（CS / LS）· DBRG 從他方 repo 推論跨產品配合項目</div>
+          <div class="pg-head-sub">今天：<span id="pg-today">2026-11-17</span> · 資料擷取：ClickUp（IAM）+ WBS（CS / LS）· DBRG 從他方 repo 推論跨產品配合項目</div>
         </div>
         <div class="pg-legend">
           <div class="pg-legend-item"><span class="pg-legend-swatch" style="background:linear-gradient(135deg,#22C55E,#15803D)"></span>已完成</div>
@@ -7248,16 +7436,17 @@ body.ext .sec[data-topic="dbrg"]{display:none}
           </div>
         </div>
 
-        <!-- 2027-01-07 · LS STG -->
+        <!-- 2027-01-12 · LS Ready for STG (v70 · 11/17 meeting) -->
         <div style="position:relative;margin-bottom:22px">
           <div style="position:absolute;left:-18px;top:4px;width:14px;height:14px;border-radius:50%;background:#B8860B;border:2px solid #fff;box-shadow:0 2px 6px rgba(184,134,11,.4)"></div>
           <div style="padding:16px 18px;border-radius:12px;background:rgba(252,211,77,.1);border:1px solid rgba(184,134,11,.3);border-left:4px solid #B8860B">
             <div style="margin-bottom:6px">
-              <span style="font-family:'JetBrains Mono',monospace;font-size:11px;color:#B8860B;font-weight:700;letter-spacing:1.5px">2027-01-07 · LS STG 簽核</span>
-              <div style="font-family:'Noto Serif TC',serif;font-size:16px;font-weight:900;color:var(--text);margin-top:2px">📁 LS 24 Features 上 Stage</div>
+              <span style="font-family:'JetBrains Mono',monospace;font-size:11px;color:#B8860B;font-weight:700;letter-spacing:1.5px">2027-01-12 · LS Ready for STG</span>
+              <div style="font-family:'Noto Serif TC',serif;font-size:16px;font-weight:900;color:var(--text);margin-top:2px">📁 LS 24 MVP Features 上 Stage</div>
             </div>
             <div style="font-size:12.5px;color:var(--text-muted);line-height:1.75">
-              <strong style="color:var(--text)">BD 能帶客戶看</strong>：檔案操作 (瀏覽/上傳/下載/移動/權限) · 垃圾桶 (勾選/還原/到期真刪) · 用量儀表板 · IAM × LS 聯動流程
+              <strong style="color:var(--text)">BD 能帶客戶看</strong>：檔案操作 (瀏覽/上傳/下載/移動/權限) · 垃圾桶 (勾選/還原/到期真刪) · 用量儀表板 · IAM × LS 聯動流程<br>
+              <strong style="color:#D86848">注意</strong>：1/12 上 STG 後仍有 STG Testing + Fixing 至 2/16，BD demo 需說明「功能在 Stage 測試中」
             </div>
           </div>
         </div>
@@ -7268,14 +7457,15 @@ body.ext .sec[data-topic="dbrg"]{display:none}
           <div style="padding:16px 18px;border-radius:12px;background:linear-gradient(135deg,rgba(76,183,130,.1),rgba(255,255,255,.65));border:1px solid rgba(76,183,130,.4);border-left:4px solid #15803D">
             <div style="display:flex;justify-content:space-between;align-items:flex-start;flex-wrap:wrap;gap:8px;margin-bottom:8px">
               <div>
-                <span style="font-family:'JetBrains Mono',monospace;font-size:11px;color:#15803D;font-weight:700;letter-spacing:1.5px">2027-01-15 · LS MVP 內部上線</span>
+                <span style="font-family:'JetBrains Mono',monospace;font-size:11px;color:#15803D;font-weight:700;letter-spacing:1.5px">2027-02-19 · LS MVP 對外上線</span>
                 <div style="font-family:'Noto Serif TC',serif;font-size:16px;font-weight:900;color:var(--text);margin-top:2px">🎯 第一個「IAM × LS × DBRG」完整鏈路成形</div>
               </div>
               <span style="padding:3px 10px;border-radius:10px;background:rgba(76,183,130,.2);color:#15803D;font-size:10px;font-weight:700;font-family:'JetBrains Mono',monospace">關鍵節點</span>
             </div>
             <div style="font-size:12.5px;color:var(--text-muted);line-height:1.75">
               <strong style="color:var(--text)">BD 能帶客戶看</strong>：使用者登入 → 建 Project → 開通路徑 → 上傳檔案 → 下游 DBRG 消費<br>
-              <strong style="color:var(--blue)">BD 推廣建議</strong>：這是第一個能讓客戶感受「DIP 不是 11 個產品，是一個資料閉環」的時間點
+              <strong style="color:var(--blue)">BD 推廣建議</strong>：這是第一個能讓客戶感受「DIP 不是 11 個產品，是一個資料閉環」的時間點<br>
+              <strong style="color:#D86848">⚠ 11/17 更新</strong>：原 1/15 → 2/19（含 STG Fixing 01/27–02/16 + 春節 2/4–2/10 · 觀察期至 03/08）
             </div>
           </div>
         </div>
@@ -7400,7 +7590,7 @@ body.ext .sec[data-topic="dbrg"]{display:none}
       ⚠ <strong style="color:#D86848">提前試玩的風險</strong>：目前時間點 Stage 尚未完成、產品也還沒串起來，若在這個階段讓客戶進場試玩，看到的不是 DIP 完整樣貌 —— 可能造成對四產品全貌的誤解，後續需花更多時間重新解釋「這不是最終版」。
       <br><br>
       <strong style="color:var(--text)">建議時間點</strong>：
-      <strong style="color:#15803D">1/15 LS MVP 上線</strong>是第一個比較適合的時間點（三產品串起來）· <strong style="color:#15803D">3/31 Dogfooding</strong>是真正完整閉環的時間點 · BD 端在這之前準備好 Demo 腳本 / FAQ / 客戶簡報
+      <strong style="color:#15803D">2/19 LS MVP 上線</strong>是第一個比較適合的時間點（三產品串起來）· <strong style="color:#15803D">3/31 Dogfooding</strong>是真正完整閉環的時間點 · BD 端在這之前準備好 Demo 腳本 / FAQ / 客戶簡報
     </div>
   </div>
 </section>
@@ -7533,15 +7723,99 @@ body.ext .sec[data-topic="dbrg"]{display:none}
         </thead>
         <tbody>
           <tr>
-            <td class="pc-date">2026-11-12</td>
+            <td class="pc-date">2026-11-17</td>
             <td><span class="pc-prod pc-prod-cs">⚡ CS</span></td>
             <td><span class="pc-type pc-type-decision">計價邏輯</span></td>
             <td>
-              <strong>ADR-005 · DBRG 資源獨立</strong><br>
-              <span class="pc-detail">DBRG 自己管 queue 資源與計價，不放在 CS 資源裡一起算 · 原因：DBRG 可能用外部資源 + Kafka Connect 用量難計算</span>
+              <strong>D-152 · 建 Project 時建兩個同級 Queue</strong><br>
+              <span class="pc-detail">建立 Project 即建好 Project queue + DBRG queue · DBRG queue 由 SRE 預設，不揭露不可調 · 更新 ADR-006 的「先全在 CS queue 再切」模型</span>
+            </td>
+            <td><span class="pc-impact pc-impact-sku">⚡ SKU / Tier 變動</span></td>
+            <td class="pc-src">CS 11/17 會議</td>
+          </tr>
+
+          <tr>
+            <td class="pc-date">2026-11-17</td>
+            <td><span class="pc-prod pc-prod-dbrg">🔄 DBRG</span></td>
+            <td><span class="pc-type pc-type-decision">計價邏輯</span></td>
+            <td>
+              <strong>D-153 · DBRG Job 仍經 CS（覆蓋 D-136）</strong><br>
+              <span class="pc-detail">DBRG 以 Service Account 呼叫 CS API 送出 Job，用 DBRG 自己的 queue（不用 Project queue）· Q1 開始 · 覆蓋 D-136「完全不經 CS」</span>
             </td>
             <td><span class="pc-impact pc-impact-scope">⟲ 認列範圍改變</span></td>
-            <td class="pc-src">CS 11/12 會議</td>
+            <td class="pc-src">CS 11/17 會議</td>
+          </tr>
+
+          <tr>
+            <td class="pc-date">2026-11-17</td>
+            <td><span class="pc-prod pc-prod-cs">⚡ CS</span></td>
+            <td><span class="pc-type pc-type-decision">計價邏輯</span></td>
+            <td>
+              <strong>D-154 · CS 記錄 DBRG 但不計入 Project</strong><br>
+              <span class="pc-detail">CS 記錄 DBRG Job 與用量但不計入 Project 資源 · Q1 CS 畫面與用量 API 皆濾掉 DBRG · 之後改篩選即可開放</span>
+            </td>
+            <td><span class="pc-impact pc-impact-scope">⟲ 認列範圍改變</span></td>
+            <td class="pc-src">CS 11/17 會議</td>
+          </tr>
+
+          <tr>
+            <td class="pc-date">2026-11-17</td>
+            <td><span class="pc-prod pc-prod-cs">⚡ CS</span></td>
+            <td><span class="pc-type pc-type-decision">計價邏輯</span></td>
+            <td>
+              <strong>D-155 · DBRG 不受超額檢查</strong><br>
+              <span class="pc-detail">CS 不對 DBRG Job 做超額檢查 · Project 未選 Tier 時 DBRG Job 仍可送 · 失敗與 log 由 DBRG 畫面呈現（可用 CS API 查自己的 Job）</span>
+            </td>
+            <td><span class="pc-impact pc-impact-info">ℹ️ 僅通知</span></td>
+            <td class="pc-src">CS 11/17 會議</td>
+          </tr>
+
+          <tr>
+            <td class="pc-date">2026-11-17</td>
+            <td><span class="pc-prod pc-prod-cs">⚡ CS</span></td>
+            <td><span class="pc-type pc-type-decision">計價邏輯</span></td>
+            <td>
+              <strong>D-156 · DBRG Queue API 一律拒絕</strong><br>
+              <span class="pc-detail">對 DBRG queue 呼叫 queue API（建立 / 調整 / 刪除 / 選用）一律拒絕 · 判定：看 Service Account 是否為 DBRG</span>
+            </td>
+            <td><span class="pc-impact pc-impact-info">ℹ️ 僅通知</span></td>
+            <td class="pc-src">CS 11/17 會議</td>
+          </tr>
+
+          <tr>
+            <td class="pc-date">2026-11-17</td>
+            <td><span class="pc-prod pc-prod-ls">📁 LS</span></td>
+            <td><span class="pc-type pc-type-decision">計價邏輯</span></td>
+            <td>
+              <strong>LS MVP 上線日延至 2027/02/19（原 01/15）</strong><br>
+              <span class="pc-detail">11/17 里程碑會議定案：加入 STG Fixing（01/27–02/16）+ 春節（02/04–02/10）· Ready for STG 01/12 · Released 02/19 · 觀察期至 03/08</span>
+            </td>
+            <td><span class="pc-impact pc-impact-info">ℹ️ 僅通知</span></td>
+            <td class="pc-src">LS 11/17 里程碑會議</td>
+          </tr>
+
+          <tr>
+            <td class="pc-date">2026-11-13</td>
+            <td><span class="pc-prod pc-prod-cs">⚡ CS</span></td>
+            <td><span class="pc-type pc-type-decision">計價邏輯</span></td>
+            <td>
+              <strong>D-147 · Job 範本（F-10）不做</strong><br>
+              <span class="pc-detail">Job 範本功能完全取消，Kafka → ODS 搬移任務由 DBRG 自己的畫面處理 · 取代 D-054 Q2 2027 加入的計畫</span>
+            </td>
+            <td><span class="pc-impact pc-impact-sku">⚡ SKU / Tier 變動</span></td>
+            <td class="pc-src">CS CHANGELOG D-147</td>
+          </tr>
+
+          <tr>
+            <td class="pc-date">2026-11-13</td>
+            <td><span class="pc-prod pc-prod-cs">⚡ CS</span></td>
+            <td><span class="pc-type pc-type-decision">計價邏輯</span></td>
+            <td>
+              <strong>D-142 · Secret / 密鑰管理 · MVP 先不做</strong><br>
+              <span class="pc-detail">MVP 不含 Secret 管理功能，含密鑰管理頁，Q1 不開發，等需求量再排進 Roadmap</span>
+            </td>
+            <td><span class="pc-impact pc-impact-sku">⚡ SKU / Tier 變動</span></td>
+            <td class="pc-src">CS CHANGELOG D-142</td>
           </tr>
 
           <tr>
@@ -7549,8 +7823,32 @@ body.ext .sec[data-topic="dbrg"]{display:none}
             <td><span class="pc-prod pc-prod-cs">⚡ CS</span></td>
             <td><span class="pc-type pc-type-decision">計價邏輯</span></td>
             <td>
-              <strong>ADR-006 · Project 資源集中後切分</strong><br>
-              <span class="pc-detail">Project 資源先全部在 CS YuniKorn queue · 產品要用時：(a) 選現有 queue 或 (b) 從 CS queue 切新 queue · <strong>同一 queue 可能多產品共用</strong></span>
+              <strong>D-141 · CS 完全重寫（不再以 1.0 為基礎）</strong><br>
+              <span class="pc-detail">CS 2.0 不再以 1.0 程式碼為基礎，完全重新開發 · 影響 1.0 API 相容性策略：NG-5 更新，不再承諾 1.0 相容</span>
+            </td>
+            <td><span class="pc-impact pc-impact-info">ℹ️ 僅通知</span></td>
+            <td class="pc-src">CS PRD D-141</td>
+          </tr>
+
+          <tr>
+            <td class="pc-date">2026-11-12</td>
+            <td><span class="pc-prod pc-prod-dbrg">🔄 DBRG</span></td>
+            <td><span class="pc-type pc-type-decision">計價邏輯</span></td>
+            <td>
+              <strong>D-136 · <del>DBRG Q1 完全不經 CS</del> → 11/17 被 D-153 覆蓋</strong><br>
+              <span class="pc-detail">原 11/13 決議已被 11/17 覆蓋：DBRG Job 仍經 CS（Service Account 呼叫 CS API，用 DBRG queue）· 見 D-153</span>
+            </td>
+            <td><span class="pc-impact pc-impact-scope">⟲ 認列範圍改變</span></td>
+            <td class="pc-src">CS CHANGELOG D-136</td>
+          </tr>
+
+          <tr>
+            <td class="pc-date">2026-11-12</td>
+            <td><span class="pc-prod pc-prod-dbrg">🔄 DBRG</span></td>
+            <td><span class="pc-type pc-type-decision">計價邏輯</span></td>
+            <td>
+              <strong>ADR-005 / D-129 · DBRG 資源與計價獨立</strong><br>
+              <span class="pc-detail">DBRG 自己管 queue 資源與計價，不放在 CS 資源裡一起算 · 原因：DBRG 可能用外部資源、Kafka Connect 用量難算</span>
             </td>
             <td><span class="pc-impact pc-impact-sku">⚡ SKU / Tier 變動</span></td>
             <td class="pc-src">CS 11/12 會議</td>
@@ -7559,25 +7857,49 @@ body.ext .sec[data-topic="dbrg"]{display:none}
           <tr>
             <td class="pc-date">2026-11-12</td>
             <td><span class="pc-prod pc-prod-cs">⚡ CS</span></td>
-            <td><span class="pc-type pc-type-defer">暫緩</span></td>
+            <td><span class="pc-type pc-type-decision">計價邏輯</span></td>
             <td>
-              <strong>Secret 開發暫緩</strong><br>
-              <span class="pc-detail">Secret 功能暫緩，等需求量變多再做</span>
+              <strong>ADR-006 / D-130 · Queue 模型取代產品配額</strong><br>
+              <span class="pc-detail">Project 資源先全部放 CS YuniKorn queue，產品要用時選現有或切新的 · 多產品可共用同一 queue · 取代原先的「產品配額」模型</span>
             </td>
-            <td><span class="pc-impact pc-impact-info">ℹ️ 僅通知</span></td>
+            <td><span class="pc-impact pc-impact-sku">⚡ SKU / Tier 變動</span></td>
             <td class="pc-src">CS 11/12 會議</td>
           </tr>
 
           <tr>
-            <td class="pc-date">2026 初</td>
-            <td><span class="pc-prod pc-prod-dbrg">🔄 DBRG</span></td>
-            <td><span class="pc-type pc-type-migration">技術遷移</span></td>
+            <td class="pc-date">2026-11-10</td>
+            <td><span class="pc-prod pc-prod-cs">⚡ CS</span></td>
+            <td><span class="pc-type pc-type-decision">計價邏輯</span></td>
             <td>
-              <strong>Airflow → PowerJob（排程工具替換）</strong><br>
-              <span class="pc-detail">DBRG Pipeline 底層排程工具由 Airflow 改為 PowerJob · DBRG 尚未上線不需並行切換 · 若日後以「排程使用量」計費，算法將以 PowerJob 為基礎</span>
+              <strong>D-122 · Notebook 轉 Job 功能取消</strong><br>
+              <span class="pc-detail">原 Q1 規劃的 Notebook→Job 轉換功能取消，Jeff 表示無實際需求與案例 · 影響：MVP 範圍縮減一個功能 · Q-085 暫緩</span>
             </td>
-            <td><span class="pc-impact pc-impact-info">ℹ️ 僅通知</span></td>
-            <td class="pc-src">ADR-DBRG-001</td>
+            <td><span class="pc-impact pc-impact-sku">⚡ SKU / Tier 變動</span></td>
+            <td class="pc-src">CS 11/10 會議</td>
+          </tr>
+
+          <tr>
+            <td class="pc-date">2026-11-10</td>
+            <td><span class="pc-prod pc-prod-cs">⚡ CS</span></td>
+            <td><span class="pc-type pc-type-decision">計價邏輯</span></td>
+            <td>
+              <strong>D-123 · Q1 改接 Hive API（非 Data Forge API）</strong><br>
+              <span class="pc-detail">所有倉表經 Hive 建立，Q1 先接 Hive API · 之後串 Data Forge 改由 IAM 管控 · Q1 暫無法細緻控管 table 權限</span>
+            </td>
+            <td><span class="pc-impact pc-impact-scope">⟲ 認列範圍改變</span></td>
+            <td class="pc-src">CS 11/10 會議</td>
+          </tr>
+
+          <tr>
+            <td class="pc-date">2026-11-10</td>
+            <td><span class="pc-prod pc-prod-cs">⚡ CS</span></td>
+            <td><span class="pc-type pc-type-feature">新功能</span></td>
+            <td>
+              <strong>新增 Spark Java 支援</strong><br>
+              <span class="pc-detail">因 Data Bridge 底層用 Java，CS 需支援帶 jar、main class 等參數的 Spark Java Job · 原三種（PySpark / SparkR / Spark SQL）變四種</span>
+            </td>
+            <td><span class="pc-impact pc-impact-sku">⚡ SKU / Tier 變動</span></td>
+            <td class="pc-src">CS 11/10 會議</td>
           </tr>
 
           <tr>
@@ -7605,6 +7927,18 @@ body.ext .sec[data-topic="dbrg"]{display:none}
           </tr>
 
           <tr>
+            <td class="pc-date">2026 初</td>
+            <td><span class="pc-prod pc-prod-dbrg">🔄 DBRG</span></td>
+            <td><span class="pc-type pc-type-migration">技術遷移</span></td>
+            <td>
+              <strong>Airflow → PowerJob（排程工具替換）</strong><br>
+              <span class="pc-detail">DBRG Pipeline 底層排程工具由 Airflow 改為 PowerJob · DBRG 尚未上線不需並行切換 · 若日後以「排程使用量」計費，算法將以 PowerJob 為基礎</span>
+            </td>
+            <td><span class="pc-impact pc-impact-info">ℹ️ 僅通知</span></td>
+            <td class="pc-src">ADR-DBRG-001</td>
+          </tr>
+
+          <tr>
             <td class="pc-date">待補</td>
             <td><span class="pc-prod pc-prod-iam">🛡 IAM</span></td>
             <td><span class="pc-type pc-type-feature">新功能</span></td>
@@ -7621,8 +7955,8 @@ body.ext .sec[data-topic="dbrg"]{display:none}
             <td><span class="pc-prod pc-prod-ls">📁 LS</span></td>
             <td><span class="pc-type pc-type-feature">新功能</span></td>
             <td>
-              <strong>24 Features MVP 上線（1/15）</strong><br>
-              <span class="pc-detail"><strong style="color:#D86848">待 LS PO 補 24 Features 清單</strong>，LS MVP 1.0 功能範圍定案</span>
+              <strong>23 MVP Features 上線（2/19 · 原 1/15）</strong><br>
+              <span class="pc-detail">4 模組 33 功能中 MVP 收 23 項（M1–M3）· Files 含 Recycle Bin、Usage Dashboard、介接服務 · <strong style="color:#D86848">待 LS PO 補完整清單</strong></span>
             </td>
             <td><span class="pc-impact pc-impact-sku">⚡ SKU / Tier 變動</span></td>
             <td class="pc-src">待 LS PO 提供</td>
@@ -8393,7 +8727,7 @@ const cmdkData = [
 
   // Overview group · v61 用明確 ID，含新增的 customer-journey / why-dip / cta
   { topic:'overview', id:'hero',             num:'OV·00',   name:'Hero · 平台概覽',        kw:'首頁 hero intro dip' },
-  { topic:'overview', id:'usage-guide',      num:'OV·GUIDE',name:'使用導引 · How to Read 🔒 🆕', kw:'guide tour onboarding help 導引 新人 教學 use 使用 role path 角色 路徑' },
+  { topic:'overview', id:'usage-guide',      num:'OV·GUIDE',name:'使用導引 · How to Read 🔒 🆕', kw:'guide tour onboarding help 導引 新人 教學 use 使用 role path 角色 路徑 對內 對外 差異 internal external mode 模式' },
   { topic:'overview', id:'pain',             num:'OV·00',   name:'客戶痛點 · WHY ✦',       kw:'痛點 why pain 客戶 external 對外' },
   { topic:'overview', id:'customer-journey', num:'OV·00.5', name:'90 天客戶旅程 ✦ 🆕',     kw:'journey customer 旅程 90 天 roi demo external 對外' },
   { topic:'overview', id:'four-core',        num:'OV·01',   name:'四大核心產品',            kw:'iam dbrg ls cs core 四大 產品' },
@@ -9333,3 +9667,5 @@ document.addEventListener('keydown',(e)=>{
 
 </body>
 </html>
+
+</body></html>
